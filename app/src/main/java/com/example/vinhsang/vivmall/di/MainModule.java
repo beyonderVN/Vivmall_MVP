@@ -26,7 +26,7 @@ public class MainModule {
 
     @Provides
     DataLoadingSubject getDataManager(){
-        DataLoadingSubject dataManager = new DataManager();
+        DataLoadingSubject dataManager = DataManager.getInstance();
         return dataManager;
     }
 }

@@ -3,6 +3,7 @@ package com.example.vinhsang.vivmall.activity.mainactivity.allfragment;
 import android.util.Log;
 
 import com.example.vinhsang.vivmall.helper.Extra;
+import com.example.vinhsang.vivmall.helper.Utils;
 import com.example.vinhsang.vivmall.model.ItemProduct;
 
 import java.io.Serializable;
@@ -46,15 +47,10 @@ public class AllPresentationModel implements Serializable {
 
     public void loadMore() {
         Log.d(TAG, "loadMore: "+mItemProducts.size());
-        try {
-            List<ItemProduct> listItemProduct = new Extra.MyTaskLoadProduct().execute("", Integer.toString(lastItem)).get();
-            lastItem = lastItem + listItemProduct.size();
-            mItemProducts.addAll(listItemProduct);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        //            List<ItemProduct> listItemProduct = new Extra.MyTaskLoadProduct().execute("", Integer.toString(lastItem)).get();
+        List<ItemProduct> listItemProduct = Utils.getListItemProduct();
+        lastItem = lastItem + listItemProduct.size();
+        mItemProducts.addAll(listItemProduct);
     }
 
 }

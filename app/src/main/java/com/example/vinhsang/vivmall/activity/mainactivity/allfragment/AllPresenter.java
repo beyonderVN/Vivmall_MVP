@@ -27,9 +27,9 @@ public class AllPresenter extends SimpleMVPPresenter<AllView,AllPresentationMode
     @Override
     public void attachView(AllView mvpView, AllPresentationModel presentationModel) {
         super.attachView(mvpView, presentationModel);
-        if(presentationModel.shouldFetchRepositories()){
+
             getListItemProduct();
-        }
+
     }
 
     public void getListItemProduct() {
@@ -43,7 +43,6 @@ public class AllPresenter extends SimpleMVPPresenter<AllView,AllPresentationMode
 
     private void showContent() {
 
-        Log.d(TAG, "showContent: "+getPresentationModel().getmItemProducts().size());
         if (getMvpView() != null) {
             getMvpView().showContent();
         }

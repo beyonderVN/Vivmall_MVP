@@ -25,7 +25,7 @@ public class CataloguePresenter extends SimpleMVPPresenter<CatalogueView,Catalog
     public void attachView(CatalogueView mvpView, CataloguePresentationModel presentationModel) {
         super.attachView(mvpView, presentationModel);
         if(presentationModel.shouldFetchRepositories()){
-            init();
+            //init();
         }
     }
 

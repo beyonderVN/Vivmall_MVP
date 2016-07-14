@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,6 +103,7 @@ void setupRecyclerView(RecyclerView recyclerView){
     itemAnimator.setAddDuration(3000);
     itemAnimator.setRemoveDuration(3000);
     recyclerView.setItemAnimator(itemAnimator);
+
 
     recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
         // The minimum amount of items to have below your current scroll position

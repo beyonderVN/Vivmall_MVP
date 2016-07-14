@@ -1,5 +1,7 @@
 package com.example.vinhsang.vivmall.datamanager;
 
+import android.util.Log;
+
 import com.example.vinhsang.vivmall.activity.mainactivity.allfragment.AllPresentationModel;
 
 import java.util.ArrayList;
@@ -10,10 +12,16 @@ import java.util.List;
  */
 
 public class DataManager extends BaseDataManager {
-
-    AllPresentationModel allPresentationModel;
+    private static final String TAG = "DataManager";
+    private static DataManager dataManager = new DataManager();
+    public static DataManager getInstance() {
+        return dataManager;
+    }
+    static int count = 0;
+    static AllPresentationModel allPresentationModel;
     private List<DataLoadingCallbacks> loadingCallbacks;
     public DataManager() {
+
         allPresentationModel = new AllPresentationModel("All");
     }
 
@@ -39,6 +47,8 @@ public class DataManager extends BaseDataManager {
 
     @Override
     public AllPresentationModel getAllPresentationMOdel() {
+        count++;
+        Log.d(TAG, "DataManager: "+count);
         return allPresentationModel;
     }
 }
