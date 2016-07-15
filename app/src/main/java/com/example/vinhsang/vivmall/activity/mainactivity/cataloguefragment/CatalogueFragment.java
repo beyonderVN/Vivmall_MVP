@@ -179,7 +179,7 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
 
                 // If it isn’t currently loading, we check to see if we have breached
                 // the visibleThreshold and need to reload more data.
-                // If we do need to reload some more data, we execute onLoadMore to fetch the data.
+                // If we do need to reload some more data, we execute onUpdate to fetch the data.
                 // threshold should reflect how many total columns there are too
                 if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
                     currentPage++;
@@ -310,7 +310,7 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
 
     @Override
     public void onLoadMore() {
-        Log.d(TAG, "onLoadMore: " + presenter.getPresentationModel().getmItemProducts().size());
+        Log.d(TAG, "onUpdate: " + presenter.getPresentationModel().getmItemProducts().size());
         itemProductsAdapter.notifyDataSetChanged();
 
     }

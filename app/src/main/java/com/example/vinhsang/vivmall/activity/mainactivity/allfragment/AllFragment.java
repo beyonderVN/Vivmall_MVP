@@ -9,7 +9,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -149,7 +148,7 @@ void setupRecyclerView(RecyclerView recyclerView){
 
             // If it isn’t currently loading, we check to see if we have breached
             // the visibleThreshold and need to reload more data.
-            // If we do need to reload some more data, we execute onLoadMore to fetch the data.
+            // If we do need to reload some more data, we execute onUpdate to fetch the data.
             // threshold should reflect how many total columns there are too
             if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
                 currentPage++;
@@ -212,7 +211,10 @@ void setupRecyclerView(RecyclerView recyclerView){
         itemProductsAdapter.notifyDataSetChanged();
 
     }
-
+    @Override
+    public void onUpdate() {
+        itemProductsAdapter.notifyDataSetChanged();
+    }
     @Override
     public void onConnected() {
 
@@ -228,10 +230,7 @@ void setupRecyclerView(RecyclerView recyclerView){
 
     }
 
-    @Override
-    public void onLoadMore() {
-        itemProductsAdapter.notifyDataSetChanged();
-    }
+
 
     @Override
     public void showLoadingMore() {

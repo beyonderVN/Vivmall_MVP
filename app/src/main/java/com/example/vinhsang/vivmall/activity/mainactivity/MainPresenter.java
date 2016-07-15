@@ -1,6 +1,7 @@
 package com.example.vinhsang.vivmall.activity.mainactivity;
 
 import com.example.vinhsang.vivmall.coremvp.SimpleMVPPresenter;
+import com.example.vinhsang.vivmall.datamanager.DataManager;
 
 import javax.inject.Inject;
 
@@ -12,4 +13,10 @@ public class MainPresenter extends SimpleMVPPresenter<MainView,MainPresentationM
     @Inject
     public MainPresenter() {
     }
+
+    //fortest
+    public void resetListItemProduct(){
+        DataManager.getInstance().getAllPresentationMOdel().clearListItemProduct();
+    }
+
 }

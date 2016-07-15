@@ -22,12 +22,5 @@ import com.example.vinhsang.vivmall.activity.mainactivity.allfragment.AllPresent
  * An interface for classes offering data loading state to be observed.
  */
 public interface DataLoadingSubject {
-    boolean isDataLoading();
-    void registerCallback(DataLoadingCallbacks callbacks);
-    void unregisterCallback(DataLoadingCallbacks callbacks);
     AllPresentationModel getAllPresentationMOdel();
-    interface DataLoadingCallbacks {
-        void dataStartedLoading();
-        void dataFinishedLoading();
-    }
 }

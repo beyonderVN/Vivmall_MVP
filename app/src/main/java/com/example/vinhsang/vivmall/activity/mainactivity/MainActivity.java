@@ -111,9 +111,6 @@ public class MainActivity extends BaseActivity<MainPresentationModel,MainView,Ma
         fragmentSub = CatalogueFragment.newInstance();
         mAdapter.addFragment(fragmentMain, "All");
         mAdapter.addFragment(fragmentSub, "Catalogue");
-        for(int i = 0;i<2;i++){
-            mAdapter.addFragment(AllFragment.newInstance(), "Catalogue");
-        }
         mViewpager.setAdapter(mAdapter);
         mTabs.setupWithViewPager(mViewpager);
     }
@@ -176,6 +173,7 @@ public class MainActivity extends BaseActivity<MainPresentationModel,MainView,Ma
 
         switch (id){
             case R.id.action_cart :
+                presenter.resetListItemProduct();
                 Toast.makeText(this, "R.id.action_cart", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_search:
