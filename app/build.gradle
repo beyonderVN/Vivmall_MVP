@@ -1,12 +1,12 @@
-
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply from: '../quality_tools/findbugs.gradle'
+apply plugin: 'com.fernandocejas.frodo'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
-    useLibrary  'org.apache.http.legacy'
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.example.vinhsang.vivmall"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -21,6 +21,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
@@ -32,6 +36,10 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.1.0'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     compile 'com.google.code.gson:gson:2.7'
+
+    compile 'io.reactivex:rxjava:1.0.14'
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'javax.annotation:jsr250-api:1.0'
 
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'

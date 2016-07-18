@@ -1,8 +1,11 @@
 package com.example.vinhsang.vivmall.di;
 
-import com.example.vinhsang.vivmall.datamanager.ConnectService;
-import com.example.vinhsang.vivmall.datamanager.DataLoadingSubject;
+import android.content.Context;
+
+import com.example.vinhsang.vivmall.datamanager.DataInterface;
 import com.example.vinhsang.vivmall.datamanager.DataManager;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,20 +16,15 @@ import dagger.Provides;
 @Module
 public class MainModule {
     private String baseUrl;
-
-    public MainModule(String baseUrl) {
+    private Context context;
+    public MainModule(String baseUrl, Context context) {
         this.baseUrl = baseUrl;
-    }
-    @Provides
-    ConnectService getConnectService(){
-        ConnectService connectService = new ConnectService();
-        connectService.setUrl(baseUrl);
-        return connectService;
+        this.context = context;
     }
 
-    @Provides
-    DataLoadingSubject getDataManager(){
-        DataLoadingSubject dataManager = DataManager.getInstance();
+    @Provides @Singleton
+    DataInterface getDataManager(){
+        DataInterface dataManager = new DataManager(context);
         return dataManager;
     }
 }

@@ -2,7 +2,7 @@ package com.example.vinhsang.vivmall.activity.mainactivity.allfragment;
 
 import com.example.vinhsang.vivmall.activity.base.OneInterfaceForAll;
 import com.example.vinhsang.vivmall.coremvp.SimpleMVPPresenter;
-import com.example.vinhsang.vivmall.datamanager.DataLoadingSubject;
+import com.example.vinhsang.vivmall.datamanager.DataInterface;
 
 import javax.inject.Inject;
 
@@ -15,14 +15,10 @@ public class AllPresenter extends SimpleMVPPresenter<AllView,AllPresentationMode
         RESET_LIST
     }
     private static final String TAG = "AllPresenter";
-    private final DataLoadingSubject dataManager;
-
-    public DataLoadingSubject getDataManager() {
-        return dataManager;
-    }
+    private final DataInterface dataManager;
 
     @Inject
-    public AllPresenter(DataLoadingSubject dataManager) {
+    public AllPresenter(DataInterface dataManager) {
         this.dataManager = dataManager;
     }
 
@@ -38,7 +34,7 @@ public class AllPresenter extends SimpleMVPPresenter<AllView,AllPresentationMode
         if (getMvpView() != null) {
             getMvpView().showProgress();
         }
-            getPresentationModel().loadMore();
+            getPresentationModel().loadMore(dataManager.itemProducts());
             showContent();
     }
 
@@ -59,7 +55,7 @@ public class AllPresenter extends SimpleMVPPresenter<AllView,AllPresentationMode
             getMvpView().showLoadingMore();
         }
         try{
-            getPresentationModel().loadMore();
+            getPresentationModel().loadMore(dataManager.itemProducts());
             if (getMvpView() != null) {
                 getMvpView().onUpdate();
             }

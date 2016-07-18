@@ -18,6 +18,7 @@ import com.example.vinhsang.vivmall.R;
 import com.example.vinhsang.vivmall.activity.base.BaseFragment;
 import com.example.vinhsang.vivmall.activity.mainactivity.allfragment.adapter.ItemProductsAdapter;
 
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -33,7 +34,8 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
     View view;
     @BindView(R.id.recycler_detail)
     RecyclerView recyclerView;
-
+    @BindInt(R.integer.column_num)
+        int columnNum;
     ItemProductsAdapter itemProductsAdapter;
 
     public static AllFragment newInstance(int position) {
@@ -91,11 +93,11 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
 void setupRecyclerView(RecyclerView recyclerView){
     final StaggeredGridLayoutManager staggeredGridLayoutManagerVertical =
             new StaggeredGridLayoutManager(
-                    3, //The number of Columns in the grid
+                    columnNum, //The number of Columns in the grid
                     LinearLayoutManager.VERTICAL);
     staggeredGridLayoutManagerVertical.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
     //staggeredGridLayoutManagerVertical.invalidateSpanAssignments();
-    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), columnNum);
     recyclerView.setLayoutManager(staggeredGridLayoutManagerVertical);
     recyclerView.setHasFixedSize(true);
     RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
@@ -245,7 +247,7 @@ void setupRecyclerView(RecyclerView recyclerView){
     @NonNull
     @Override
     protected AllPresentationModel createPresentationModel() {
-        return presenter.getDataManager().getAllPresentationMOdel();
+        return new AllPresentationModel("All");
     }
 
     @Override

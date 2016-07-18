@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.example.vinhsang.vivmall.coremvp.MVPActivity;
 import com.example.vinhsang.vivmall.coremvp.MVPPresenter;
 import com.example.vinhsang.vivmall.coremvp.MVPView;
+import com.example.vinhsang.vivmall.navigation.Navigator;
 
 import java.io.Serializable;
 
@@ -17,7 +18,8 @@ import javax.inject.Inject;
 public abstract class BaseActivity<M extends Serializable, V extends MVPView, P extends MVPPresenter<V, M>>
 extends MVPActivity <M,V,P>{
     @Inject protected P presenter;
-
+    @Inject
+    Navigator navigator;
     @NonNull
     @Override
     protected P createPresenter() {

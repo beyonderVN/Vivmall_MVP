@@ -16,11 +16,15 @@
 
 package com.example.vinhsang.vivmall.datamanager;
 
-import com.example.vinhsang.vivmall.activity.mainactivity.allfragment.AllPresentationModel;
+import com.example.vinhsang.vivmall.model.ItemProduct;
+
+import java.util.List;
 
 /**
  * An interface for classes offering data loading state to be observed.
  */
-public interface DataLoadingSubject {
-    AllPresentationModel getAllPresentationMOdel();
+public interface DataInterface {
+    List<ItemProduct> itemProducts();
+
+    ItemProduct itemProduct();
 }

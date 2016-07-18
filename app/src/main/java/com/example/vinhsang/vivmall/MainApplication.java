@@ -26,7 +26,7 @@ public class MainApplication extends Application {
 
     void setupGraph(){
         mainComponent = DaggerMainComponent.builder()
-                .mainModule(new MainModule(baseUrl))
+                .mainModule(new MainModule(baseUrl,mContext))
                 .build();
 
     }

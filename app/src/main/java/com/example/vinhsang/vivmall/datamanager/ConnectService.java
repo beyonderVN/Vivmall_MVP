@@ -24,13 +24,12 @@ import java.io.InputStreamReader;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import static android.content.ContentValues.TAG;
-
 public class ConnectService {
+	private static final String TAG = "ConnectService";
 	interface ConnectServiceInterface {
 
 	}
-	private static String url="http://10.0.12.14:8080/SrvAppVivmall/RestSrv/SrvConnect/";
+	private static String url="http://103.3.249.99:8080/SrvAppVivmall/RestSrv/SrvConnect/";
 
 	public static String getUrl() {
 		return url;
@@ -214,7 +213,7 @@ public class ConnectService {
 			{
 				request.addHeader(h.getName(), h.getValue());
 			}
-
+			Log.d(TAG, "Execute: "+mainUrl + combinedParams);
 			response= executeRequest(request, mainUrl);
 			break;
 		}
@@ -268,16 +267,19 @@ public class ConnectService {
 			}
 
 		} catch (ClientProtocolException e)  {
-			Log.v("1",e.getMessage());
-			client.getConnectionManager().shutdown();
 			e.printStackTrace();
+			client.getConnectionManager().shutdown();
+
 		} catch (IOException e) {
-			Log.v("2",e.getMessage());
-			client.getConnectionManager().shutdown();
 			e.printStackTrace();
+			client.getConnectionManager().shutdown();
+
 		}catch (Exception e){
-			Log.v("3",e.getMessage());
+
+			e.printStackTrace();
 		}
+		Log.d(TAG, "executeRequest: "+response);
+		Log.d(TAG, "executeRequest: "+Thread.getAllStackTraces());
 		return response;
 	}
 	private static String convertStreamToString(InputStream is) {

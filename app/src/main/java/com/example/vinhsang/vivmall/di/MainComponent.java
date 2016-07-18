@@ -3,8 +3,7 @@ package com.example.vinhsang.vivmall.di;
 import com.example.vinhsang.vivmall.activity.mainactivity.MainActivity;
 import com.example.vinhsang.vivmall.activity.mainactivity.allfragment.AllFragment;
 import com.example.vinhsang.vivmall.activity.mainactivity.cataloguefragment.CatalogueFragment;
-import com.example.vinhsang.vivmall.datamanager.ConnectService;
-import com.example.vinhsang.vivmall.datamanager.DataLoadingSubject;
+import com.example.vinhsang.vivmall.datamanager.DataInterface;
 
 import javax.inject.Singleton;
 
@@ -16,8 +15,8 @@ import dagger.Component;
 @Singleton
 @Component(modules = {MainModule.class})
 public interface MainComponent {
-    ConnectService getConnectService();
-    DataLoadingSubject getDataManager();
+
+    DataInterface getDataManager();
 
     void inject(MainActivity mainActivity);
     void inject(AllFragment allFragment);

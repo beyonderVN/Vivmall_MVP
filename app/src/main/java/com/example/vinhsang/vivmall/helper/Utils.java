@@ -1,11 +1,8 @@
 package com.example.vinhsang.vivmall.helper;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.widget.ImageView;
 
-import com.example.vinhsang.vivmall.MainApplication;
 import com.example.vinhsang.vivmall.model.ItemProduct;
 
 import org.json.JSONArray;
@@ -22,12 +19,12 @@ import java.util.ArrayList;
 
 public class Utils {
     private static final String TAG = "Utils";
-    public static String getListItemProduct(Activity activity   ){
+    public static String getListItemProductString(Context context   ){
         String json = "";
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(
-                    new InputStreamReader(activity.getAssets().open("listItemproduct.json"), "UTF-8"));
+                    new InputStreamReader(context.getAssets().open("listItemproduct.json"), "UTF-8"));
 
             // do reading, usually loop until end of file reading
             String mLine;
@@ -48,14 +45,15 @@ public class Utils {
         }
         return json;
     }
-    public static ArrayList<ItemProduct> getListItemProduct(){
-        Context context = MainApplication.mContext;
+    public static ArrayList<ItemProduct> getListItemProduct(Context context ){
+
         String json = "";
         BufferedReader reader = null;
         ArrayList<ItemProduct> itemProductList = new ArrayList<>();
         try {
+            Log.d(TAG, "getListItemProduct: "+context);
             reader = new BufferedReader(
-                    new InputStreamReader(context.getAssets().open("listItemproduct.json"), "UTF-8"));
+                     new InputStreamReader(context.getAssets().open("listItemproduct.json"), "UTF-8"));
 
             // do reading, usually loop until end of file reading
             String mLine;

@@ -3,7 +3,6 @@ package com.example.vinhsang.vivmall.activity.mainactivity.allfragment;
 import android.util.Log;
 
 import com.example.vinhsang.vivmall.activity.base.OneInterfaceForAll;
-import com.example.vinhsang.vivmall.helper.Utils;
 import com.example.vinhsang.vivmall.model.ItemProduct;
 
 import java.io.Serializable;
@@ -48,9 +47,9 @@ public class AllPresentationModel implements Serializable {
         return mItemProducts.size() == 0;
     }
 
-    public void loadMore() {
-        //List<ItemProduct> listItemProduct = new Extra.MyTaskLoadProduct().execute("", Integer.toString(lastItem)).get();
-        List<ItemProduct> listItemProduct = Utils.getListItemProduct();
+
+    public void loadMore(List<ItemProduct> listItemProduct) {
+        //List<ItemProductEntity> listItemProduct = new Extra.MyTaskLoadProduct().execute("", Integer.toString(lastItem)).get();
         lastItem = lastItem + listItemProduct.size();
         mItemProducts.addAll(listItemProduct);
         mItemProducts.addAll(listItemProduct);
@@ -58,7 +57,6 @@ public class AllPresentationModel implements Serializable {
     public void clearListItemProduct() {
         mItemProducts.clear();
         lastItem = 0;
-        loadMore();
         for (OneInterfaceForAll oneInterfaceForAll : listDataCallbackses) {
             oneInterfaceForAll.update(RESET_LIST,null);
         }

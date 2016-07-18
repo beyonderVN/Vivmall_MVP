@@ -114,8 +114,8 @@ public class Extra {
         protected ArrayList<ItemProduct> doInBackground(String... params) {
             ArrayList<ItemProduct> mlistProduct = new ArrayList<>();
             try {
-                String cateid = params[0];
-                String fromrow  = params[1];
+
+                String fromrow  = params[0];
 
                 mlistProduct = Extra.loadProductListAll( fromrow);
             } catch(Exception e) {
