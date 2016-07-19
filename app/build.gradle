@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply from: '../quality_tools/findbugs.gradle'
 apply plugin: 'com.fernandocejas.frodo'
+
+frodo {
+    enabled = true
+}
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -22,8 +26,8 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_7
     }
 }
 
