@@ -1,4 +1,4 @@
-package com.brothers.admin.kill_some_time.helper.ui;
+package com.brothers.admin.kill_some_time.presentation.ui.uihelper;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
  */
 public class DynamicHeightImageView extends ImageView {
 	private static final String TAG = "DynamicHeightImageView";
-	private float whRatio = 1;
+	private float whRatio = 0;
 
 	public DynamicHeightImageView(Context context, AttributeSet attrs) {
 		super(context, attrs);

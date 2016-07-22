@@ -1,9 +1,6 @@
 package com.brothers.admin.kill_some_time;
 
-import android.util.Log;
-
-import com.brothers.admin.kill_some_time.datamanager.HaiVl;
-import com.brothers.admin.kill_some_time.datamanager.HaiVlApi;
+import com.brothers.admin.kill_some_time.data.HaiVlApiImpl;
 
 import org.junit.Test;
 
@@ -22,7 +19,7 @@ public class ExampleUnitTest {
     }
     @Test
     public void testHaiVl() throws Exception {
-        HaiVl haiVl = HaiVl.get();
+        HaiVlApiImpl haiVl = HaiVlApiImpl.get();
         haiVl.getSource().size();
         assertEquals(15, haiVl.getSource().size());
     }

@@ -1,4 +1,4 @@
-package com.brothers.admin.kill_some_time.Main;
+package com.brothers.admin.kill_some_time.presentation.ui.Main;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;

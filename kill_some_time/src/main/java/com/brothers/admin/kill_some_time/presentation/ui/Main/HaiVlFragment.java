@@ -1,4 +1,4 @@
-package com.brothers.admin.kill_some_time.Main;
+package com.brothers.admin.kill_some_time.presentation.ui.Main;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,13 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.brothers.admin.kill_some_time.R;
-import com.brothers.admin.kill_some_time.helper.ui.DynamicHeightImageView;
+import com.brothers.admin.kill_some_time.presentation.ui.uihelper.DynamicHeightImageView;
 import com.squareup.picasso.Picasso;
 
 import org.jsoup.Jsoup;
@@ -31,14 +30,6 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HaiVlFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HaiVlFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HaiVlFragment extends Fragment {
 
     public HaiVlFragment() {

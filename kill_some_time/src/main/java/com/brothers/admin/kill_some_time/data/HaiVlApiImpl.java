@@ -1,4 +1,4 @@
-package com.brothers.admin.kill_some_time.datamanager;
+package com.brothers.admin.kill_some_time.data;
 
 import android.util.Log;
 
@@ -15,12 +15,12 @@ import java.util.List;
  * Created by Admin on 16/07/2016.
  */
 
-public class HaiVl implements HaiVlApi{
-    private static volatile HaiVl singleton;
-    public static HaiVl get() {
+public class HaiVlApiImpl implements RestApi {
+    private static volatile HaiVlApiImpl singleton;
+    public static HaiVlApiImpl get() {
         if (singleton == null) {
-            synchronized (HaiVl.class) {
-                singleton = new HaiVl();
+            synchronized (HaiVlApiImpl.class) {
+                singleton = new HaiVlApiImpl();
             }
         }
         return singleton;
