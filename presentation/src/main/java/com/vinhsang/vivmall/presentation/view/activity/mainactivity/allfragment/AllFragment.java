@@ -102,7 +102,9 @@ void setupRecyclerView(RecyclerView recyclerView){
                     LinearLayoutManager.VERTICAL);
     staggeredGridLayoutManagerVertical.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
     //staggeredGridLayoutManagerVertical.invalidateSpanAssignments();
-    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), columnNum);
+    RecyclerView.LayoutManager layoutGridManager = new GridLayoutManager(getActivity(), columnNum);
+    layoutGridManager.setMeasurementCacheEnabled(true);
+
     recyclerView.setLayoutManager(staggeredGridLayoutManagerVertical);
     recyclerView.setHasFixedSize(true);
     RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
@@ -219,6 +221,7 @@ void setupRecyclerView(RecyclerView recyclerView){
     }
     @Override
     public void onUpdate() {
+        itemProductsAdapter.dataFinishedLoading();
         itemProductsAdapter.notifyDataSetChanged();
     }
     @Override
@@ -240,7 +243,7 @@ void setupRecyclerView(RecyclerView recyclerView){
 
     @Override
     public void showLoadingMore() {
-
+        itemProductsAdapter.dataStartedLoading();
     }
 
     @Override

@@ -68,7 +68,7 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<ItemProductsAdapte
         return 0;
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private static final String TAG = "ViewHolder";
+        private static final String TAG = "ItemProductViewHolder";
         @BindView(R.id.image_product)
         DynamicHeightImageView imageView;
         @BindView(R.id.product_name)

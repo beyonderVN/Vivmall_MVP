@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,10 +25,11 @@ import butterknife.ButterKnife;
  * Created by Long on 7/11/2016.
  */
 
-public class ItemProductsAdapter extends RecyclerView.Adapter<ItemProductsAdapter.ViewHolder>{
+public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private static final String TAG = "ItemProductsAdapter";
     List<ItemProduct> mItemProducts = new ArrayList<>();
-
+    private static final int TYPE_ITEMPRODUCT = 0;
+    private static final int TYPE_LOADING_MORE = -1;
 
 
     public ItemProductsAdapter(List<ItemProduct> mItemProducts) {
@@ -43,30 +45,83 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<ItemProductsAdapte
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+
+        switch (viewType) {
+            case TYPE_ITEMPRODUCT:
+                return createItemProductHolder(parent);
+            case TYPE_LOADING_MORE:
+                return new LoadingMoreHolder(
+                        LayoutInflater
+                                .from(parent.getContext())
+                                .inflate(R.layout.infinite_loading, parent, false));
+        }
+        return null;
+
+
+    }
+
+    private ItemProductViewHolder createItemProductHolder(ViewGroup parent) {
         View v = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.layout_itemproduct,parent,false);
-        ViewHolder viewHolder = new ViewHolder(v);
+        ItemProductViewHolder viewHolder = new ItemProductViewHolder(v);
         return viewHolder;
-    }
-    int count = 0;
-    @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        final ItemProduct itemProduct = mItemProducts.get(position);
-        holder.setProductImage(itemProduct.getProduct_image(),position);
-        holder.setProductName(itemProduct.getProduct_name());
-        holder.setProductPrice(itemProduct.getProduct_price());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), itemProduct.getProduct_name(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
-    public void onViewRecycled(ViewHolder holder) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        switch (getItemViewType(position)) {
+
+            case TYPE_ITEMPRODUCT:
+                bindItemProductView((ItemProduct) getItem(position), (ItemProductViewHolder) holder);
+                break;
+            case TYPE_LOADING_MORE:
+                bindLoadingViewHolder((LoadingMoreHolder) holder, position);
+                break;
+        }
+
+    }
+    private void bindLoadingViewHolder(LoadingMoreHolder holder, int position) {
+        // only show the infinite load progress spinner if there are already items in the
+        // grid i.e. it's not the first item & data is being loaded
+//        holder.progress.setVisibility((position > 0)
+//                ? View.VISIBLE : View.INVISIBLE);
+        holder.progress.setVisibility(View.VISIBLE );
+    }
+    private void bindItemProductView(final ItemProduct item, ItemProductViewHolder holder) {
+        holder.setProductImage(item.getProduct_image());
+        holder.setProductName(item.getProduct_name());
+        holder.setProductPrice(item.getProduct_price());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), item.getProduct_name(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    boolean showLoadingMore = false;
+
+    public void dataStartedLoading() {
+        Log.d(TAG, "dataStartedLoading: ");
+        if (showLoadingMore) return;
+        showLoadingMore = true;
+        notifyItemInserted(getLoadingMoreItemPosition());
+    }
+
+
+    public void dataFinishedLoading() {
+        if (!showLoadingMore) return;
+        final int loadingPos = getLoadingMoreItemPosition();
+        showLoadingMore = false;
+        notifyItemRemoved(loadingPos);
+    }
+    private int getLoadingMoreItemPosition() {
+        return showLoadingMore ? getItemCount() - 1 : RecyclerView.NO_POSITION;
+    }
+    @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
         super.onViewRecycled(holder);
 
     }
@@ -78,13 +133,29 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<ItemProductsAdapte
         return mItemProducts.size();
     }
 
+    public int getDataItemCount() {
+        return mItemProducts.size();
+    }
     @Override
     public int getItemViewType(int position) {
-        return 0;
+        Log.d(TAG, "getItemViewType: "+position);
+        if (position < getDataItemCount()
+                && getDataItemCount() > 0) {
+            ItemProduct item = getItem(position);
+            if (item instanceof ItemProduct) {
+                return TYPE_ITEMPRODUCT;
+            }
+        }
+        return TYPE_LOADING_MORE;
     }
-    public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private static final String TAG = "ViewHolder";
+    private ItemProduct getItem(int position) {
+        return mItemProducts.get(position);
+    }
+
+    /* package */ static  class ItemProductViewHolder extends RecyclerView.ViewHolder{
+
+        private static final String TAG = "ItemProductViewHolder";
         @BindView(R.id.image_product)
         DynamicHeightImageView imageView;
         @BindView(R.id.product_name)
@@ -92,15 +163,15 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<ItemProductsAdapte
         @BindView(R.id.product_price)
         TextView productPrice;
         Context context;
-        public ViewHolder(View itemView) {
+        public ItemProductViewHolder(View itemView) {
 
             super(itemView);
-            Log.d(TAG, "ViewHolder: "+itemView.getMeasuredWidth());
+            Log.d(TAG, "ItemProductViewHolder: "+itemView.getMeasuredWidth());
             ButterKnife.bind(this, itemView);
             context = itemView.getContext();
 
         }
-        public void setProductImage(String productImage, int position ){
+        public void setProductImage(String productImage ){
 
             if(imageView!=null){
 
@@ -131,6 +202,18 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<ItemProductsAdapte
 
             return s;
         }
+    }
+
+    /* package */ static class LoadingMoreHolder extends RecyclerView.ViewHolder {
+
+        ProgressBar progress;
+
+        public LoadingMoreHolder(View itemView) {
+            super(itemView);
+            Log.d(TAG, "LoadingMoreHolder: ");
+            progress = (ProgressBar) itemView;
+        }
+
     }
 
 }
