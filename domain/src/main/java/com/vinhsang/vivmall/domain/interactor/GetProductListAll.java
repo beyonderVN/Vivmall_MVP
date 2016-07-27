@@ -22,6 +22,7 @@ import com.vinhsang.vivmall.domain.executor.ThreadExecutor;
 import com.vinhsang.vivmall.domain.repository.ProductRepositoty;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -58,7 +59,7 @@ public class GetProductListAll extends UseCase {
   protected Observable buildUseCaseObservable(Object... objects) {
     int pos = (Integer) objects[0];
     Observable<List<ItemProduct>> observable = this.productRepositoty.iListObservable(pos);
-    return observable;
+    return observable.delay(2, TimeUnit.SECONDS);
   }
 
 
