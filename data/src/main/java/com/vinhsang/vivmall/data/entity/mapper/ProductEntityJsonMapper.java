@@ -16,6 +16,8 @@
 package com.vinhsang.vivmall.data.entity.mapper;
 
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -30,7 +32,7 @@ import javax.inject.Inject;
  * Class used to transform from Strings representing json to valid objects.
  */
 public class ProductEntityJsonMapper {
-
+  private static final String TAG = "ProductEntityJsonMapper";
   private final Gson gson;
 
   @Inject
@@ -65,13 +67,16 @@ public class ProductEntityJsonMapper {
    */
   public List<ItemProductEntity> transformUserEntityCollection(String productListJsonResponse)
       throws JsonSyntaxException {
-
-    List<ItemProductEntity> userEntityCollection;
+    Log.d(TAG, "transformUserEntityCollection: "+productListJsonResponse);
+    List<ItemProductEntity> itemProductEntities;
     try {
       Type listOfUserEntityType = new TypeToken<List<ItemProductEntity>>() {}.getType();
-      userEntityCollection = this.gson.fromJson(productListJsonResponse, listOfUserEntityType);
-
-      return userEntityCollection;
+      itemProductEntities = this.gson.fromJson(productListJsonResponse, listOfUserEntityType);
+      for (ItemProductEntity item:itemProductEntities
+           ) {
+        Log.d(TAG, item.toString());
+      }
+      return itemProductEntities;
     } catch (JsonSyntaxException jsonException) {
       throw jsonException;
     }

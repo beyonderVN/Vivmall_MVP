@@ -34,6 +34,14 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<ItemProductsAdapte
         this.mItemProducts = mItemProducts;
     }
 
+    public ItemProductsAdapter() {
+
+    }
+
+    public void setmItemProducts(List<ItemProduct> mItemProducts) {
+        this.mItemProducts = mItemProducts;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater
@@ -114,8 +122,13 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<ItemProductsAdapte
             }
         }
         String formatNumber(String s){
-            s = s.substring(0,s.length()-3);
-            s ="đ"+s+"k";
+            int l =0;
+            if(s!=null){
+                l=s.length();
+                s = s.substring(0,l-3);
+                s ="đ"+s+"k";
+            }
+
             return s;
         }
     }

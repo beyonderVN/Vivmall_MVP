@@ -16,7 +16,6 @@
 package com.vinhsang.vivmall.domain.interactor;
 
 
-import com.vinhsang.vivmall.domain.ItemProduct;
 import com.vinhsang.vivmall.domain.executor.PostExecutionThread;
 import com.vinhsang.vivmall.domain.executor.ThreadExecutor;
 import com.vinhsang.vivmall.domain.repository.ProductRepositoty;
@@ -27,28 +26,29 @@ import rx.Observable;
 
 /**
  * This class is an implementation of {@link UseCase} that represents a use case for
- * retrieving data related to an specific {@link ItemProduct}.
+ * retrieving a collection of all {@link com.vinhsang.vivmall.domain.Catalogue}.
  */
-public class GetProductDetails extends UseCase {
-
-  private final int userId;
+public class GetProductListByCataloge extends UseCase {
   private final ProductRepositoty productRepositoty;
-
   @Inject
-  public GetProductDetails(int userId, ProductRepositoty userRepository,
-                           ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+  public GetProductListByCataloge(ProductRepositoty productRepositoty, ThreadExecutor threadExecutor,
+                                  PostExecutionThread postExecutionThread) {
+
     super(threadExecutor, postExecutionThread);
-    this.userId = userId;
-    this.productRepositoty = userRepository;
+    this.productRepositoty = productRepositoty;
   }
 
-  @Override protected Observable buildUseCaseObservable() {
-    return this.productRepositoty.itemProductObservable(this.userId);
+  @Override public Observable buildUseCaseObservable() {
+    Observable observable = this.productRepositoty.catalogueListObservable();
+    return observable;
   }
 
   @Override
   protected Observable buildUseCaseObservable(Object... objects) {
-    return null;
+    int cata = (Integer) objects[0];
+    int pos = (Integer) objects[1];
+    Observable observable = this.productRepositoty.iListByCataObservable(cata,pos);
+    return observable;
   }
 
 }

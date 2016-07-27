@@ -78,12 +78,23 @@ public class ItemProduct implements Serializable {
     }
 
     public String getProduct_image() {
-        return "http://vivmall.vn/Nvivmall/upload/product/"+product_image;
+        return product_image;
     }
 
     public void setProduct_image(String product_image) {
         this.product_image = product_image;
     }
+    @Override public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
 
+        stringBuilder.append("***** User Entity Details *****\n");
+        stringBuilder.append("id=" + this.getProduct_id() + "\n");
+        stringBuilder.append("cover url=" + this.getProduct_image() + "\n");
+        stringBuilder.append("name=" + this.getProduct_name() + "\n");
+        stringBuilder.append("description=" + this.getProduct_des() + "\n");
+        stringBuilder.append("*******************************");
+
+        return stringBuilder.toString();
+    }
 
 }

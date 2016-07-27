@@ -1,44 +1,41 @@
 package com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment;
 
 
-import com.vinhsang.vivmall.presentation.view.activity.base.OneInterfaceForAll;
-import com.vinhsang.vivmall.presentation.coremvp.SimpleMVPPresenter;
+import android.util.Log;
+
 import com.vinhsang.vivmall.data.datamanager.DataInterface;
+import com.vinhsang.vivmall.domain.ItemProduct;
+import com.vinhsang.vivmall.domain.interactor.DefaultSubscriber;
+import com.vinhsang.vivmall.domain.interactor.UseCase;
+import com.vinhsang.vivmall.presentation.coremvp.SimpleMVPPresenter;
+
+import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Created by Long on 7/8/2016.
  */
 
-public class AllPresenter extends SimpleMVPPresenter<AllView,AllPresentationModel> implements OneInterfaceForAll {
-    public enum Work {
-        RESET_LIST
-    }
+public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationModel>  {
+
     private static final String TAG = "AllPresenter";
     private final DataInterface dataManager;
+    private final UseCase useCase;
 
     @Inject
-    public AllPresenter(DataInterface dataManager) {
+    public AllPresenter(DataInterface dataManager,@Named("userList") UseCase useCase) {
         this.dataManager = dataManager;
+        this.useCase = useCase;
     }
 
     @Override
     public void attachView(AllView mvpView, AllPresentationModel presentationModel) {
         super.attachView(mvpView, presentationModel);
-        registerCallback(this);
-            init();
-    }
 
-    public void init() {
-        registerCallback(this);
-        if (getMvpView() != null) {
-            getMvpView().showProgress();
-        }
-            getPresentationModel().loadMore(dataManager.itemProducts());
-            showContent();
+        getFirstPageProductList();
     }
-
     private void showContent() {
 
         if (getMvpView() != null) {
@@ -51,42 +48,80 @@ public class AllPresenter extends SimpleMVPPresenter<AllView,AllPresentationMode
             getMvpView().onFetchError();
         }
     }
+
     public void loadMore() {
         if (getMvpView() != null) {
             getMvpView().showLoadingMore();
         }
-        try{
-            getPresentationModel().loadMore(dataManager.itemProducts());
+        try {
+            this.useCase.execute(new LoadMoreListSubscriber(),getPresentationModel().getLastItem());
             if (getMvpView() != null) {
                 getMvpView().onUpdate();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getStackTrace();
             onFetchError();
         }
 
     }
 
-    @Override
-    public void registerCallback(OneInterfaceForAll callbacks) {
-        getPresentationModel().registerCallback(this);
+
+    private void getFirstPageProductList() {
+        Log.d(TAG, "getFirstPageProductList: ");
+        if (getMvpView() != null) {
+            getMvpView().showProgress();
+        }
+        this.useCase.execute(new LoadFirstSubscriber(),getPresentationModel().getLastItem());
+
     }
 
-    @Override
-    public void unregisterCallback(OneInterfaceForAll callbacks) {
-        getPresentationModel().unregisterCallback(this);
-    }
+    private class LoadFirstSubscriber extends DefaultSubscriber<List<ItemProduct>> {
 
-
-    @Override
-    public void update(Object work, Object object) {
-        switch ((Work) work){
-            case RESET_LIST:
-                if (getMvpView() != null) {
-                    getMvpView().onUpdate();
-                }
-                break;
+        @Override
+        public void onCompleted() {
+            Log.d(TAG, "onCompleted: ");
         }
 
+        @Override
+        public void onError(Throwable e) {
+//            UserListPresenter.this.hideViewLoading();
+//            UserListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
+//            UserListPresenter.this.showViewRetry();
+        }
+
+        @Override
+        public void onNext(List<ItemProduct> itemProducts) {
+            //UserListPresenter.this.showUsersCollectionInView(users);
+            Log.d(TAG, "onNext: " + itemProducts.size());
+            getPresentationModel().loadMore(itemProducts);
+            showContent();
+        }
     }
+
+    private class LoadMoreListSubscriber extends DefaultSubscriber<List<ItemProduct>> {
+
+        @Override
+        public void onCompleted() {
+            Log.d(TAG, "onCompleted: ");
+        }
+
+        @Override
+        public void onError(Throwable e) {
+//            UserListPresenter.this.hideViewLoading();
+//            UserListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
+//            UserListPresenter.this.showViewRetry();
+        }
+
+        @Override
+        public void onNext(List<ItemProduct> itemProducts) {
+            //UserListPresenter.this.showUsersCollectionInView(users);
+            Log.d(TAG, "onNext: " + itemProducts.size());
+            getPresentationModel().loadMore(itemProducts);
+            if (getMvpView() != null) {
+                getMvpView().onUpdate();
+            }
+        }
+    }
+
+
 }

@@ -13,16 +13,17 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ViewAnimator;
 
 import com.vinhsang.vivmall.presentation.MainApplication;
 import com.vinhsang.vivmall.presentation.R;
 import com.vinhsang.vivmall.presentation.view.activity.base.BaseFragment;
 import com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment.adapter.ItemProductsAdapter;
 
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,7 +32,8 @@ import me.gujun.android.taggroup.TagGroup;
 
 public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, CatalogueView, CataloguePresenter> implements CatalogueView, TagGroup.OnTagClickListener {
     private static final String TAG = CatalogueFragment.class.getCanonicalName();
-
+    private static final int POSITION_CONTENT_VIEW  = 0;
+    private static final int POSITION_PROGRESS_VIEW = 1;
 
     private static final String ARG_POSITION = "position";
 
@@ -47,9 +49,10 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
     TagGroup mTagGroup;
     @BindView(R.id.catalogue_name)
     TextView catalogueName;
-    @BindView(R.id.progress_bar)
-    FrameLayout processBar;
-
+    @BindView(R.id.resultAnimator)
+    ViewAnimator resultAnimator;
+    @BindInt(R.integer.column_num)
+    int columnNum;
     @OnClick(R.id.expand_button)
     void seleteCatalogue() {
         boolean isVisible = (mTagGroup.getVisibility() == View.GONE);
@@ -60,7 +63,7 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
         }
     }
 
-    ItemProductsAdapter itemProductsAdapter;
+    ItemProductsAdapter itemProductsAdapter = new ItemProductsAdapter();
 
     public static CatalogueFragment newInstance() {
         CatalogueFragment f = new CatalogueFragment();
@@ -119,19 +122,20 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
         view = inflater.inflate(R.layout.fragment_sub, container, false);
         ButterKnife.bind(this, view);
         setupRecyclerView();
+        mTagGroup.setOnTagClickListener(this);
         return view;
 
     }
     private void setupRecyclerView() {
-        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(itemProductsAdapter);
+        recyclerView.setHasFixedSize(true);
         final StaggeredGridLayoutManager staggeredGridLayoutManagerVertical =
                 new StaggeredGridLayoutManager(
-                        2, //The number of Columns in the grid
+                        columnNum, //The number of Columns in the grid
                         LinearLayoutManager.VERTICAL);
         staggeredGridLayoutManagerVertical.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         staggeredGridLayoutManagerVertical.invalidateSpanAssignments();
-        final RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        final RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), columnNum);
         recyclerView.setLayoutManager(staggeredGridLayoutManagerVertical);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             // The minimum amount of items to have below your current scroll position
@@ -223,6 +227,7 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
                     showCatalogue();
                 }
                 if (yU - yD < -30) {
+                    hideTagGroup();
                     hideCatalogue();
                 }
                 Log.d(TAG, "onTouch: " + (yU - yD));
@@ -231,6 +236,12 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
         });
     }
 
+    private void hideTagGroup() {
+        if(mTagGroup.getVisibility()!= View.GONE){
+            mTagGroup.setVisibility(View.GONE);
+        }
+
+    }
     private void hideCatalogue() {
         if(layoutCatalogue.getVisibility()!= View.GONE){
             layoutCatalogue.setVisibility(View.GONE);
@@ -239,7 +250,6 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
             mTagGroup.setVisibility(View.GONE);
         }
     }
-
     private void showCatalogue() {
         if(layoutCatalogue.getVisibility()!= View.VISIBLE){
             layoutCatalogue.setVisibility(View.VISIBLE);
@@ -268,29 +278,35 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
     public void onTagClick(String tag) {
         Log.d(TAG, "onTagClick: ");
         catalogueName.setText(tag);
-        hideCatalogue();
+        hideTagGroup();
         presenter.resetRecyclerViewByNewTag(tag);
     }
 
 
-    private void hideProcess() {
-        processBar.setVisibility(View.GONE);
+    @Override
+    public void init() {
+        Log.d(TAG, "init: ");
+        itemProductsAdapter.setmItemProducts(presenter.getPresentationModel().getmItemProducts());
+        itemProductsAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void loadListTag() {
+        Log.d(TAG, "loadListTag: ");
+        mTagGroup.setTags(presenter.getPresentationModel().getListTagString());
+        catalogueName.setText(presenter.getPresentationModel().getCurrentTag());
+    }
 
     @Override
     public void showProgress() {
-        processBar.setVisibility(View.VISIBLE);
+        resultAnimator.setDisplayedChild(POSITION_PROGRESS_VIEW);
     }
 
     @Override
     public void showContent() {
-        itemProductsAdapter = new ItemProductsAdapter(presenter.getPresentationModel().getmItemProducts());
-        recyclerView.setAdapter(itemProductsAdapter);
-        mTagGroup.setTags(presenter.getPresentationModel().getListTag());
-        mTagGroup.setOnTagClickListener(this);
-        catalogueName.setText(presenter.getPresentationModel().getCurrentTag());
-        hideProcess();
+
+
+        resultAnimator.setDisplayedChild(POSITION_CONTENT_VIEW);
     }
 
     @Override
@@ -312,7 +328,6 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
     public void onLoadMore() {
         Log.d(TAG, "onUpdate: " + presenter.getPresentationModel().getmItemProducts().size());
         itemProductsAdapter.notifyDataSetChanged();
-
     }
 
     @Override

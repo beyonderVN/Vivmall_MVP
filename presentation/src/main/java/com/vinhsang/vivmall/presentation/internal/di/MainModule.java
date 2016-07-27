@@ -8,14 +8,17 @@ import com.vinhsang.vivmall.data.executor.JobExecutor;
 import com.vinhsang.vivmall.data.repository.ProductDataRepository;
 import com.vinhsang.vivmall.domain.executor.PostExecutionThread;
 import com.vinhsang.vivmall.domain.executor.ThreadExecutor;
-import com.vinhsang.vivmall.domain.interactor.GetProductList;
-import com.vinhsang.vivmall.domain.interactor.ProductCase;
+import com.vinhsang.vivmall.domain.interactor.GetCatalogueList;
+import com.vinhsang.vivmall.domain.interactor.GetProductListAll;
+import com.vinhsang.vivmall.domain.interactor.GetProductListByCataloge;
+import com.vinhsang.vivmall.domain.interactor.UseCase;
 import com.vinhsang.vivmall.domain.repository.ProductRepositoty;
 import com.vinhsang.vivmall.presentation.MainApplication;
 import com.vinhsang.vivmall.presentation.UIThread;
 import com.vinhsang.vivmall.data.datamanager.DataInterface;
 import com.vinhsang.vivmall.data.datamanager.DataManager;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -64,9 +67,21 @@ public class MainModule {
         return productDataRepository;
     }
 
-    @Provides @Singleton
-    ProductCase provideGetProductListUseCase(
-            GetProductList getProductList) {
+    @Provides  @Named("userList")
+    UseCase provideGetProductListUseCase(
+            GetProductListAll getProductList) {
         return getProductList;
     }
+
+    @Provides  @Named("catalogueList")
+    UseCase provideGetCatalogueList(
+            GetCatalogueList getCatalogueList) {
+        return getCatalogueList;
+    }
+    @Provides  @Named("productListByCata")
+    UseCase provideGetProductListByCataUseCase(
+            GetProductListByCataloge getProductListByCataloge) {
+        return getProductListByCataloge;
+    }
 }
+

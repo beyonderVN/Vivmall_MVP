@@ -17,6 +17,7 @@ package com.vinhsang.vivmall.data.repository.datasource;
 
 
 import com.vinhsang.vivmall.data.entity.ItemProductEntity;
+import com.vinhsang.vivmall.domain.Catalogue;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public interface ItemProductDataStore {
   /**
    * Get an {@link Observable} which will emit a List of {@link ItemProductEntity}.
    */
-  Observable<List<ItemProductEntity>> iEntityListObservable();
+  Observable<List<ItemProductEntity>> iEntityListObservable(int pos);
 
   /**
    * Get an {@link Observable} which will emit a {@link ItemProductEntity} by its id.
@@ -37,4 +38,11 @@ public interface ItemProductDataStore {
    * @param userId The id to retrieve user data.
    */
   Observable<ItemProductEntity> itemEntityDetails(final int userId);
+
+  /**
+   * Get an {@link Observable} which will emit a List of {@link com.vinhsang.vivmall.domain.Catalogue}.
+   */
+  Observable<List<Catalogue>> listCatalogue();
+
+  Observable<List<ItemProductEntity>> iEntityListByCatalogueObservable(int cataId,int pos);
 }

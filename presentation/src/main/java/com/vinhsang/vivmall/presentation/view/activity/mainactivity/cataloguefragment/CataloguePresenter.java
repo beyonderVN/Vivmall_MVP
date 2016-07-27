@@ -1,15 +1,15 @@
 package com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment;
 
-import android.util.Log;
-
-import com.vinhsang.vivmall.presentation.coremvp.SimpleMVPPresenter;
-import com.vinhsang.vivmall.presentation.helper.Extra;
+import com.vinhsang.vivmall.domain.Catalogue;
 import com.vinhsang.vivmall.domain.ItemProduct;
+import com.vinhsang.vivmall.domain.interactor.DefaultSubscriber;
+import com.vinhsang.vivmall.domain.interactor.UseCase;
+import com.vinhsang.vivmall.presentation.coremvp.SimpleMVPPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Created by Long on 7/8/2016.
@@ -17,89 +17,118 @@ import javax.inject.Inject;
 
 public class CataloguePresenter extends SimpleMVPPresenter<CatalogueView, CataloguePresentationModel> {
     private static final String TAG = "CataloguePresenter";
+    private final UseCase productCase;
+    private final UseCase productListByCata;
+
     @Inject
-    public CataloguePresenter() {
+    public CataloguePresenter(@Named("catalogueList") UseCase productCase,
+                              @Named("productListByCata") UseCase productListByCata) {
+        this.productCase = productCase;
+        this.productListByCata = productListByCata;
     }
 
     @Override
     public void attachView(CatalogueView mvpView, CataloguePresentationModel presentationModel) {
         super.attachView(mvpView, presentationModel);
-        if(presentationModel.shouldFetchRepositories()){
-            //init();
+        if (getMvpView() != null) {
+            getMvpView().init();
+            getMvpView().loadListTag();
+        }
+        if (presentationModel.shouldFetchRepositories()) {
+            init();
         }
     }
 
     public void init() {
-
         if (getMvpView() != null) {
             getMvpView().showProgress();
         }
-        List<ItemProduct> listItemProduct = new ArrayList<>();
-        String[] tags = new String[]{"Điện tử", "Thiết bị thông minh", "Phụ kiện điện tử","Headphone","Kính mát","Đèn Led"};
-        getPresentationModel().setListTag(tags);
-        try{
-
-            int last = getPresentationModel().getLastItem();
-            getPresentationModel().setCurrentTag("Điện tử");
-            listItemProduct = new Extra.MyTaskLoadProductbyCt().execute("0" + getPresentationModel().getTagId(), Integer.toString(last)).get();
-            Log.d(TAG, "init: "+listItemProduct.size()+getPresentationModel().getCurrentTag() );
-            getPresentationModel().setLastItem(last+getPresentationModel().getLoadItemNum());
-            showContent(listItemProduct);
-        }catch (Exception e){
-            e.getStackTrace();
-            onFetchError();
-        }
-
+        productCase.execute(new LoadCatalogueList());
     }
 
-    private void showContent(List<ItemProduct> listItemProduct) {
-        getPresentationModel().getmItemProducts().addAll(listItemProduct);
-        if (getMvpView() != null) {
-            getMvpView().showContent();
-        }
-    }
-
-    private void onFetchError() {
-        if (getMvpView() != null) {
-            getMvpView().onFetchError();
-        }
-    }
     public void loadMore() {
         if (getMvpView() != null) {
             getMvpView().showLoadingMore();
         }
-        List<ItemProduct> listItemProduct = new ArrayList<>();
-        try{
-            int last = getPresentationModel().getLastItem();
-            listItemProduct = new Extra.MyTaskLoadProductbyCt().execute("0" + Integer.toString(1), Integer.toString(last)).get();
-            getPresentationModel().getmItemProducts().addAll(listItemProduct);
-            getPresentationModel().setLastItem(last+getPresentationModel().getLoadItemNum());
-            if (getMvpView() != null) {
-                getMvpView().onLoadMore();
-            }
-        }catch (Exception e){
-            e.getStackTrace();
-            onFetchError();
-        }
+        productListByCata.execute(new LoadMoreItemByCata(), getPresentationModel().getTagId(), getPresentationModel().getLastItem());
 
     }
-    public void resetRecyclerViewByNewTag(String tag)  {
-        List<ItemProduct> listItemProduct = new ArrayList<>();
-        getPresentationModel().getmItemProducts().clear();
-        try{
-            int last = 0;
-            getPresentationModel().setLastItem(last);
-            getPresentationModel().setCurrentTag(tag);
-            listItemProduct = new Extra.MyTaskLoadProductbyCt().execute("0" + Integer.toString(getPresentationModel().getTagId()), Integer.toString(last)).get();
-            getPresentationModel().getmItemProducts().addAll(listItemProduct);
-            getPresentationModel().setLastItem(last+getPresentationModel().getLoadItemNum());
 
+    public void resetRecyclerViewByNewTag(String tag) {
+        getPresentationModel().reset();
+        if (getMvpView() != null) {
+            getMvpView().showProgress();
+        }
+        getPresentationModel().setCurrentTag(tag);
+        productListByCata.execute(new LoadFirstItemsByCata(), getPresentationModel().getTagId(), getPresentationModel().getLastItem());
+    }
+
+    public class LoadCatalogueList extends DefaultSubscriber<List<Catalogue>> {
+
+        @Override
+        public void onCompleted() {
+            super.onCompleted();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+        }
+
+        @Override
+        public void onNext(List<Catalogue> catalogues) {
+            super.onNext(catalogues);
+            getPresentationModel().setListTag(catalogues);
+            getPresentationModel().setCurrentTag("Điện tử");
             if (getMvpView() != null) {
+                getMvpView().showContent();
+                getMvpView().loadListTag();
+            }
+            productListByCata.execute(new LoadFirstItemsByCata(), getPresentationModel().getTagId(), getPresentationModel().getLastItem());
+        }
+    }
+
+    public class LoadFirstItemsByCata extends DefaultSubscriber<List<ItemProduct>> {
+        @Override
+        public void onCompleted() {
+            super.onCompleted();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+        }
+
+        @Override
+        public void onNext(List<ItemProduct> itemProducts) {
+            super.onNext(itemProducts);
+            getPresentationModel().loadMore(itemProducts);
+            getMvpView().init();
+            if (getMvpView() != null) {
+                getMvpView().showContent();
+            }
+        }
+    }
+
+    public class LoadMoreItemByCata extends DefaultSubscriber<List<ItemProduct>> {
+        @Override
+        public void onCompleted() {
+            super.onCompleted();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+        }
+
+        @Override
+        public void onNext(List<ItemProduct> itemProducts) {
+            super.onNext(itemProducts);
+            getPresentationModel().loadMore(itemProducts);
+            if (getMvpView() != null) {
+                getMvpView().showContent();
                 getMvpView().onLoadMore();
             }
-        }catch (Exception e){
-            e.getStackTrace();
-            onFetchError();
         }
     }
 }

@@ -2,6 +2,7 @@ package com.vinhsang.vivmall.data.net;
 
 
 import com.vinhsang.vivmall.data.entity.ItemProductEntity;
+import com.vinhsang.vivmall.domain.Catalogue;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface RestApi {
     /**
      * Retrieves an {@link rx.Observable} which will emit a List of {@link ItemProductEntity}.
      */
-    Observable<List<ItemProductEntity>> itemEntityListObservable();
+    Observable<List<ItemProductEntity>> itemEntityListAllObservable(int pos);
 
     /**
      * Retrieves an {@link rx.Observable} which will emit a {@link ItemProductEntity}.
@@ -22,4 +23,8 @@ public interface RestApi {
      * @param userId The user id used to get user data.
      */
     Observable<ItemProductEntity> itemProductEntityObservable(final int userId);
+
+    Observable<List<Catalogue>> getListCatalogue();
+
+    Observable<List<ItemProductEntity>> itemEntityListByCatalogueObservable(int cataId, int pos);
 }

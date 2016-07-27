@@ -4,6 +4,7 @@ package com.vinhsang.vivmall.data.repository.datasource;
 import com.vinhsang.vivmall.data.cache.ProductCache;
 import com.vinhsang.vivmall.data.entity.ItemProductEntity;
 import com.vinhsang.vivmall.data.net.RestApi;
+import com.vinhsang.vivmall.domain.Catalogue;
 
 import java.util.List;
 
@@ -32,12 +33,22 @@ public class CloudItemProductDataStore implements ItemProductDataStore {
     };
 
     @Override
-    public Observable<List<ItemProductEntity>> iEntityListObservable() {
-        return this.restApi.itemEntityListObservable();
+    public Observable<List<ItemProductEntity>> iEntityListObservable(int pos) {
+        return this.restApi.itemEntityListAllObservable(pos);
     }
 
     @Override
     public Observable<ItemProductEntity> itemEntityDetails(int itemId) {
         return this.restApi.itemProductEntityObservable(itemId).doOnNext(saveToCacheAction);
+    }
+
+    @Override
+    public Observable<List<Catalogue>> listCatalogue() {
+        return this.restApi.getListCatalogue();
+    }
+
+    @Override
+    public Observable<List<ItemProductEntity>> iEntityListByCatalogueObservable(int cataId, int pos) {
+        return this.restApi.itemEntityListByCatalogueObservable(cataId, pos);
     }
 }

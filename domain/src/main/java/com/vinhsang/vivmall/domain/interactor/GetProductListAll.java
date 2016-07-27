@@ -21,34 +21,45 @@ import com.vinhsang.vivmall.domain.executor.PostExecutionThread;
 import com.vinhsang.vivmall.domain.executor.ThreadExecutor;
 import com.vinhsang.vivmall.domain.repository.ProductRepositoty;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.functions.Action1;
 
 /**
  * This class is an implementation of {@link UseCase} that represents a use case for
- * retrieving data related to an specific {@link ItemProduct}.
+ * retrieving a collection of all {@link ItemProduct}.
  */
-public class GetProductDetails extends UseCase {
-
-  private final int userId;
+public class GetProductListAll extends UseCase {
+  private static final String TAG = "GetProductListAll";
+  private int lastPosition = 0;
   private final ProductRepositoty productRepositoty;
-
   @Inject
-  public GetProductDetails(int userId, ProductRepositoty userRepository,
-                           ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+  public GetProductListAll(ProductRepositoty productRepositoty, ThreadExecutor threadExecutor,
+                           PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);
-    this.userId = userId;
-    this.productRepositoty = userRepository;
+    this.productRepositoty = productRepositoty;
   }
 
-  @Override protected Observable buildUseCaseObservable() {
-    return this.productRepositoty.itemProductObservable(this.userId);
+  @Override public Observable buildUseCaseObservable() {
+    Observable<List<ItemProduct>> observable = this.productRepositoty.iListObservable(lastPosition);
+
+    return observable.doOnNext(new Action1<List<ItemProduct>>() {
+      @Override
+      public void call(List<ItemProduct> itemProducts) {
+        lastPosition = lastPosition + itemProducts.size();
+      }
+    });
   }
 
   @Override
   protected Observable buildUseCaseObservable(Object... objects) {
-    return null;
+    int pos = (Integer) objects[0];
+    Observable<List<ItemProduct>> observable = this.productRepositoty.iListObservable(pos);
+    return observable;
   }
+
 
 }

@@ -9,22 +9,22 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class ItemProductEntity implements Serializable {
-    @SerializedName("id")
+    @SerializedName("product_id")
     protected String product_id;
 
-    @SerializedName("price")
+    @SerializedName("product_price")
     protected String product_price;
 
-    @SerializedName("name")
+    @SerializedName("product_name")
     protected String product_name;
 
-    @SerializedName("image")
+    @SerializedName("product_image")
     protected String product_image;
 
-    @SerializedName("des")
+    @SerializedName("product_des")
     protected String product_des;
 
-    @SerializedName("info")
+    @SerializedName("more_information")
     protected String more_information;
 
 

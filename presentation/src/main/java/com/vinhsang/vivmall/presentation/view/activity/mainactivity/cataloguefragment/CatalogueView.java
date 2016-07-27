@@ -17,6 +17,8 @@ public interface CatalogueView extends MVPView {
     void onDisconnected();
 
     void onFetchError();
+    void init();
+    void loadListTag();
     void onLoadMore();
     void showLoadingMore();
 }

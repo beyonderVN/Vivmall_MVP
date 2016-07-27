@@ -12,6 +12,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ViewAnimator;
 
 import com.vinhsang.vivmall.presentation.MainApplication;
 import com.vinhsang.vivmall.presentation.R;
@@ -26,7 +27,8 @@ import butterknife.ButterKnife;
 public class AllFragment extends BaseFragment<AllPresentationModel, AllView, AllPresenter>
         implements AllView {
     private static final String TAG = "AllFragment";
-
+    private static final int POSITION_CONTENT_VIEW  = 0;
+    private static final int POSITION_PROGRESS_VIEW = 1;
 
     private static final String ARG_POSITION = "position";
 
@@ -36,7 +38,9 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
     RecyclerView recyclerView;
     @BindInt(R.integer.column_num)
         int columnNum;
-    ItemProductsAdapter itemProductsAdapter;
+    @BindView(R.id.viewAnimator)
+    ViewAnimator resultAnimator;
+    ItemProductsAdapter itemProductsAdapter = new ItemProductsAdapter();
 
     public static AllFragment newInstance(int position) {
         AllFragment f = new AllFragment();
@@ -91,6 +95,7 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
 
     }
 void setupRecyclerView(RecyclerView recyclerView){
+    recyclerView.setAdapter(itemProductsAdapter);
     final StaggeredGridLayoutManager staggeredGridLayoutManagerVertical =
             new StaggeredGridLayoutManager(
                     columnNum, //The number of Columns in the grid
@@ -154,12 +159,12 @@ void setupRecyclerView(RecyclerView recyclerView){
             // threshold should reflect how many total columns there are too
             if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
                 currentPage++;
-                onLoadMore(currentPage, totalItemCount);
+                onLoadMore();
                 loading = true;
             }
         }
 
-        private void onLoadMore(int currentPage, int totalItemCount) {
+        private void onLoadMore() {
             try {
                 presenter.loadMore();
             } catch (Exception e) {
@@ -185,7 +190,6 @@ void setupRecyclerView(RecyclerView recyclerView){
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
     }
 
 
@@ -203,14 +207,14 @@ void setupRecyclerView(RecyclerView recyclerView){
 
     @Override
     public void showProgress() {
-
+        resultAnimator.setDisplayedChild(POSITION_PROGRESS_VIEW);
     }
 
     @Override
     public void showContent() {
-        itemProductsAdapter = new ItemProductsAdapter(presenter.getPresentationModel().getmItemProducts());
-        recyclerView.setAdapter(itemProductsAdapter);
+        itemProductsAdapter.setmItemProducts(presenter.getPresentationModel().getmItemProducts());
         itemProductsAdapter.notifyDataSetChanged();
+        resultAnimator.setDisplayedChild(POSITION_CONTENT_VIEW);
 
     }
     @Override

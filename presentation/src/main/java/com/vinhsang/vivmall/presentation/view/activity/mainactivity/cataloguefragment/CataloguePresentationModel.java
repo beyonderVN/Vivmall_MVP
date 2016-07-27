@@ -1,5 +1,8 @@
 package com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment;
 
+import android.util.Log;
+
+import com.vinhsang.vivmall.domain.Catalogue;
 import com.vinhsang.vivmall.domain.ItemProduct;
 
 import java.io.Serializable;
@@ -11,11 +14,12 @@ import java.util.List;
  */
 
 public class CataloguePresentationModel implements Serializable {
-    private List<ItemProduct> mItemProducts = new ArrayList<>();
-    private String           tittle;
-    private String[] listTag;
-    private int loadItemNum = 6;
+    private static final String TAG = "CataloguePresentationMo";
+    private List<ItemProduct> mItemProducts = new ArrayList<ItemProduct>();
+    private String tittle;
+    private List<Catalogue> listTag = new ArrayList<>();
     private String currentTag;
+    int lastItem = 0;
     public String getCurrentTag() {
         return currentTag;
     }
@@ -25,11 +29,21 @@ public class CataloguePresentationModel implements Serializable {
     }
 
 
-    public String[] getListTag() {
+    public List<Catalogue> getListTag() {
         return listTag;
     }
 
-    public void setListTag(String[] listTag) {
+    public List<String> getListTagString() {
+        List<String> list = new ArrayList<>();
+        for (Catalogue catalogue : listTag
+                ) {
+            list.add(catalogue.getTitle());
+        }
+        return list;
+    }
+
+    public void setListTag(List<Catalogue> listTag) {
+        Log.d(TAG, "setListTag: "+listTag.size());
         this.listTag = listTag;
     }
 
@@ -38,19 +52,14 @@ public class CataloguePresentationModel implements Serializable {
         return lastItem;
     }
 
-    public int getLoadItemNum() {
-        return loadItemNum;
-    }
 
-    public void setLoadItemNum(int loadItemNum) {
-        this.loadItemNum = loadItemNum;
-    }
 
     public void setLastItem(int lastItem) {
         this.lastItem = lastItem;
     }
 
-    int lastItem = 0;
+
+
     public CataloguePresentationModel(String tittle) {
         this.tittle = tittle;
     }
@@ -70,19 +79,28 @@ public class CataloguePresentationModel implements Serializable {
     public void setTittle(String tittle) {
         this.tittle = tittle;
     }
+
     public boolean shouldFetchRepositories() {
-        return mItemProducts.size() == 0;
+        return listTag.size() == 0;
     }
 
-    public int getTagId(){
-        int id = 1;
-        for (int i = 0; i < listTag.length; i++) {
-            if(listTag[i].equals(currentTag) ){
-               id = id + i;
+    public int getTagId() {
+        Log.d(TAG, "currentTag: "+currentTag);
+        Log.d(TAG, "currentTag: "+listTag.size());
+        for (int i = 0; i < listTag.size(); i++) {
+            Log.d(TAG, "listTag: " +listTag.get(i).getTitle());
+            if(currentTag.equals(listTag.get(i).getTitle())){
+                return listTag.get(i).getId();
             }
-
-
         }
-        return id;
+        return 0;
+    }
+    public void loadMore(List<ItemProduct> listItemProduct) {
+        lastItem = lastItem + listItemProduct.size();
+        mItemProducts.addAll(listItemProduct);
+    }
+    public void reset(){
+        mItemProducts.clear();
+        lastItem=0;
     }
 }

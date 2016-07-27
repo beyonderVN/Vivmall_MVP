@@ -2,7 +2,6 @@ package com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefr
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import com.vinhsang.vivmall.domain.ItemProduct;
 import com.vinhsang.vivmall.presentation.R;
 import com.vinhsang.vivmall.presentation.helper.recyclerviewhelper.DynamicHeightImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,9 +24,15 @@ import butterknife.ButterKnife;
 
 public class ItemProductsAdapter extends RecyclerView.Adapter<ItemProductsAdapter.ViewHolder>{
     private static final String TAG = "ItemProductsAdapter";
-    List<ItemProduct> mItemProducts;
+    List<ItemProduct> mItemProducts = new ArrayList<>();
 
     public ItemProductsAdapter(List<ItemProduct> mItemProducts) {
+        this.mItemProducts = mItemProducts;
+    }
+    public ItemProductsAdapter() {
+    }
+
+    public void setmItemProducts(List<ItemProduct> mItemProducts) {
         this.mItemProducts = mItemProducts;
     }
 
@@ -45,10 +51,10 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<ItemProductsAdapte
         holder.setProductImage(itemProduct.getProduct_image());
         holder.setProductName(itemProduct.getProduct_name());
         holder.setProductPrice(itemProduct.getProduct_price());
-        if(position==0) {
-            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
-            layoutParams.setFullSpan(true);
-        }
+//        if(position==0) {
+//            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
+//            layoutParams.setFullSpan(true);
+//        }
     }
 
 

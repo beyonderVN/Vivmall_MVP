@@ -15,13 +15,13 @@ import javax.inject.Singleton;
  *  * Factory that creates different implementations of {@link ItemProductDataStore}.
  */
 @Singleton
-public class DataStoreFactory {
+public class ItemProductDataStoreFactory {
 
     private final Context context;
     private final ProductCache productCache;
 
     @Inject
-    public DataStoreFactory(Context context, ProductCache productCache) {
+    public ItemProductDataStoreFactory(Context context, ProductCache productCache) {
         if (context == null || productCache == null) {
             throw new IllegalArgumentException("Constructor parameters cannot be null!!!");
         }

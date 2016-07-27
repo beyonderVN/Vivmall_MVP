@@ -30,27 +30,30 @@ import rx.subscriptions.Subscriptions;
  * This interface represents a execution unit for different use cases (this means any use case
  * in the application should implement this contract).
  *
- * By convention each ProductCase implementation will return the result using a {@link Subscriber}
+ * By convention each UseCase implementation will return the result using a {@link Subscriber}
  * that will execute its job in a background thread and will post the result in the UI thread.
  */
-public abstract class ProductCase {
+public abstract class UseCase {
 
   private final ThreadExecutor threadExecutor;
   private final PostExecutionThread postExecutionThread;
 
   private Subscription subscription = Subscriptions.empty();
 
-  protected ProductCase(ThreadExecutor threadExecutor,
-                        PostExecutionThread postExecutionThread) {
+  protected UseCase(ThreadExecutor threadExecutor,
+                    PostExecutionThread postExecutionThread) {
     this.threadExecutor = threadExecutor;
     this.postExecutionThread = postExecutionThread;
   }
 
   /**
-   * Builds an {@link Observable} which will be used when executing the current {@link ProductCase}.
+   * Builds an {@link Observable} which will be used when executing the current {@link UseCase}.
    */
   protected abstract Observable buildUseCaseObservable();
-
+  /**
+   * Builds an {@link Observable} which will be used when executing the current {@link UseCase}.
+   */
+  protected abstract Observable buildUseCaseObservable(Object... objects);
   /**
    * Executes the current use case.
    *
@@ -64,7 +67,19 @@ public abstract class ProductCase {
         .observeOn(postExecutionThread.getScheduler())
         .subscribe(UseCaseSubscriber);
   }
-
+  /**
+   * Executes the current use case.
+   *
+   * @param UseCaseSubscriber The guy who will be listen to the observable build
+   * with {@link #buildUseCaseObservable()}.
+   */
+  @SuppressWarnings("unchecked")
+  public void execute(Subscriber UseCaseSubscriber,Object... objects) {
+    this.subscription = this.buildUseCaseObservable(objects)
+            .subscribeOn(Schedulers.from(threadExecutor))
+            .observeOn(postExecutionThread.getScheduler())
+            .subscribe(UseCaseSubscriber);
+  }
   /**
    * Unsubscribes from current {@link Subscription}.
    */
@@ -73,4 +88,5 @@ public abstract class ProductCase {
       subscription.unsubscribe();
     }
   }
+
 }
