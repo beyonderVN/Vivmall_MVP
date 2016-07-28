@@ -53,5 +53,7 @@ public abstract class SimpleMVPPresenter<V extends MVPView, M extends Serializab
     protected V getMvpView() {
         return mvpView;
     }
+
+
 }
 

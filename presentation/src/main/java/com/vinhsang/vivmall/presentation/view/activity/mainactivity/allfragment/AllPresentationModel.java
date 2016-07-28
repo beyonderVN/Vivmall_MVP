@@ -1,5 +1,7 @@
 package com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment;
 
+import android.util.Log;
+
 import com.vinhsang.vivmall.domain.ItemProduct;
 
 import java.io.Serializable;
@@ -56,12 +58,13 @@ public class AllPresentationModel implements Serializable {
 
         lastItem = lastItem + listItemProduct.size();
         mItemProducts.addAll(listItemProduct);
+        Log.d(TAG, "mItemProducts.size(): "+mItemProducts.size());
     }
 
-    public void clearListItemProduct() {
+
+    public void reset(){
         mItemProducts.clear();
         lastItem = 0;
-
     }
 
 

@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.presentation.helper.recyclerviewhelper;
+package com.vinhsang.vivmall.presentation.view.recyclerviewhelper;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -51,20 +51,22 @@ public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationMod
 
     public void loadMore() {
         if (getMvpView() != null) {
-            getMvpView().showLoadingMore();
+            getMvpView().startLoadingMore();
         }
         try {
             this.useCase.execute(new LoadMoreListSubscriber(),getPresentationModel().getLastItem());
-            if (getMvpView() != null) {
-                getMvpView().onUpdate();
-            }
         } catch (Exception e) {
             e.getStackTrace();
             onFetchError();
         }
 
     }
-
+    public void resetData() {
+        getPresentationModel().reset();
+        if (getMvpView() != null) {
+            getMvpView().onUpdate();
+        }
+    }
 
     private void getFirstPageProductList() {
         Log.d(TAG, "getFirstPageProductList: ");
@@ -116,10 +118,14 @@ public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationMod
         public void onNext(List<ItemProduct> itemProducts) {
             //UserListPresenter.this.showUsersCollectionInView(users);
             Log.d(TAG, "onNext: " + itemProducts.size());
+            if (getMvpView() != null) {
+                getMvpView().finishLoadingMore();
+            }
             getPresentationModel().loadMore(itemProducts);
             if (getMvpView() != null) {
                 getMvpView().onUpdate();
             }
+
         }
     }
 

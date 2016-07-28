@@ -17,6 +17,7 @@ public interface AllView extends MVPView {
     void onDisconnected();
 
     void onFetchError();
+    void finishLoadingMore();
+    void startLoadingMore();
     void onUpdate();
-    void showLoadingMore();
 }

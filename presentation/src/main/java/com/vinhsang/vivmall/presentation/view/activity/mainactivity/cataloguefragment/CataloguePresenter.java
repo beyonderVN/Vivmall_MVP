@@ -48,7 +48,7 @@ public class CataloguePresenter extends SimpleMVPPresenter<CatalogueView, Catalo
 
     public void loadMore() {
         if (getMvpView() != null) {
-            getMvpView().showLoadingMore();
+            getMvpView().startLoadingMore();
         }
         productListByCata.execute(new LoadMoreItemByCata(), getPresentationModel().getTagId(), getPresentationModel().getLastItem());
 
@@ -124,11 +124,17 @@ public class CataloguePresenter extends SimpleMVPPresenter<CatalogueView, Catalo
         @Override
         public void onNext(List<ItemProduct> itemProducts) {
             super.onNext(itemProducts);
+
+            if (getMvpView() != null) {
+                getMvpView().finishLoadingMore();
+            }
             getPresentationModel().loadMore(itemProducts);
             if (getMvpView() != null) {
-                getMvpView().showContent();
-                getMvpView().onLoadMore();
+                getMvpView().onUpdate();
             }
         }
+    }
+    public void resetRecyclerView(){
+
     }
 }

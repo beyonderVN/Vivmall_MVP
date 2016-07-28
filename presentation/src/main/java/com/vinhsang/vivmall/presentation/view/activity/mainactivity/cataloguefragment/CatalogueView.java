@@ -19,6 +19,7 @@ public interface CatalogueView extends MVPView {
     void onFetchError();
     void init();
     void loadListTag();
-    void onLoadMore();
-    void showLoadingMore();
+    void finishLoadingMore();
+    void startLoadingMore();
+    void onUpdate();
 }

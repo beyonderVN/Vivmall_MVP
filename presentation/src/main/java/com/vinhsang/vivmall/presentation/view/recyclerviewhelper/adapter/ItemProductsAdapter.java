@@ -1,7 +1,8 @@
-package com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment.adapter;
+package com.vinhsang.vivmall.presentation.view.recyclerviewhelper.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.vinhsang.vivmall.domain.ItemProduct;
 import com.vinhsang.vivmall.presentation.R;
-import com.vinhsang.vivmall.presentation.helper.recyclerviewhelper.DynamicHeightImageView;
+import com.vinhsang.vivmall.presentation.view.recyclerviewhelper.DynamicHeightImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
  */
 
 public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private static final String TAG = "ItemProductsAdapter";
+    private static final String TAG = "ItemProductAllAdapter";
     List<ItemProduct> mItemProducts = new ArrayList<>();
     private static final int TYPE_ITEMPRODUCT = 0;
     private static final int TYPE_LOADING_MORE = -1;
@@ -88,6 +89,8 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         // grid i.e. it's not the first item & data is being loaded
 //        holder.progress.setVisibility((position > 0)
 //                ? View.VISIBLE : View.INVISIBLE);
+        StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
+        layoutParams.setFullSpan(true);
         holder.progress.setVisibility(View.VISIBLE );
     }
     private void bindItemProductView(final ItemProduct item, ItemProductViewHolder holder) {
@@ -101,10 +104,17 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
         });
     }
-    boolean showLoadingMore = false;
 
+    public boolean isShowLoadingMore() {
+        return showLoadingMore;
+    }
+
+    boolean showLoadingMore = false;
+    int count = 0;
     public void dataStartedLoading() {
-        Log.d(TAG, "dataStartedLoading: ");
+        count++;
+        Log.d(TAG, "dataStartedLoading: "+count);
+
         if (showLoadingMore) return;
         showLoadingMore = true;
         notifyItemInserted(getLoadingMoreItemPosition());
@@ -112,6 +122,8 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
     public void dataFinishedLoading() {
+        count--;
+        Log.d(TAG, "dataFinishedLoading: "+count);
         if (!showLoadingMore) return;
         final int loadingPos = getLoadingMoreItemPosition();
         showLoadingMore = false;
@@ -127,10 +139,9 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
-
     @Override
     public int getItemCount() {
-        return mItemProducts.size();
+        return getDataItemCount() + (showLoadingMore ? 1 : 0);
     }
 
     public int getDataItemCount() {
@@ -138,7 +149,6 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
     @Override
     public int getItemViewType(int position) {
-        Log.d(TAG, "getItemViewType: "+position);
         if (position < getDataItemCount()
                 && getDataItemCount() > 0) {
             ItemProduct item = getItem(position);
@@ -147,6 +157,7 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
         }
         return TYPE_LOADING_MORE;
+
     }
 
     private ItemProduct getItem(int position) {
@@ -166,7 +177,6 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public ItemProductViewHolder(View itemView) {
 
             super(itemView);
-            Log.d(TAG, "ItemProductViewHolder: "+itemView.getMeasuredWidth());
             ButterKnife.bind(this, itemView);
             context = itemView.getContext();
 
@@ -210,7 +220,6 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public LoadingMoreHolder(View itemView) {
             super(itemView);
-            Log.d(TAG, "LoadingMoreHolder: ");
             progress = (ProgressBar) itemView;
         }
 

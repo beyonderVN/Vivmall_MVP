@@ -66,13 +66,11 @@ public class MainModule {
     ProductRepositoty provideUserRepository(ProductDataRepository productDataRepository) {
         return productDataRepository;
     }
-
     @Provides  @Named("userList")
     UseCase provideGetProductListUseCase(
             GetProductListAll getProductList) {
         return getProductList;
     }
-
     @Provides  @Named("catalogueList")
     UseCase provideGetCatalogueList(
             GetCatalogueList getCatalogueList) {

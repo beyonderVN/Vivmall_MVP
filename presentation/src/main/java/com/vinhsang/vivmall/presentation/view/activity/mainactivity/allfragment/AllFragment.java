@@ -2,13 +2,16 @@ package com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +19,9 @@ import android.widget.ViewAnimator;
 
 import com.vinhsang.vivmall.presentation.MainApplication;
 import com.vinhsang.vivmall.presentation.R;
+import com.vinhsang.vivmall.presentation.view.recyclerviewhelper.InfiniteScrollListener;
 import com.vinhsang.vivmall.presentation.view.activity.base.BaseFragment;
-import com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment.adapter.ItemProductsAdapter;
+import com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment.adapter.ItemProductAllAdapter;
 
 import butterknife.BindInt;
 import butterknife.BindView;
@@ -40,7 +44,9 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
         int columnNum;
     @BindView(R.id.viewAnimator)
     ViewAnimator resultAnimator;
-    ItemProductsAdapter itemProductsAdapter = new ItemProductsAdapter();
+    @BindView(R.id.swipe_refresh)
+    SwipeRefreshLayout swipeRefresh;
+    ItemProductAllAdapter itemProductsAdapter = new ItemProductAllAdapter();
 
     public static AllFragment newInstance(int position) {
         AllFragment f = new AllFragment();
@@ -88,6 +94,7 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
             view = inflater.inflate(R.layout.fragment_main, container, false);
             ButterKnife.bind(this, view);
             setupRecyclerView(recyclerView);
+            setupSwipeRefreshLayout(swipeRefresh);
 
         }
 
@@ -112,79 +119,19 @@ void setupRecyclerView(RecyclerView recyclerView){
     itemAnimator.setRemoveDuration(3000);
     recyclerView.setItemAnimator(itemAnimator);
 
-
-    recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-        // The minimum amount of items to have below your current scroll position
-        // before loading more.
-        private int visibleThreshold = 5;
-        // The current offset index of data you have loaded
-        private int currentPage = 0;
-        // The total number of items in the dataset after the last load
-        private int previousTotalItemCount = 0;
-        // True if we are still waiting for the last set of data to load.
-        private boolean loading = true;
-        // Sets the starting page index
-        private int startingPageIndex = 0;
-        RecyclerView.LayoutManager mLayoutManager = staggeredGridLayoutManagerVertical;
-
+    recyclerView.addOnScrollListener(new InfiniteScrollListener(staggeredGridLayoutManagerVertical) {
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-        }
-
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            int lastVisibleItemPosition = 0;
-            int totalItemCount = mLayoutManager.getItemCount();
-            int[] lastVisibleItemPositions = ((StaggeredGridLayoutManager) mLayoutManager).findLastVisibleItemPositions(null);
-            // get maximum element within the list
-            lastVisibleItemPosition = getLastVisibleItem(lastVisibleItemPositions);
-            if (totalItemCount < previousTotalItemCount) {
-                this.currentPage = this.startingPageIndex;
-                this.previousTotalItemCount = totalItemCount;
-                if (totalItemCount == 0) {
-                    this.loading = true;
-                }
-            }
-            // If it’s still loading, we check to see if the dataset count has
-            // changed, if so we conclude it has finished loading and update the current page
-            // number and total item count.
-            if (loading && (totalItemCount > previousTotalItemCount)) {
-                loading = false;
-                previousTotalItemCount = totalItemCount;
-            }
-
-            // If it isn’t currently loading, we check to see if we have breached
-            // the visibleThreshold and need to reload more data.
-            // If we do need to reload some more data, we execute onUpdate to fetch the data.
-            // threshold should reflect how many total columns there are too
-            if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
-                currentPage++;
-                onLoadMore();
-                loading = true;
-            }
-        }
-
-        private void onLoadMore() {
-            try {
+        public void onLoadMore() {
+                        try {
                 presenter.loadMore();
             } catch (Exception e) {
                 e.getStackTrace();
             }
-
         }
 
-        public int getLastVisibleItem(int[] lastVisibleItemPositions) {
-            int maxSize = 0;
-            for (int i = 0; i < lastVisibleItemPositions.length; i++) {
-                if (i == 0) {
-                    maxSize = lastVisibleItemPositions[i];
-                } else if (lastVisibleItemPositions[i] > maxSize) {
-                    maxSize = lastVisibleItemPositions[i];
-                }
-            }
-            return maxSize;
+        @Override
+        public boolean isLoading() {
+            return itemProductsAdapter.isShowLoadingMore();
         }
     });
 }
@@ -219,11 +166,7 @@ void setupRecyclerView(RecyclerView recyclerView){
         resultAnimator.setDisplayedChild(POSITION_CONTENT_VIEW);
 
     }
-    @Override
-    public void onUpdate() {
-        itemProductsAdapter.dataFinishedLoading();
-        itemProductsAdapter.notifyDataSetChanged();
-    }
+
     @Override
     public void onConnected() {
 
@@ -242,10 +185,20 @@ void setupRecyclerView(RecyclerView recyclerView){
 
 
     @Override
-    public void showLoadingMore() {
+    public void startLoadingMore()  {
         itemProductsAdapter.dataStartedLoading();
     }
 
+    @Override
+    public void onUpdate() {
+        itemProductsAdapter.notifyDataSetChanged();
+        swipeRefresh.setRefreshing(false);
+    }
+    @Override
+    public void finishLoadingMore() {
+        itemProductsAdapter.dataFinishedLoading();
+
+    }
     @Override
     protected void performFieldInection() {
         MainApplication.getMainComponent().inject(this);
@@ -267,4 +220,21 @@ void setupRecyclerView(RecyclerView recyclerView){
     }
 
 
+    public void setupSwipeRefreshLayout(final SwipeRefreshLayout upSwipeRefreshLayout) {
+        upSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark);
+        upSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ( new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        upSwipeRefreshLayout.setRefreshing(true);
+                        Log.d("Swipe", "Refreshing Number");
+                        presenter.resetData();
+                    }
+                }, 1000);
+
+            }
+        });
+    }
 }
