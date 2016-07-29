@@ -22,9 +22,9 @@ import android.widget.ViewAnimator;
 
 import com.vinhsang.vivmall.presentation.MainApplication;
 import com.vinhsang.vivmall.presentation.R;
+import com.vinhsang.vivmall.presentation.view.activity.base.BaseFragment;
 import com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment.adapter.ItemProductCatalogueAdapter;
 import com.vinhsang.vivmall.presentation.view.recyclerviewhelper.InfiniteScrollListener;
-import com.vinhsang.vivmall.presentation.view.activity.base.BaseFragment;
 
 import butterknife.BindInt;
 import butterknife.BindView;
@@ -34,7 +34,7 @@ import me.gujun.android.taggroup.TagGroup;
 
 
 public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, CatalogueView, CataloguePresenter> implements CatalogueView, TagGroup.OnTagClickListener {
-    private static final String TAG = CatalogueFragment.class.getCanonicalName();
+    private static final String TAG = "CatalogueFragment";
     private static final int POSITION_CONTENT_VIEW  = 0;
     private static final int POSITION_PROGRESS_VIEW = 1;
 
@@ -56,8 +56,8 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
     ViewAnimator resultAnimator;
     @BindInt(R.integer.column_num)
     int columnNum;
-    @BindView(R.id.swipe_refresh)
-    SwipeRefreshLayout swipeRefresh;
+//    @BindView(R.id.swipe_refresh)
+//    SwipeRefreshLayout swipeRefresh;
     @OnClick(R.id.expand_button)
     void seleteCatalogue() {
         boolean isVisible = (mTagGroup.getVisibility() == View.GONE);
@@ -128,10 +128,12 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
         ButterKnife.bind(this, view);
         setupRecyclerView();
         mTagGroup.setOnTagClickListener(this);
-        setupSwipeRefreshLayout(swipeRefresh);
+        //setupSwipeRefreshLayout(swipeRefresh);
+
         return view;
 
     }
+
     public void setupSwipeRefreshLayout(final SwipeRefreshLayout upSwipeRefreshLayout) {
         upSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark);
         upSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -141,13 +143,13 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
                     @Override
                     public void run() {
                         upSwipeRefreshLayout.setRefreshing(true);
-                        Log.d("Swipe", "Refreshing Number");
                         presenter.resetRecyclerView();
                     }
                 }, 1000);
 
             }
         });
+
     }
     private void setupRecyclerView() {
         recyclerView.setAdapter(itemProductsAdapter);
@@ -173,29 +175,43 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
 
             @Override
             public boolean isLoading() {
-                return itemProductsAdapter.isShowLoadingMore();
+                return itemProductsAdapter.isLoadingMore();
             }
-        });
-        recyclerView.setOnTouchListener(new View.OnTouchListener() {
-            float yD, yU;
 
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    yD = motionEvent.getY();
-                }
-                yU = motionEvent.getY();
-                if (yU - yD > 30) {
-                    showCatalogue();
-                }
-                if (yU - yD < -30) {
-                    hideTagGroup();
-                    hideCatalogue();
-                }
-                Log.d(TAG, "onTouch: " + (yU - yD));
+            public boolean isNoMore() {
                 return false;
             }
         });
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            float yD=0, yU=0;
+            boolean onMove = false;
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_MOVE && onMove==false) {
+                    yD = motionEvent.getY();
+                    onMove = true;
+                    Log.d(TAG, "yD: "+yD);
+                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP && onMove==true) {
+                    onMove = false;
+                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN ) {
+                    yD = motionEvent.getY();
+                    Log.d(TAG, "yD: "+yD);
+                }
+                yU = motionEvent.getY();
+                if (yU - yD > 10) {
+                    showCatalogue();
+                }
+                if (yU - yD < -5) {
+                    hideTagGroup();
+                    hideCatalogue();
+                }
+                return false;
+            }
+        });
+
     }
 
     private void hideTagGroup() {
@@ -238,23 +254,25 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
 
     @Override
     public void onTagClick(String tag) {
-        Log.d(TAG, "onTagClick: ");
+
         catalogueName.setText(tag);
         hideTagGroup();
+        itemProductsAdapter.setLoadingMore(false);
         presenter.resetRecyclerViewByNewTag(tag);
+
     }
 
 
     @Override
     public void init() {
-        Log.d(TAG, "init: ");
+
         itemProductsAdapter.setmItemProducts(presenter.getPresentationModel().getmItemProducts());
         itemProductsAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void loadListTag() {
-        Log.d(TAG, "loadListTag: ");
+
         mTagGroup.setTags(presenter.getPresentationModel().getListTagString());
         catalogueName.setText(presenter.getPresentationModel().getCurrentTag());
     }
@@ -299,6 +317,6 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
     @Override
     public void onUpdate() {
         itemProductsAdapter.notifyDataSetChanged();
-        swipeRefresh.setRefreshing(false);
+        //swipeRefresh.setRefreshing(false);
     }
 }

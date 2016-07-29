@@ -37,6 +37,8 @@ public abstract class InfiniteScrollListener extends RecyclerView.OnScrollListen
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
+        if(isNoMore()) return;
+        if(isLoading()) return;
         int lastVisibleItemPosition = 0;
         int totalItemCount = mLayoutManager.getItemCount();
         int[] lastVisibleItemPositions = ((StaggeredGridLayoutManager) mLayoutManager).findLastVisibleItemPositions(null);
@@ -51,7 +53,7 @@ public abstract class InfiniteScrollListener extends RecyclerView.OnScrollListen
         // If it’s still loading, we check to see if the dataset count has
         // changed, if so we conclude it has finished loading and update the current page
         // number and total item count.
-        if (isLoading() && (totalItemCount > previousTotalItemCount)) {
+        if ((totalItemCount > previousTotalItemCount)) {
             previousTotalItemCount = totalItemCount;
         }
 
@@ -59,7 +61,7 @@ public abstract class InfiniteScrollListener extends RecyclerView.OnScrollListen
         // the visibleThreshold and need to reload more data.
         // If we do need to reload some more data, we execute finishLoadingMore to fetch the data.
         // threshold should reflect how many total columns there are too
-        if (!isLoading() && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
+        if ((lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
             currentPage++;
             onLoadMore();
         }
@@ -80,5 +82,6 @@ public abstract class InfiniteScrollListener extends RecyclerView.OnScrollListen
 
     public abstract void onLoadMore();
     public abstract boolean isLoading();
+    public abstract boolean isNoMore();
 
 }

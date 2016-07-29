@@ -16,7 +16,6 @@ import com.vinhsang.vivmall.domain.ItemProduct;
 import com.vinhsang.vivmall.presentation.R;
 import com.vinhsang.vivmall.presentation.view.recyclerviewhelper.DynamicHeightImageView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,9 +27,10 @@ import butterknife.ButterKnife;
 
 public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private static final String TAG = "ItemProductAllAdapter";
-    List<ItemProduct> mItemProducts = new ArrayList<>();
-    private static final int TYPE_ITEMPRODUCT = 0;
-    private static final int TYPE_LOADING_MORE = -1;
+    List<ItemProduct> mItemProducts ;
+    protected static final int TYPE_ITEMPRODUCT = 0;
+    protected static final int TYPE_LOADING_MORE = -1;
+    protected static final int TYPE_NO_MORE = -2;
 
 
     public ItemProductsAdapter(List<ItemProduct> mItemProducts) {
@@ -53,17 +53,14 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case TYPE_ITEMPRODUCT:
                 return createItemProductHolder(parent);
             case TYPE_LOADING_MORE:
-                return new LoadingMoreHolder(
-                        LayoutInflater
-                                .from(parent.getContext())
-                                .inflate(R.layout.infinite_loading, parent, false));
+                return createLoadingMoreHolder(parent);
         }
         return null;
 
 
     }
 
-    private ItemProductViewHolder createItemProductHolder(ViewGroup parent) {
+    protected ItemProductViewHolder createItemProductHolder(ViewGroup parent) {
         View v = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.layout_itemproduct,parent,false);
@@ -71,6 +68,19 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return viewHolder;
     }
 
+    protected LoadingMoreHolder createLoadingMoreHolder(ViewGroup parent) {
+        return new LoadingMoreHolder(
+                LayoutInflater
+                        .from(parent.getContext())
+                        .inflate(R.layout.infinite_loading, parent, false));
+    }
+
+    protected NoMoreHolder createNoMoreHolder(ViewGroup parent) {
+        return new NoMoreHolder(
+                LayoutInflater
+                        .from(parent.getContext())
+                        .inflate(R.layout.infinite_no_more, parent, false));
+    }
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
@@ -105,18 +115,22 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         });
     }
 
-    public boolean isShowLoadingMore() {
-        return showLoadingMore;
+    public boolean isLoadingMore() {
+        return isLoadingMore;
     }
 
-    boolean showLoadingMore = false;
+    public void setLoadingMore(boolean loadingMore) {
+        this.isLoadingMore = loadingMore;
+    }
+
+    boolean isLoadingMore = false;
     int count = 0;
     public void dataStartedLoading() {
         count++;
         Log.d(TAG, "dataStartedLoading: "+count);
 
-        if (showLoadingMore) return;
-        showLoadingMore = true;
+        if (isLoadingMore) return;
+        isLoadingMore = true;
         notifyItemInserted(getLoadingMoreItemPosition());
     }
 
@@ -124,13 +138,13 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void dataFinishedLoading() {
         count--;
         Log.d(TAG, "dataFinishedLoading: "+count);
-        if (!showLoadingMore) return;
+        if (!isLoadingMore) return;
         final int loadingPos = getLoadingMoreItemPosition();
-        showLoadingMore = false;
+        isLoadingMore = false;
         notifyItemRemoved(loadingPos);
     }
-    private int getLoadingMoreItemPosition() {
-        return showLoadingMore ? getItemCount() - 1 : RecyclerView.NO_POSITION;
+    protected int getLoadingMoreItemPosition() {
+        return isLoadingMore ? getItemCount() - 1 : RecyclerView.NO_POSITION;
     }
     @Override
     public void onViewRecycled(RecyclerView.ViewHolder holder) {
@@ -141,7 +155,7 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return getDataItemCount() + (showLoadingMore ? 1 : 0);
+        return getDataItemCount() + (isLoadingMore ? 1 : 0);
     }
 
     public int getDataItemCount() {
@@ -160,7 +174,7 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
-    private ItemProduct getItem(int position) {
+    protected ItemProduct getItem(int position) {
         return mItemProducts.get(position);
     }
 
@@ -221,6 +235,15 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public LoadingMoreHolder(View itemView) {
             super(itemView);
             progress = (ProgressBar) itemView;
+        }
+
+    }
+
+    /* package */ static class NoMoreHolder extends RecyclerView.ViewHolder {
+
+
+        public NoMoreHolder(View itemView) {
+            super(itemView);
         }
 
     }

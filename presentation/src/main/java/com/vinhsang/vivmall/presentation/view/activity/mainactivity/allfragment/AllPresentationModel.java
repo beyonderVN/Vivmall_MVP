@@ -65,7 +65,16 @@ public class AllPresentationModel implements Serializable {
     public void reset(){
         mItemProducts.clear();
         lastItem = 0;
+        noMore =false;
     }
 
+    boolean noMore =false;
 
+    public boolean isNoMore() {
+        return noMore;
+    }
+
+    public void setNoMore(boolean noMore) {
+        this.noMore = noMore;
+    }
 }

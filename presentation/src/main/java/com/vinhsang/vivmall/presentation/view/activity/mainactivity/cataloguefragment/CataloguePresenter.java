@@ -57,10 +57,9 @@ public class CataloguePresenter extends SimpleMVPPresenter<CatalogueView, Catalo
     public void resetRecyclerViewByNewTag(String tag) {
         getPresentationModel().reset();
         if (getMvpView() != null) {
-            getMvpView().showProgress();
+            getMvpView().onUpdate();
         }
         getPresentationModel().setCurrentTag(tag);
-        productListByCata.execute(new LoadFirstItemsByCata(), getPresentationModel().getTagId(), getPresentationModel().getLastItem());
     }
 
     public class LoadCatalogueList extends DefaultSubscriber<List<Catalogue>> {
@@ -135,6 +134,6 @@ public class CataloguePresenter extends SimpleMVPPresenter<CatalogueView, Catalo
         }
     }
     public void resetRecyclerView(){
-
+        resetRecyclerViewByNewTag(getPresentationModel().getCurrentTag());
     }
 }
