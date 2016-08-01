@@ -103,4 +103,14 @@ public class CataloguePresentationModel implements Serializable {
         mItemProducts.clear();
         lastItem=0;
     }
+
+    boolean noMore =false;
+
+    public boolean isNoMore() {
+        return noMore;
+    }
+
+    public void setNoMore(boolean noMore) {
+        this.noMore = noMore;
+    }
 }

@@ -30,7 +30,7 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     List<ItemProduct> mItemProducts ;
     protected static final int TYPE_ITEMPRODUCT = 0;
     protected static final int TYPE_LOADING_MORE = -1;
-    protected static final int TYPE_NO_MORE = -2;
+
 
 
     public ItemProductsAdapter(List<ItemProduct> mItemProducts) {
@@ -75,12 +75,7 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         .inflate(R.layout.infinite_loading, parent, false));
     }
 
-    protected NoMoreHolder createNoMoreHolder(ViewGroup parent) {
-        return new NoMoreHolder(
-                LayoutInflater
-                        .from(parent.getContext())
-                        .inflate(R.layout.infinite_no_more, parent, false));
-    }
+
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
@@ -94,7 +89,7 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
     }
-    private void bindLoadingViewHolder(LoadingMoreHolder holder, int position) {
+    protected void bindLoadingViewHolder(LoadingMoreHolder holder, int position) {
         // only show the infinite load progress spinner if there are already items in the
         // grid i.e. it's not the first item & data is being loaded
 //        holder.progress.setVisibility((position > 0)
@@ -103,7 +98,9 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         layoutParams.setFullSpan(true);
         holder.progress.setVisibility(View.VISIBLE );
     }
-    private void bindItemProductView(final ItemProduct item, ItemProductViewHolder holder) {
+
+
+    protected void bindItemProductView(final ItemProduct item, ItemProductViewHolder holder) {
         holder.setProductImage(item.getProduct_image());
         holder.setProductName(item.getProduct_name());
         holder.setProductPrice(item.getProduct_price());
@@ -178,7 +175,7 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return mItemProducts.get(position);
     }
 
-    /* package */ static  class ItemProductViewHolder extends RecyclerView.ViewHolder{
+    /* package */ protected static  class ItemProductViewHolder extends RecyclerView.ViewHolder{
 
         private static final String TAG = "ItemProductViewHolder";
         @BindView(R.id.image_product)
@@ -228,7 +225,7 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    /* package */ static class LoadingMoreHolder extends RecyclerView.ViewHolder {
+    /* package */ protected static class LoadingMoreHolder extends RecyclerView.ViewHolder {
 
         ProgressBar progress;
 
@@ -239,13 +236,6 @@ public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
-    /* package */ static class NoMoreHolder extends RecyclerView.ViewHolder {
 
-
-        public NoMoreHolder(View itemView) {
-            super(itemView);
-        }
-
-    }
 
 }

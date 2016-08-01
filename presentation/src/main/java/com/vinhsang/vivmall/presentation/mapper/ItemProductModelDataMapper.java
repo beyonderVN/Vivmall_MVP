@@ -22,6 +22,7 @@ import com.vinhsang.vivmall.presentation.model.ItemProductModel;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -62,8 +63,8 @@ public class ItemProductModelDataMapper {
    * @param itemProducts Object Collection to be transformed.
    * @return {@link ItemProduct} if valid {@link ItemProductEntity} otherwise null.
    */
-  public Collection<ItemProductModel> transform(Collection<ItemProduct> itemProducts) {
-    Collection<ItemProductModel> itemProductModelCollection;
+  public List<ItemProductModel> transform(Collection<ItemProduct> itemProducts) {
+    List<ItemProductModel> itemProductModelCollection;
 
     if (itemProducts != null && !itemProducts.isEmpty()) {
       itemProductModelCollection = new ArrayList<>();

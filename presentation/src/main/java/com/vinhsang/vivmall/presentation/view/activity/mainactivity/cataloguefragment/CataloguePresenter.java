@@ -31,7 +31,6 @@ public class CataloguePresenter extends SimpleMVPPresenter<CatalogueView, Catalo
     public void attachView(CatalogueView mvpView, CataloguePresentationModel presentationModel) {
         super.attachView(mvpView, presentationModel);
         if (getMvpView() != null) {
-            getMvpView().init();
             getMvpView().loadListTag();
         }
         if (presentationModel.shouldFetchRepositories()) {
@@ -57,9 +56,10 @@ public class CataloguePresenter extends SimpleMVPPresenter<CatalogueView, Catalo
     public void resetRecyclerViewByNewTag(String tag) {
         getPresentationModel().reset();
         if (getMvpView() != null) {
-            getMvpView().onUpdate();
+            getMvpView().showProgress();
         }
         getPresentationModel().setCurrentTag(tag);
+        productListByCata.execute(new LoadFirstItemsByCata(), getPresentationModel().getTagId(), getPresentationModel().getLastItem());
     }
 
     public class LoadCatalogueList extends DefaultSubscriber<List<Catalogue>> {
@@ -80,7 +80,6 @@ public class CataloguePresenter extends SimpleMVPPresenter<CatalogueView, Catalo
             getPresentationModel().setListTag(catalogues);
             getPresentationModel().setCurrentTag("Điện tử");
             if (getMvpView() != null) {
-                getMvpView().showContent();
                 getMvpView().loadListTag();
             }
             productListByCata.execute(new LoadFirstItemsByCata(), getPresentationModel().getTagId(), getPresentationModel().getLastItem());
@@ -102,7 +101,6 @@ public class CataloguePresenter extends SimpleMVPPresenter<CatalogueView, Catalo
         public void onNext(List<ItemProduct> itemProducts) {
             super.onNext(itemProducts);
             getPresentationModel().loadMore(itemProducts);
-            getMvpView().init();
             if (getMvpView() != null) {
                 getMvpView().showContent();
             }
@@ -123,7 +121,9 @@ public class CataloguePresenter extends SimpleMVPPresenter<CatalogueView, Catalo
         @Override
         public void onNext(List<ItemProduct> itemProducts) {
             super.onNext(itemProducts);
-
+            if(itemProducts.size()==0){
+                getPresentationModel().setNoMore(true);
+            }
             if (getMvpView() != null) {
                 getMvpView().finishLoadingMore();
             }

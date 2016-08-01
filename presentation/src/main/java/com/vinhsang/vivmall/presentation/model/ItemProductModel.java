@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Long on 3/15/2016.
  */
 @SuppressWarnings("serial")
-public class ItemProductModel implements Serializable {
+public class ItemProductModel extends BaseModel implements Serializable {
 
     protected String product_id;
     protected String product_price;
@@ -16,10 +16,22 @@ public class ItemProductModel implements Serializable {
     protected String more_information;
     protected int product_amount = 1;
 
+    public int getType() {
+        return type;
+    }
 
+    public void setType(int type) {
+        this.type = type;
+    }
 
+    protected int type;
+
+    public ItemProductModel() {
+        type = ModelType.ITEM_PRODUCT;
+    }
     ///contructor
     public ItemProductModel(String product_id, String product_price, String product_name, String product_image) {
+        this();
         this.product_id = product_id;
         this.product_price = product_price;
         this.product_name = product_name;
@@ -27,6 +39,7 @@ public class ItemProductModel implements Serializable {
 
     }
     public ItemProductModel(String product_id) {
+        this();
         this.product_id = product_id;
     }
     public String getProduct_des() {
@@ -78,12 +91,27 @@ public class ItemProductModel implements Serializable {
     }
 
     public String getProduct_image() {
-        return "http://vivmall.vn/Nvivmall/upload/product/"+product_image;
+        return product_image;
     }
 
     public void setProduct_image(String product_image) {
         this.product_image = product_image;
     }
+    @Override public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
 
+        stringBuilder.append("***** User Entity Details *****\n");
+        stringBuilder.append("id=" + this.getProduct_id() + "\n");
+        stringBuilder.append("cover url=" + this.getProduct_image() + "\n");
+        stringBuilder.append("name=" + this.getProduct_name() + "\n");
+        stringBuilder.append("description=" + this.getProduct_des() + "\n");
+        stringBuilder.append("*******************************");
 
+        return stringBuilder.toString();
+    }
+
+    @Override
+    public int getModelType() {
+        return getType();
+    }
 }

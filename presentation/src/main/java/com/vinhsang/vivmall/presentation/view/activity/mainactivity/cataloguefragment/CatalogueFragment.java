@@ -68,8 +68,8 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
         }
     }
 
-    ItemProductCatalogueAdapter itemProductsAdapter = new ItemProductCatalogueAdapter();
-
+    ItemProductCatalogueAdapter itemProductsAdapter ;
+    CataloguePresentationModel cataloguePresentationModel;
     public static CatalogueFragment newInstance() {
         CatalogueFragment f = new CatalogueFragment();
 
@@ -119,7 +119,14 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
         super.onDestroyView();
     }
 
-
+    //IMPORTANT run after presenter.attachView()
+    @Override
+    public void onStart() {
+        super.onStart();
+        cataloguePresentationModel = presenter.getPresentationModel();
+        itemProductsAdapter = new ItemProductCatalogueAdapter(cataloguePresentationModel);
+        recyclerView.setAdapter(itemProductsAdapter);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -284,8 +291,7 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
 
     @Override
     public void showContent() {
-
-
+        itemProductsAdapter.notifyDataSetChanged();
         resultAnimator.setDisplayedChild(POSITION_CONTENT_VIEW);
     }
 

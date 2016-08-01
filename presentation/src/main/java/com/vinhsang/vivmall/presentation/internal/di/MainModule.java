@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.vinhsang.vivmall.data.cache.ProductCache;
 import com.vinhsang.vivmall.data.cache.ProductCacheImpl;
+import com.vinhsang.vivmall.data.datamanager.DataInterface;
+import com.vinhsang.vivmall.data.datamanager.DataManager;
 import com.vinhsang.vivmall.data.executor.JobExecutor;
 import com.vinhsang.vivmall.data.repository.ProductDataRepository;
 import com.vinhsang.vivmall.domain.executor.PostExecutionThread;
@@ -15,8 +17,6 @@ import com.vinhsang.vivmall.domain.interactor.UseCase;
 import com.vinhsang.vivmall.domain.repository.ProductRepositoty;
 import com.vinhsang.vivmall.presentation.MainApplication;
 import com.vinhsang.vivmall.presentation.UIThread;
-import com.vinhsang.vivmall.data.datamanager.DataInterface;
-import com.vinhsang.vivmall.data.datamanager.DataManager;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -61,7 +61,6 @@ public class MainModule {
     ProductCache provideProductCache(ProductCacheImpl productCache) {
         return productCache;
     }
-
     @Provides @Singleton
     ProductRepositoty provideUserRepository(ProductDataRepository productDataRepository) {
         return productDataRepository;

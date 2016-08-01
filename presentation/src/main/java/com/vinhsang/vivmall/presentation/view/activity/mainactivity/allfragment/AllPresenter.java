@@ -18,14 +18,14 @@ import javax.inject.Named;
  * Created by Long on 7/8/2016.
  */
 
-public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationModel>  {
+public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationModel> {
 
     private static final String TAG = "AllPresenter";
     private final DataInterface dataManager;
     private final UseCase useCase;
 
     @Inject
-    public AllPresenter(DataInterface dataManager,@Named("userList") UseCase useCase) {
+    public AllPresenter(DataInterface dataManager, @Named("userList") UseCase useCase) {
         this.dataManager = dataManager;
         this.useCase = useCase;
     }
@@ -36,6 +36,7 @@ public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationMod
 
         getFirstPageProductList();
     }
+
     private void showContent() {
 
         if (getMvpView() != null) {
@@ -54,29 +55,29 @@ public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationMod
             getMvpView().startLoadingMore();
         }
         try {
-            this.useCase.execute(new LoadMoreListSubscriber(),getPresentationModel().getLastItem());
+            this.useCase.execute(new LoadMoreListSubscriber(), getPresentationModel().getLastItem());
         } catch (Exception e) {
             e.getStackTrace();
             onFetchError();
         }
 
     }
+
     public void resetData() {
         getPresentationModel().reset();
-        if (getMvpView() != null) {
-            getMvpView().onUpdate();
-        }
+        getFirstPageProductList();
     }
 
     private void getFirstPageProductList() {
-
-        if (getMvpView() != null) {
-            getMvpView().showProgress();
+        if (getPresentationModel().shouldFetchRepositories()) {
+            if (getMvpView() != null) {
+                getMvpView().showProgress();
+            }
+            this.useCase.execute(new LoadFirstSubscriber(), getPresentationModel().getLastItem());
         }
-        this.useCase.execute(new LoadFirstSubscriber(),getPresentationModel().getLastItem());
+
 
     }
-
     private class LoadFirstSubscriber extends DefaultSubscriber<List<ItemProduct>> {
 
         @Override
@@ -95,7 +96,7 @@ public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationMod
         public void onNext(List<ItemProduct> itemProducts) {
             //UserListPresenter.this.showUsersCollectionInView(users);
             Log.d(TAG, "onNext: " + itemProducts.size());
-            if(itemProducts.size()==0){
+            if (itemProducts.size() == 0) {
                 getPresentationModel().setNoMore(true);
             }
             getPresentationModel().loadMore(itemProducts);
@@ -121,7 +122,7 @@ public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationMod
         public void onNext(List<ItemProduct> itemProducts) {
             //UserListPresenter.this.showUsersCollectionInView(users);
             Log.d(TAG, "onNext: " + itemProducts.size());
-            if(itemProducts.size()==0){
+            if (itemProducts.size() == 0) {
                 getPresentationModel().setNoMore(true);
             }
             if (getMvpView() != null) {
