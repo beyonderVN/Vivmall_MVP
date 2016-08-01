@@ -1,7 +1,6 @@
 package com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -45,8 +44,9 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
     ViewAnimator resultAnimator;
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefresh;
-    ItemProductAllAdapter itemProductsAdapter ;
-    AllPresentationModel allPresentationModel ;
+    ItemProductAllAdapter itemProductsAdapter;
+    AllPresentationModel allPresentationModel;
+
     public static AllFragment newInstance(int position) {
         AllFragment f = new AllFragment();
         Bundle b = new Bundle();
@@ -64,7 +64,6 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
     public AllFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -230,15 +229,17 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
         upSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                (new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        upSwipeRefreshLayout.setRefreshing(true);
-                        Log.d("Swipe", "Refreshing Number");
-                        presenter.resetData();
-                    }
-                }, 1000);
-
+                upSwipeRefreshLayout.setRefreshing(false);
+//                (new Handler()).postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                        Log.d("Swipe", "Refreshing Number");
+//                        presenter.resetData();
+//                    }
+//                }, 1000);
+                Log.d("Swipe", "Refreshing Number");
+                presenter.resetData();
             }
         });
     }
