@@ -17,7 +17,9 @@ package com.vinhsang.vivmall.presentation.mapper;
 
 import com.vinhsang.vivmall.data.entity.ItemProductEntity;
 import com.vinhsang.vivmall.domain.ItemProduct;
+import com.vinhsang.vivmall.presentation.model.BaseModel;
 import com.vinhsang.vivmall.presentation.model.ItemProductModel;
+import com.vinhsang.vivmall.presentation.model.ItemProductModel2;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,7 +45,7 @@ public class ItemProductModelDataMapper {
    * @param itemProduct Object to be transformed.
    * @return {@link ItemProduct} if valid {@link ItemProductEntity} otherwise null.
    */
-  public ItemProductModel transform(ItemProduct itemProduct) {
+  public BaseModel transform(ItemProduct itemProduct) {
     ItemProductModel itemProductModel = null;
     if (itemProduct != null) {
       itemProductModel = new ItemProductModel(itemProduct.getProduct_id());
@@ -56,20 +58,39 @@ public class ItemProductModelDataMapper {
 
     return itemProductModel;
   }
+  public BaseModel transform2(ItemProduct itemProduct) {
+    ItemProductModel2 itemProductModel = null;
+    if (itemProduct != null) {
+      itemProductModel = new ItemProductModel2(itemProduct.getProduct_id());
+      itemProductModel.setProduct_image(itemProduct.getProduct_image());
+      itemProductModel.setProduct_name(itemProduct.getProduct_name());
+      itemProductModel.setProduct_des(itemProduct.getProduct_des());
+      itemProductModel.setMore_information(itemProduct.getMore_information());
+      itemProductModel.setProduct_price(itemProduct.getProduct_price());
+    }
 
+    return itemProductModel;
+  }
   /**
    * Transform a List of {@link ItemProductEntity} into a Collection of {@link ItemProduct}.
    *
    * @param itemProducts Object Collection to be transformed.
    * @return {@link ItemProduct} if valid {@link ItemProductEntity} otherwise null.
    */
-  public List<ItemProductModel> transform(Collection<ItemProduct> itemProducts) {
-    List<ItemProductModel> itemProductModelCollection;
-
+  public List<BaseModel> transform(Collection<ItemProduct> itemProducts) {
+    List<BaseModel> itemProductModelCollection;
+    boolean bl = false;
     if (itemProducts != null && !itemProducts.isEmpty()) {
       itemProductModelCollection = new ArrayList<>();
       for (ItemProduct itemProduct : itemProducts) {
-        itemProductModelCollection.add(transform(itemProduct));
+        if(bl){
+          itemProductModelCollection.add(transform(itemProduct));
+          bl = !bl;
+        } else {
+          itemProductModelCollection.add(transform2(itemProduct));
+          bl = !bl;
+        }
+
       }
     } else {
       itemProductModelCollection = Collections.emptyList();

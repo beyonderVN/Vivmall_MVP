@@ -5,6 +5,7 @@ import com.vinhsang.vivmall.domain.ItemProduct;
 import com.vinhsang.vivmall.domain.interactor.DefaultSubscriber;
 import com.vinhsang.vivmall.domain.interactor.UseCase;
 import com.vinhsang.vivmall.presentation.coremvp.SimpleMVPPresenter;
+import com.vinhsang.vivmall.presentation.mapper.ItemProductModelDataMapper;
 
 import java.util.List;
 
@@ -19,12 +20,14 @@ public class CataloguePresenter extends SimpleMVPPresenter<CatalogueView, Catalo
     private static final String TAG = "CataloguePresenter";
     private final UseCase productCase;
     private final UseCase productListByCata;
-
+    private final ItemProductModelDataMapper itemProductModelDataMapper;
     @Inject
     public CataloguePresenter(@Named("catalogueList") UseCase productCase,
-                              @Named("productListByCata") UseCase productListByCata) {
+                              @Named("productListByCata") UseCase productListByCata,
+                              ItemProductModelDataMapper itemProductModelDataMapper) {
         this.productCase = productCase;
         this.productListByCata = productListByCata;
+        this.itemProductModelDataMapper = itemProductModelDataMapper;
     }
 
     @Override
@@ -100,7 +103,7 @@ public class CataloguePresenter extends SimpleMVPPresenter<CatalogueView, Catalo
         @Override
         public void onNext(List<ItemProduct> itemProducts) {
             super.onNext(itemProducts);
-            getPresentationModel().loadMore(itemProducts);
+            getPresentationModel().loadMore(itemProductModelDataMapper.transform(itemProducts));
             if (getMvpView() != null) {
                 getMvpView().showContent();
             }
@@ -127,7 +130,7 @@ public class CataloguePresenter extends SimpleMVPPresenter<CatalogueView, Catalo
             if (getMvpView() != null) {
                 getMvpView().finishLoadingMore();
             }
-            getPresentationModel().loadMore(itemProducts);
+            getPresentationModel().loadMore(itemProductModelDataMapper.transform(itemProducts));
             if (getMvpView() != null) {
                 getMvpView().onUpdate();
             }

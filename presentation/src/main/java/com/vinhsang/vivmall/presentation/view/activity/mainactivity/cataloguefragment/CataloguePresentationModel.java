@@ -3,7 +3,7 @@ package com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefr
 import android.util.Log;
 
 import com.vinhsang.vivmall.domain.Catalogue;
-import com.vinhsang.vivmall.domain.ItemProduct;
+import com.vinhsang.vivmall.presentation.model.BaseModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class CataloguePresentationModel implements Serializable {
     private static final String TAG = "CataloguePresentationMo";
-    private List<ItemProduct> mItemProducts = new ArrayList<ItemProduct>();
+    private List<BaseModel> mItemProducts = new ArrayList<BaseModel>();
     private String tittle;
     private List<Catalogue> listTag = new ArrayList<>();
     private String currentTag;
@@ -64,12 +64,8 @@ public class CataloguePresentationModel implements Serializable {
         this.tittle = tittle;
     }
 
-    public List<ItemProduct> getmItemProducts() {
+    public List<BaseModel> getmItemProducts() {
         return mItemProducts;
-    }
-
-    public void setmItemProducts(List<ItemProduct> mItemProducts) {
-        this.mItemProducts = mItemProducts;
     }
 
     public String getTittle() {
@@ -95,7 +91,7 @@ public class CataloguePresentationModel implements Serializable {
         }
         return 0;
     }
-    public void loadMore(List<ItemProduct> listItemProduct) {
+    public void loadMore(List<BaseModel> listItemProduct) {
         lastItem = lastItem + listItemProduct.size();
         mItemProducts.addAll(listItemProduct);
     }

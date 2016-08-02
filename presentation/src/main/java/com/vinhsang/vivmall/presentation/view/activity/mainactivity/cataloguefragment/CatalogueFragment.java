@@ -273,8 +273,6 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
     @Override
     public void init() {
 
-        itemProductsAdapter.setmItemProducts(presenter.getPresentationModel().getmItemProducts());
-        itemProductsAdapter.notifyDataSetChanged();
     }
 
     @Override

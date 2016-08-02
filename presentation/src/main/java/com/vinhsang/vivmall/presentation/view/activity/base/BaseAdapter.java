@@ -14,21 +14,19 @@ import com.vinhsang.vivmall.presentation.model.BaseModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 /**
  * Created by Long on 7/11/2016.
  */
 
 public abstract class BaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private static final String TAG = "ItemProductsAdapter";
+    private static final String TAG = "BaseAdapter";
 
     protected static final int TYPE_LOADING_MORE = -1;
     protected static final int TYPE_NO_MORE = -2;
 
     List<BaseModel> mDataItems = new ArrayList<>();
 
-    @Inject
+
     public BaseAdapter(List<BaseModel> items) {
         mDataItems = items;
     }
@@ -41,7 +39,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<RecyclerView.View
             case TYPE_NO_MORE:
                 return createNoMoreHolder(parent);
         }
-        return createDataItemHolder(parent);
+        return createDataItemHolder(viewType,parent);
 
     }
 
@@ -59,7 +57,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<RecyclerView.View
                 break;
         }
 
-        bindDataItemViewHolder();
+        bindDataItemViewHolder(holder, position);
 
     }
 
@@ -89,7 +87,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
     public void dataFinishedLoading() {
-        if(isNoMore()) {
+        if(!isNoMore()) {
             count--;
             Log.d(TAG, "dataFinishedLoading: "+count);
             if (!isLoadingMore) return;
@@ -141,15 +139,19 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     protected abstract int getDataItemViewType(int position) ;
 
-    protected abstract RecyclerView.ViewHolder createDataItemHolder(ViewGroup parent);
+    protected abstract RecyclerView.ViewHolder createDataItemHolder(int viewType, ViewGroup parent);
 
-    protected abstract void bindDataItemViewHolder();
+    protected abstract void bindDataItemViewHolder(RecyclerView.ViewHolder holder, int position);
 
     protected BaseModel getItem(int position) {
         return mDataItems.get(position);
     }
 
 
+
+
+
+    ////////////////////////////////LoadingMoreHolder////////////////////////////////////////////////////////
 
     /* package */ protected static class LoadingMoreHolder extends RecyclerView.ViewHolder {
 
@@ -178,6 +180,8 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<RecyclerView.View
         layoutParams.setFullSpan(true);
         holder.progress.setVisibility(View.VISIBLE );
     }
+
+    ///////////////////////////////NoMoreHolder/////////////////////////////////////////////////////////
 
     /* package */ protected static class NoMoreHolder extends RecyclerView.ViewHolder {
         public NoMoreHolder(View itemView) {

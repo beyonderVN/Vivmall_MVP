@@ -1,101 +1,212 @@
 package com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.vinhsang.vivmall.domain.ItemProduct;
+import com.squareup.picasso.Picasso;
 import com.vinhsang.vivmall.presentation.R;
+import com.vinhsang.vivmall.presentation.model.BaseModel;
+import com.vinhsang.vivmall.presentation.model.ItemProductModel;
+import com.vinhsang.vivmall.presentation.model.ItemProductModel2;
+import com.vinhsang.vivmall.presentation.view.activity.base.BaseAdapter;
 import com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment.CataloguePresentationModel;
-import com.vinhsang.vivmall.presentation.view.recyclerviewhelper.adapter.ItemProductsAdapter;
+import com.vinhsang.vivmall.presentation.view.recyclerviewhelper.DynamicHeightImageView;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Long on 7/11/2016.
  */
 
-public class ItemProductCatalogueAdapter extends ItemProductsAdapter{
+public class ItemProductCatalogueAdapter extends BaseAdapter{
     private static final String TAG = "ItemProductCatalogue";
+
     CataloguePresentationModel cataloguePresentationModel;
-    protected static final int TYPE_NO_MORE = -2;
+    protected static final int TYPE_ITEMPRODUCT = BaseModel.ModelType.ITEM_PRODUCT;
+    protected static final int TYPE_ITEMPRODUCT2 = BaseModel.ModelType.ITEM_PRODUCT2;
 
-
-    public ItemProductCatalogueAdapter(CataloguePresentationModel cataloguePresentationModel) {
+    @Inject
+    public ItemProductCatalogueAdapter (CataloguePresentationModel cataloguePresentationModel){
         super(cataloguePresentationModel.getmItemProducts());
         this.cataloguePresentationModel = cataloguePresentationModel;
     }
-
     @Override
-    public void dataFinishedLoading() {
-        if(cataloguePresentationModel.isNoMore()==false) {
-            super.dataFinishedLoading();
-        }else{
-            notifyItemChanged(getLoadingMoreItemPosition());
-        }
+    protected boolean isNoMore() {
+        return cataloguePresentationModel.isNoMore();
     }
 
     @Override
-    public int getItemViewType(int position) {
-        if (position < getDataItemCount()
-                && getDataItemCount() > 0) {
-            ItemProduct item = getItem(position);
-            if (item instanceof ItemProduct) {
-                return TYPE_ITEMPRODUCT;
-            }
-        }
-        if (cataloguePresentationModel.isNoMore()) {
-            return TYPE_NO_MORE;
-        }
-        return TYPE_LOADING_MORE;
-
+    protected int getDataItemViewType(int position) {
+        return getItem(position).getModelType();
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    protected RecyclerView.ViewHolder createDataItemHolder(int viewType, ViewGroup parent) {
         switch (viewType) {
             case TYPE_ITEMPRODUCT:
                 return createItemProductHolder(parent);
-            case TYPE_LOADING_MORE:
-                return createLoadingMoreHolder(parent);
-            case TYPE_NO_MORE:
-                return createNoMoreHolder(parent);
+            case TYPE_ITEMPRODUCT2:
+                return createItemProductHolder2(parent);
         }
         return null;
-
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        super.onBindViewHolder(holder, position);
+    protected void bindDataItemViewHolder(RecyclerView.ViewHolder holder,int position) {
         switch (getItemViewType(position)) {
-            case TYPE_NO_MORE:
-                bindNoMoreViewHolder((NoMoreHolder) holder, position);
+            case TYPE_ITEMPRODUCT:
+                bindItemProductView((ItemProductModel) getItem(position), (ItemProductViewHolder) holder);
+                break;
+            case TYPE_ITEMPRODUCT2:
+                bindItemProductView2((ItemProductModel2) getItem(position), (ItemProductViewHolder2) holder);
                 break;
         }
     }
 
-    /* package */ protected static class NoMoreHolder extends RecyclerView.ViewHolder {
-        public NoMoreHolder(View itemView) {
+    protected ItemProductViewHolder createItemProductHolder(ViewGroup parent) {
+        View v = LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.layout_itemproduct,parent,false);
+        ItemProductViewHolder viewHolder = new ItemProductViewHolder(v);
+        return viewHolder;
+    }
+
+    protected void bindItemProductView(final ItemProductModel item, ItemProductViewHolder holder) {
+        holder.setProductImage(item.getProduct_image());
+        holder.setProductName(item.getProduct_name());
+        holder.setProductPrice(item.getProduct_price());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), item.getProduct_name(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /* package */ protected static  class ItemProductViewHolder extends RecyclerView.ViewHolder{
+
+        private static final String TAG = "ItemProductViewHolder";
+        @BindView(R.id.image_product)
+        DynamicHeightImageView imageView;
+        @BindView(R.id.product_name)
+        TextView productName;
+        @BindView(R.id.product_price)
+        TextView productPrice;
+        Context context;
+        public ItemProductViewHolder(View itemView) {
+
             super(itemView);
-            Log.d(TAG, "NoMoreHolder: ");
+            ButterKnife.bind(this, itemView);
+            context = itemView.getContext();
+
         }
+        public void setProductImage(String productImage ){
 
+            if(imageView!=null){
+
+                Picasso.with(context).load(productImage).into(imageView);
+
+            }
+        }
+        public void setProductName(String _productName ){
+
+            if(productName!=null){
+                productName.setText(_productName);
+
+            }
+        }
+        public void setProductPrice(String _productPrice ){
+
+            if(productPrice!=null){
+                productPrice.setText(formatNumber(_productPrice));
+            }
+        }
+        String formatNumber(String s){
+
+            if(s!=null){
+                int l =s.length();
+                s = s.substring(0,l-3);
+                s ="đ"+s+"k";
+            }
+
+            return s;
+        }
     }
 
-    protected void bindNoMoreViewHolder(NoMoreHolder holder, int position) {
-        // only show the infinite load progress spinner if there are already items in the
-        // grid i.e. it's not the first item & data is being loaded
-//        holder.progress.setVisibility((position > 0)
-//                ? View.VISIBLE : View.INVISIBLE);
-        StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
-        layoutParams.setFullSpan(true);
+    /* package */ protected static  class ItemProductViewHolder2 extends RecyclerView.ViewHolder{
+
+        private static final String TAG = "ItemProductViewHolder";
+        @BindView(R.id.image_product)
+        DynamicHeightImageView imageView;
+        @BindView(R.id.product_name)
+        TextView productName;
+        @BindView(R.id.product_price)
+        TextView productPrice;
+        Context context;
+        public ItemProductViewHolder2(View itemView) {
+
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+            context = itemView.getContext();
+
+        }
+        public void setProductImage(String productImage ){
+
+            if(imageView!=null){
+
+                Picasso.with(context).load(productImage).into(imageView);
+
+            }
+        }
+        public void setProductName(String _productName ){
+
+            if(productName!=null){
+                productName.setText(_productName);
+
+            }
+        }
+        public void setProductPrice(String _productPrice ){
+
+            if(productPrice!=null){
+                productPrice.setText(formatNumber(_productPrice));
+            }
+        }
+        String formatNumber(String s){
+
+            if(s!=null){
+                int l =s.length();
+                s = s.substring(0,l-3);
+                s ="đ"+s+"k";
+            }
+
+            return s;
+        }
     }
-    protected NoMoreHolder createNoMoreHolder(ViewGroup parent) {
-        return new NoMoreHolder(
-                LayoutInflater
-                        .from(parent.getContext())
-                        .inflate(R.layout.infinite_no_more, parent, false));
+    protected ItemProductViewHolder2 createItemProductHolder2(ViewGroup parent) {
+        View v = LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.layout_itemproduct2,parent,false);
+        ItemProductViewHolder2 viewHolder = new ItemProductViewHolder2(v);
+        return viewHolder;
+    }
+
+    protected void bindItemProductView2(final ItemProductModel2 item, ItemProductViewHolder2 holder) {
+        holder.setProductImage(item.getProduct_image());
+        holder.setProductName(item.getProduct_name());
+        holder.setProductPrice(item.getProduct_price());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), item.getProduct_name(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

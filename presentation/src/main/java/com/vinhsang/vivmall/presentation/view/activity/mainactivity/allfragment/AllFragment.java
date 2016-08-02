@@ -1,6 +1,5 @@
 package com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -167,7 +166,6 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
 
     @Override
     public void showContent() {
-        itemProductsAdapter.notifyDataSetChanged();
         resultAnimator.setDisplayedChild(POSITION_CONTENT_VIEW);
     }
 
@@ -200,6 +198,7 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
     @Override
     public void onUpdate() {
         itemProductsAdapter.notifyDataSetChanged();
+        recyclerView.setLayoutFrozen(false);
         swipeRefresh.setRefreshing(false);
     }
 
@@ -235,6 +234,7 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
         upSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                recyclerView.setLayoutFrozen(true);
                 upSwipeRefreshLayout.setRefreshing(true);
                 (new Handler()).postDelayed(new Runnable() {
                     @Override
@@ -244,14 +244,10 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
                         itemProductsAdapter.setLoadingMore(false);
                         presenter.resetData();
                     }
-                }, 1000);
+                }, 500);
 
             }
         });
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
 }

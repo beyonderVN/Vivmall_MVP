@@ -3,11 +3,11 @@ package com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment
 
 import android.util.Log;
 
-import com.vinhsang.vivmall.data.datamanager.DataInterface;
 import com.vinhsang.vivmall.domain.ItemProduct;
 import com.vinhsang.vivmall.domain.interactor.DefaultSubscriber;
 import com.vinhsang.vivmall.domain.interactor.UseCase;
 import com.vinhsang.vivmall.presentation.coremvp.SimpleMVPPresenter;
+import com.vinhsang.vivmall.presentation.mapper.ItemProductModelDataMapper;
 
 import java.util.List;
 
@@ -21,12 +21,12 @@ import javax.inject.Named;
 public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationModel> {
 
     private static final String TAG = "AllPresenter";
-    private final DataInterface dataManager;
+    private final ItemProductModelDataMapper itemProductModelDataMapper;
     private final UseCase useCase;
 
     @Inject
-    public AllPresenter(DataInterface dataManager, @Named("userList") UseCase useCase) {
-        this.dataManager = dataManager;
+    public AllPresenter(ItemProductModelDataMapper itemProductModelDataMapper, @Named("userList") UseCase useCase) {
+        this.itemProductModelDataMapper = itemProductModelDataMapper;
         this.useCase = useCase;
     }
 
@@ -41,6 +41,7 @@ public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationMod
 
         if (getMvpView() != null) {
             getMvpView().showContent();
+            getMvpView().onUpdate();
         }
     }
 
@@ -96,7 +97,7 @@ public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationMod
         public void onNext(List<ItemProduct> itemProducts) {
             //UserListPresenter.this.showUsersCollectionInView(users);
             Log.d(TAG, "onNext: " + itemProducts.size());
-            getPresentationModel().loadMore(itemProducts);
+            getPresentationModel().loadMore(itemProductModelDataMapper.transform(itemProducts));
             showContent();
         }
     }
@@ -125,7 +126,7 @@ public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationMod
             if (getMvpView() != null) {
                 getMvpView().finishLoadingMore();
             }
-            getPresentationModel().loadMore(itemProducts);
+            getPresentationModel().loadMore(itemProductModelDataMapper.transform(itemProducts));
             if (getMvpView() != null) {
                 getMvpView().onUpdate();
             }
