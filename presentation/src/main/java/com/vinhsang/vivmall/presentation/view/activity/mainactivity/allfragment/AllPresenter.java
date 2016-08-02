@@ -96,9 +96,6 @@ public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationMod
         public void onNext(List<ItemProduct> itemProducts) {
             //UserListPresenter.this.showUsersCollectionInView(users);
             Log.d(TAG, "onNext: " + itemProducts.size());
-            if (itemProducts.size() == 0) {
-                getPresentationModel().setNoMore(true);
-            }
             getPresentationModel().loadMore(itemProducts);
             showContent();
         }

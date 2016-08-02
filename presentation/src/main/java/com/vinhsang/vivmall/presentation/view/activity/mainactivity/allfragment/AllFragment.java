@@ -1,5 +1,6 @@
 package com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -144,10 +145,14 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
     //IMPORTANT run after presenter.attachView()
     @Override
     public void onStart() {
+        Log.d(TAG, "onStart: ");
         super.onStart();
-        allPresentationModel = presenter.getPresentationModel();
-        itemProductsAdapter = new ItemProductAllAdapter(allPresentationModel);
-        recyclerView.setAdapter(itemProductsAdapter);
+        if(allPresentationModel==null){
+            allPresentationModel = presenter.getPresentationModel();
+            itemProductsAdapter = new ItemProductAllAdapter(allPresentationModel);
+            recyclerView.setAdapter(itemProductsAdapter);
+        }
+        
     }
 
     @Override
@@ -236,11 +241,17 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
                     public void run() {
                         upSwipeRefreshLayout.setRefreshing(false);
                         Log.d("Swipe", "Refreshing Number");
+                        itemProductsAdapter.setLoadingMore(false);
                         presenter.resetData();
                     }
                 }, 1000);
 
             }
         });
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 }

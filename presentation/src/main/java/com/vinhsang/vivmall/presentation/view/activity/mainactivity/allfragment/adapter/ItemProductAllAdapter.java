@@ -2,6 +2,7 @@ package com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.util.List;
  */
 
 public class ItemProductAllAdapter extends ItemProductsAdapter {
+    private static final String TAG = "ItemProductAllAdapter";
     AllPresentationModel allPresentationModel;
     protected static final int TYPE_NO_MORE = -2;
     public ItemProductAllAdapter(List<ItemProduct> mItemProducts) {
@@ -41,6 +43,9 @@ public class ItemProductAllAdapter extends ItemProductsAdapter {
 
     @Override
     public int getItemViewType(int position) {
+        Log.d(TAG, "getItemViewType: "+position);
+        Log.d(TAG, "getItemViewType: "+allPresentationModel.isNoMore());
+        Log.d(TAG, "getItemViewType: "+allPresentationModel.getmItemProducts().size());
         if (position < getDataItemCount()
                 && getDataItemCount() > 0) {
             ItemProduct item = getItem(position);

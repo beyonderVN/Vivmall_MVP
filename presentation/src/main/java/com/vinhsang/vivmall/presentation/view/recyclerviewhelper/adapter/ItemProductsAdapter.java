@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
  */
 
 public class ItemProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private static final String TAG = "ItemProductAllAdapter";
+    private static final String TAG = "ItemProductsAdapter";
     List<ItemProduct> mItemProducts ;
     protected static final int TYPE_ITEMPRODUCT = 0;
     protected static final int TYPE_LOADING_MORE = -1;

@@ -12,20 +12,15 @@ import com.vinhsang.vivmall.presentation.R;
 import com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment.CataloguePresentationModel;
 import com.vinhsang.vivmall.presentation.view.recyclerviewhelper.adapter.ItemProductsAdapter;
 
-import java.util.List;
-
 /**
  * Created by Long on 7/11/2016.
  */
 
 public class ItemProductCatalogueAdapter extends ItemProductsAdapter{
-    private static final String TAG = "ItemProductAllAdapter";
+    private static final String TAG = "ItemProductCatalogue";
     CataloguePresentationModel cataloguePresentationModel;
     protected static final int TYPE_NO_MORE = -2;
 
-    public ItemProductCatalogueAdapter(List<ItemProduct> mItemProducts) {
-        super(mItemProducts);
-    }
 
     public ItemProductCatalogueAdapter(CataloguePresentationModel cataloguePresentationModel) {
         super(cataloguePresentationModel.getmItemProducts());
@@ -34,7 +29,6 @@ public class ItemProductCatalogueAdapter extends ItemProductsAdapter{
 
     @Override
     public void dataFinishedLoading() {
-        Log.d(TAG, "dataFinishedLoading: "+ cataloguePresentationModel.isNoMore());
         if(cataloguePresentationModel.isNoMore()==false) {
             super.dataFinishedLoading();
         }else{
@@ -83,8 +77,6 @@ public class ItemProductCatalogueAdapter extends ItemProductsAdapter{
     }
 
     /* package */ protected static class NoMoreHolder extends RecyclerView.ViewHolder {
-
-
         public NoMoreHolder(View itemView) {
             super(itemView);
             Log.d(TAG, "NoMoreHolder: ");

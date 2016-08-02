@@ -45,7 +45,9 @@
             android:id="@+id/progress_bar"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/colorPrimaryDark"
+            android:indeterminateTintMode="src_atop"/>
 
     </ViewAnimator>
     <LinearLayout
