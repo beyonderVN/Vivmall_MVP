@@ -20,7 +20,7 @@ public abstract class BaseActivity<M extends Serializable, V extends MVPView, P 
 extends MVPActivity<M,V,P> {
     @Inject protected P presenter;
     @Inject
-    Navigator navigator;
+    protected Navigator navigator;
     @NonNull
     @Override
     protected P createPresenter() {

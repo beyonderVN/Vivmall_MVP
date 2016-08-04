@@ -96,7 +96,7 @@ public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationMod
         @Override
         public void onNext(List<ItemProduct> itemProducts) {
             //UserListPresenter.this.showUsersCollectionInView(users);
-            Log.d(TAG, "onNext: " + itemProducts.size());
+
             getPresentationModel().loadMore(itemProductModelDataMapper.transform(itemProducts));
             showContent();
         }
@@ -106,7 +106,7 @@ public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationMod
 
         @Override
         public void onCompleted() {
-            Log.d(TAG, "onCompleted: ");
+            ;
         }
 
         @Override
@@ -119,7 +119,7 @@ public class AllPresenter extends SimpleMVPPresenter<AllView, AllPresentationMod
         @Override
         public void onNext(List<ItemProduct> itemProducts) {
             //UserListPresenter.this.showUsersCollectionInView(users);
-            Log.d(TAG, "onNext: " + itemProducts.size());
+
             if (itemProducts.size() == 0) {
                 getPresentationModel().setNoMore(true);
             }

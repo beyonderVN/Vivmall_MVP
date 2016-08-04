@@ -16,6 +16,10 @@
 package com.vinhsang.vivmall.presentation.navigation;
 
 import android.content.Context;
+import android.content.Intent;
+
+import com.vinhsang.vivmall.presentation.model.ItemProductModel;
+import com.vinhsang.vivmall.presentation.view.activity.detailactivity.ItemDetailActivity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -44,14 +48,14 @@ public class Navigator {
   }
 
   /**
-   * Goes to the user details screen.
+   * Goes to the item details screen.
    *
    * @param context A Context needed to open the destiny activity.
    */
-  public void navigateToUserDetails(Context context, int userId) {
+  public void navigateToItemDetails(Context context, ItemProductModel itemId) {
     if (context != null) {
-//      Intent intentToLaunch = UserDetailsActivity.getCallingIntent(context, userId);
-//      context.startActivity(intentToLaunch);
+      Intent intentToLaunch = ItemDetailActivity.getCallingIntent(context, itemId);
+      context.startActivity(intentToLaunch);
     }
   }
 }

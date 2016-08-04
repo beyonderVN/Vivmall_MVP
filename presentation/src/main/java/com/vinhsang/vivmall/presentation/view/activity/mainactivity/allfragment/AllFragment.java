@@ -148,7 +148,7 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
         super.onStart();
         if(allPresentationModel==null){
             allPresentationModel = presenter.getPresentationModel();
-            itemProductsAdapter = new ItemProductAllAdapter(allPresentationModel);
+            itemProductsAdapter = new ItemProductAllAdapter(getActivity(),allPresentationModel,navigator);
             recyclerView.setAdapter(itemProductsAdapter);
         }
         

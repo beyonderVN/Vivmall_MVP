@@ -1,5 +1,6 @@
 package com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import com.vinhsang.vivmall.presentation.R;
 import com.vinhsang.vivmall.presentation.model.BaseModel;
 import com.vinhsang.vivmall.presentation.model.ItemProductModel;
 import com.vinhsang.vivmall.presentation.model.ItemProductModel2;
+import com.vinhsang.vivmall.presentation.navigation.Navigator;
 import com.vinhsang.vivmall.presentation.view.activity.base.BaseAdapter;
 import com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment.AllPresentationModel;
 import com.vinhsang.vivmall.presentation.view.recyclerviewhelper.DynamicHeightImageView;
@@ -31,11 +33,14 @@ public class ItemProductAllAdapter extends BaseAdapter {
     AllPresentationModel allPresentationModel;
     protected static final int TYPE_ITEMPRODUCT = BaseModel.ModelType.ITEM_PRODUCT;
     protected static final int TYPE_ITEMPRODUCT2 = BaseModel.ModelType.ITEM_PRODUCT2;
-
+    Activity activity;
+    Navigator navigator;
     @Inject
-    public ItemProductAllAdapter (AllPresentationModel allPresentationModel){
+    public ItemProductAllAdapter (Activity activity,AllPresentationModel allPresentationModel,Navigator navigator){
         super(allPresentationModel.getmItemProducts());
         this.allPresentationModel = allPresentationModel;
+        this.activity = activity;
+        this.navigator = navigator;
     }
     @Override
     protected boolean isNoMore() {
@@ -74,7 +79,8 @@ public class ItemProductAllAdapter extends BaseAdapter {
         View v = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.layout_itemproduct,parent,false);
-        ItemProductViewHolder viewHolder = new ItemProductViewHolder(v);
+        final ItemProductViewHolder viewHolder = new ItemProductViewHolder(v);
+
         return viewHolder;
     }
 
@@ -85,7 +91,7 @@ public class ItemProductAllAdapter extends BaseAdapter {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), item.getProduct_name(), Toast.LENGTH_SHORT).show();
+                navigator.navigateToItemDetails(activity,item);
             }
         });
     }
@@ -208,4 +214,7 @@ public class ItemProductAllAdapter extends BaseAdapter {
             }
         });
     }
+
+
+
 }

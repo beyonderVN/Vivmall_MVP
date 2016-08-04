@@ -77,8 +77,6 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public void dataStartedLoading() {
         count++;
-        Log.d(TAG, "dataStartedLoading: "+count);
-
         if (isLoadingMore) return;
         isLoadingMore = true;
         notifyItemInserted(getLoadingMoreItemPosition());
@@ -89,7 +87,6 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void dataFinishedLoading() {
         if(!isNoMore()) {
             count--;
-            Log.d(TAG, "dataFinishedLoading: "+count);
             if (!isLoadingMore) return;
             final int loadingPos = getLoadingMoreItemPosition();
             isLoadingMore = false;
@@ -193,10 +190,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
     protected void bindNoMoreViewHolder(NoMoreHolder holder, int position) {
-        // only show the infinite load progress spinner if there are already items in the
-        // grid i.e. it's not the first item & data is being loaded
-//        holder.progress.setVisibility((position > 0)
-//                ? View.VISIBLE : View.INVISIBLE);
+
         StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
         layoutParams.setFullSpan(true);
     }

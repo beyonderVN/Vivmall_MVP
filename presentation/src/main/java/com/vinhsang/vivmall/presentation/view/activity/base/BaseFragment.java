@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.vinhsang.vivmall.presentation.coremvp.MVPFragment;
 import com.vinhsang.vivmall.presentation.coremvp.MVPPresenter;
 import com.vinhsang.vivmall.presentation.coremvp.MVPView;
+import com.vinhsang.vivmall.presentation.navigation.Navigator;
 
 import java.io.Serializable;
 
@@ -18,7 +19,8 @@ public abstract class BaseFragment<M extends Serializable, V extends MVPView, P 
         extends MVPFragment<M, V, P> {
     @Inject
     protected P presenter;
-
+    @Inject
+    protected Navigator navigator;
     @NonNull
     @Override protected P createPresenter() {
         //this field will be populated by field injeciton from dagger
