@@ -17,7 +17,7 @@ import javax.inject.Named;
  */
 
 public class CataloguePresenter extends SimpleMVPPresenter<CatalogueView, CataloguePresentationModel> {
-    private static final String TAG = "CataloguePresenter";
+    private static final String TAG = "CataloguePresenter2";
     private final UseCase productCase;
     private final UseCase productListByCata;
     private final ItemProductModelDataMapper itemProductModelDataMapper;

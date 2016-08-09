@@ -24,6 +24,10 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<RecyclerView.View
     protected static final int TYPE_LOADING_MORE = -1;
     protected static final int TYPE_NO_MORE = -2;
 
+    public List<BaseModel> getmDataItems() {
+        return mDataItems;
+    }
+
     List<BaseModel> mDataItems = new ArrayList<>();
 
 

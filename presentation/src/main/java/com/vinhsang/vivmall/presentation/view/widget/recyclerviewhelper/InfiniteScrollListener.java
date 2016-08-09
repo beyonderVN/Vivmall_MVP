@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.presentation.view.recyclerviewhelper;
+package com.vinhsang.vivmall.presentation.view.widget.recyclerviewhelper;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

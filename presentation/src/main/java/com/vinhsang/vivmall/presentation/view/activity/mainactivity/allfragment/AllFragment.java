@@ -20,7 +20,7 @@ import com.vinhsang.vivmall.presentation.MainApplication;
 import com.vinhsang.vivmall.presentation.R;
 import com.vinhsang.vivmall.presentation.view.activity.base.BaseFragment;
 import com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment.adapter.ItemProductAllAdapter;
-import com.vinhsang.vivmall.presentation.view.recyclerviewhelper.InfiniteScrollListener;
+import com.vinhsang.vivmall.presentation.view.widget.recyclerviewhelper.InfiniteScrollListener;
 
 import butterknife.BindInt;
 import butterknife.BindView;

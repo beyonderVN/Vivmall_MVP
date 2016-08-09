@@ -9,6 +9,7 @@ import com.vinhsang.vivmall.data.datamanager.DataInterface;
 import com.vinhsang.vivmall.domain.executor.PostExecutionThread;
 import com.vinhsang.vivmall.domain.executor.ThreadExecutor;
 import com.vinhsang.vivmall.domain.repository.ProductRepositoty;
+import com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment2.CatalogueFragment2;
 
 import javax.inject.Singleton;
 
@@ -26,6 +27,7 @@ public interface MainComponent {
     void inject(MainActivity mainActivity);
     void inject(AllFragment allFragment);
     void inject(CatalogueFragment catalogueFragment);
+    void inject(CatalogueFragment2 catalogueFragment);
 
     Context context();
     ThreadExecutor threadExecutor();

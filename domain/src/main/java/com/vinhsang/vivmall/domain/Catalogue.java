@@ -1,6 +1,7 @@
 package com.vinhsang.vivmall.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Long on 7/25/2016.
@@ -10,6 +11,7 @@ public class Catalogue implements Serializable{
     String title ;
     int id;
 
+    List<ItemProduct> itemProducts;
     public Catalogue(String title, int id) {
         this.title = title;
         this.id = id;
@@ -32,6 +34,14 @@ public class Catalogue implements Serializable{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<ItemProduct> getItemProducts() {
+        return itemProducts;
+    }
+
+    public void setItemProducts(List<ItemProduct> itemProducts) {
+        this.itemProducts = itemProducts;
     }
 
     @Override public String toString() {

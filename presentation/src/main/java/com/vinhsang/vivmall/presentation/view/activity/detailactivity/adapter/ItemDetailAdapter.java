@@ -20,8 +20,8 @@ import butterknife.ButterKnife;
  * Created by Long on 8/4/2016.
  */
 
-public class ItemDetalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final String TAG = "ItemDetalAdapter";
+public class ItemDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = "ItemDetailAdapter";
     private static final int ITEM_IMAGE = 0;
     private static final int TYPE_NO_COMMENTS = 1;
     private static final int TYPE_COMMENT = 2;
@@ -31,7 +31,7 @@ public class ItemDetalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     Activity activity;
     ItemProductModel itemProductModel;
 
-    public ItemDetalAdapter(Activity activity, ItemProductModel itemProductModel) {
+    public ItemDetailAdapter(Activity activity, ItemProductModel itemProductModel) {
         this.activity = activity;
         this.itemProductModel = itemProductModel;
     }
@@ -41,6 +41,12 @@ public class ItemDetalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         Log.d(TAG, "onCreateViewHolder: ");
         switch (viewType) {
             case ITEM_IMAGE:
+                return createImagesHolder(parent);
+            case TYPE_NO_COMMENTS:
+                return createImagesHolder(parent);
+            case TYPE_COMMENT:
+                return createImagesHolder(parent);
+            case TYPE_COMMENT_REPLY:
                 return createImagesHolder(parent);
         }
         return null;
@@ -52,13 +58,19 @@ public class ItemDetalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         switch (getItemViewType(position)) {
             case ITEM_IMAGE:
                 bindImagesHolder((ImagesHolder) holder, itemProductModel.getProduct_image());
+            case TYPE_NO_COMMENTS:
+                bindImagesHolder((ImagesHolder) holder, itemProductModel.getProduct_image());
+            case TYPE_COMMENT:
+                bindImagesHolder((ImagesHolder) holder, itemProductModel.getProduct_image());
+            case TYPE_COMMENT_REPLY:
+                bindImagesHolder((ImagesHolder) holder, itemProductModel.getProduct_image());
         }
     }
 
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 4;
     }
 
     @Override
@@ -66,8 +78,8 @@ public class ItemDetalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return position;
     }
 
-    public void init() {
-        for (int i = 0; i < 1; i++) {
+    public void  init() {
+        for (int i = 0; i < 3; i++) {
             notifyItemInserted(i);
         }
     }

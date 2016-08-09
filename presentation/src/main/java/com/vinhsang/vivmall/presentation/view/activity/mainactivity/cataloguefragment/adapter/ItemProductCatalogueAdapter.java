@@ -15,7 +15,7 @@ import com.vinhsang.vivmall.presentation.model.ItemProductModel;
 import com.vinhsang.vivmall.presentation.model.ItemProductModel2;
 import com.vinhsang.vivmall.presentation.view.activity.base.BaseAdapter;
 import com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment.CataloguePresentationModel;
-import com.vinhsang.vivmall.presentation.view.recyclerviewhelper.DynamicHeightImageView;
+import com.vinhsang.vivmall.presentation.view.widget.DynamicHeightImageView;
 
 import javax.inject.Inject;
 
@@ -93,7 +93,7 @@ public class ItemProductCatalogueAdapter extends BaseAdapter{
 
     /* package */ protected static  class ItemProductViewHolder extends RecyclerView.ViewHolder{
 
-        private static final String TAG = "ItemProductViewHolder";
+        private static final String TAG = "SectionViewHolder";
         @BindView(R.id.image_product)
         DynamicHeightImageView imageView;
         @BindView(R.id.product_name)
@@ -143,7 +143,7 @@ public class ItemProductCatalogueAdapter extends BaseAdapter{
 
     /* package */ protected static  class ItemProductViewHolder2 extends RecyclerView.ViewHolder{
 
-        private static final String TAG = "ItemProductViewHolder";
+        private static final String TAG = "SectionViewHolder";
         @BindView(R.id.image_product)
         DynamicHeightImageView imageView;
         @BindView(R.id.product_name)

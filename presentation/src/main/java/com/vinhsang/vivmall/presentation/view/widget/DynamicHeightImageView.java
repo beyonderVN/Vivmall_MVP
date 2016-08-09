@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.presentation.view.recyclerviewhelper;
+package com.vinhsang.vivmall.presentation.view.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
  */
 public class DynamicHeightImageView extends ImageView {
 
-	private float whRatio = 1;
+	private float whRatio = 0;
 
 	public DynamicHeightImageView(Context context, AttributeSet attrs) {
 		super(context, attrs);

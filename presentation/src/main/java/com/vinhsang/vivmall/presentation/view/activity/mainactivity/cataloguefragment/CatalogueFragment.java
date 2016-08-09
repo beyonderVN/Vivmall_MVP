@@ -10,7 +10,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,7 +23,7 @@ import com.vinhsang.vivmall.presentation.MainApplication;
 import com.vinhsang.vivmall.presentation.R;
 import com.vinhsang.vivmall.presentation.view.activity.base.BaseFragment;
 import com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment.adapter.ItemProductCatalogueAdapter;
-import com.vinhsang.vivmall.presentation.view.recyclerviewhelper.InfiniteScrollListener;
+import com.vinhsang.vivmall.presentation.view.widget.recyclerviewhelper.InfiniteScrollListener;
 
 import butterknife.BindInt;
 import butterknife.BindView;
@@ -34,7 +33,7 @@ import me.gujun.android.taggroup.TagGroup;
 
 
 public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, CatalogueView, CataloguePresenter> implements CatalogueView, TagGroup.OnTagClickListener {
-    private static final String TAG = "CatalogueFragment";
+    private static final String TAG = "CatalogueFragment2";
     private static final int POSITION_CONTENT_VIEW  = 0;
     private static final int POSITION_PROGRESS_VIEW = 1;
 
@@ -56,6 +55,8 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
     ViewAnimator resultAnimator;
     @BindInt(R.integer.column_num)
     int columnNum;
+
+
 //    @BindView(R.id.swipe_refresh)
 //    SwipeRefreshLayout swipeRefresh;
     @OnClick(R.id.expand_button)
@@ -135,11 +136,36 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
         ButterKnife.bind(this, view);
         setupRecyclerView();
         mTagGroup.setOnTagClickListener(this);
-        //setupSwipeRefreshLayout(swipeRefresh);
-
         return view;
 
     }
+
+    View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+        float yD=0, yU=0;
+        boolean onMove = false;
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            if (motionEvent.getAction() == MotionEvent.ACTION_MOVE && onMove==false) {
+                yD = motionEvent.getY();
+                onMove = true;
+            }
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP && onMove==true) {
+                onMove = false;
+            }
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN ) {
+                yD = motionEvent.getY();
+            }
+            yU = motionEvent.getY();
+            if (yU - yD > 5) {
+                showCatalogue();
+            }
+            if (yU - yD < -10) {
+                hideTagGroup();
+                hideCatalogue();
+            }
+            return false;
+        }
+    };
 
     public void setupSwipeRefreshLayout(final SwipeRefreshLayout upSwipeRefreshLayout) {
         upSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark);
@@ -190,34 +216,7 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
                 return false;
             }
         });
-        recyclerView.setOnTouchListener(new View.OnTouchListener() {
-            float yD=0, yU=0;
-            boolean onMove = false;
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_MOVE && onMove==false) {
-                    yD = motionEvent.getY();
-                    onMove = true;
-                    Log.d(TAG, "yD: "+yD);
-                }
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP && onMove==true) {
-                    onMove = false;
-                }
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN ) {
-                    yD = motionEvent.getY();
-                    Log.d(TAG, "yD: "+yD);
-                }
-                yU = motionEvent.getY();
-                if (yU - yD > 10) {
-                    showCatalogue();
-                }
-                if (yU - yD < -5) {
-                    hideTagGroup();
-                    hideCatalogue();
-                }
-                return false;
-            }
-        });
+        recyclerView.setOnTouchListener(onTouchListener);
 
     }
 
@@ -323,4 +322,6 @@ public class CatalogueFragment extends BaseFragment<CataloguePresentationModel, 
         itemProductsAdapter.notifyDataSetChanged();
         //swipeRefresh.setRefreshing(false);
     }
+
+
 }

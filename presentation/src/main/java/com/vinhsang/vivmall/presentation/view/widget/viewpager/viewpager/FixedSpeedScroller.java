@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.vinhsang.vivmall.presentation.widget.viewpager.viewpager;
+package com.vinhsang.vivmall.presentation.view.widget.viewpager.viewpager;
 
 import android.content.Context;
 import android.view.animation.Interpolator;

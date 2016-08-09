@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.vinhsang.vivmall.presentation.widget;
+package com.vinhsang.vivmall.presentation.view.widget;
 
 import android.app.Activity;
 import android.content.Context;

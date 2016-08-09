@@ -26,6 +26,7 @@ import com.vinhsang.vivmall.presentation.R;
 import com.vinhsang.vivmall.presentation.view.activity.base.BaseActivity;
 import com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment.AllFragment;
 import com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment.CatalogueFragment;
+import com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment2.CatalogueFragment2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,6 +113,7 @@ public class MainActivity extends BaseActivity<MainPresentationModel, MainView, 
         fragmentSub = CatalogueFragment.newInstance();
         mAdapter.addFragment(fragmentMain, "All");
         mAdapter.addFragment(fragmentSub, "Catalogue");
+        mAdapter.addFragment(CatalogueFragment2.newInstance(), "Catalogue");
         mViewpager.setAdapter(mAdapter);
         mTabs.setupWithViewPager(mViewpager);
     }
