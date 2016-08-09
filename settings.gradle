@@ -1,1 +1,1 @@
-include ':vivmall', ':domain', ':data', ':presentation'
+include ':vivmall', ':domain', ':data', ':presentation',':killsometime'
