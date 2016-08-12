@@ -1,7 +1,9 @@
 package com.vinhsang.vivmall.presentation.view.activity.mainactivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -39,6 +41,7 @@ import static com.vinhsang.vivmall.presentation.R.id.toolbar;
 
 public class MainActivity extends BaseActivity<MainPresentationModel, MainView, MainPresenter>
         implements NavigationView.OnNavigationItemSelectedListener,MainView {
+    private static final String TAG = "MainActivity";
     //bind
     @BindView(R.id.appbar)
     AppBarLayout mAppBar;
@@ -56,7 +59,7 @@ public class MainActivity extends BaseActivity<MainPresentationModel, MainView, 
     AllFragment fragmentMain;
     CatalogueFragment fragmentSub;
 
-
+    //LinearLayout shape;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +67,9 @@ public class MainActivity extends BaseActivity<MainPresentationModel, MainView, 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+
+
+        //hideContent();
         setupFab();
 
 
@@ -72,13 +78,39 @@ public class MainActivity extends BaseActivity<MainPresentationModel, MainView, 
         setupViewPage();
     }
 
+//    private void hideContent(){
+//        shape = (LinearLayout) findViewById(R.id.content_main);
+//        shape.setVisibility(View.INVISIBLE);
+//        shape.setEnabled(false);
+//    }
     private void setupFab() {
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+//                Animator animator = ViewAnimationUtils.createCircularReveal(
+//                        (View)shape,
+//                        shape.getWidth() - 130,
+//                        shape.getHeight() - 130,
+//                        0,
+//                        (float) Math.hypot(shape.getWidth(), shape.getHeight()));
+//                //shape.setVisibility(View.VISIBLE);
+//                animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//                if (shape.getVisibility() != View.VISIBLE) {
+//                    animator.setDuration(400);
+//                    animator.start();
+//                    shape.setVisibility(View.VISIBLE);
+//                    shape.setEnabled(true);
+//                }else{
+//                    animator.setDuration(400);
+//                    animator.start();
+//                    shape.setVisibility(View.INVISIBLE);
+//                    shape.setEnabled(true);
+//                }
             }
         });
     }
@@ -89,13 +121,17 @@ public class MainActivity extends BaseActivity<MainPresentationModel, MainView, 
 
         setupToolbar(mDrawer);
     }
-
+    ActionBarDrawerToggle toggle;
     private void setupToolbar(DrawerLayout drawer) {
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toggle = new ActionBarDrawerToggle(
+                this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+
+
+        toggle.syncState();
+
         mAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -150,6 +186,7 @@ public class MainActivity extends BaseActivity<MainPresentationModel, MainView, 
 
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -157,6 +194,7 @@ public class MainActivity extends BaseActivity<MainPresentationModel, MainView, 
             super.onBackPressed();
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

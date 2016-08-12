@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.vinhsang.vivmall.presentation.R;
@@ -210,7 +209,9 @@ public class ItemProductAllAdapter extends BaseAdapter {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), item.getProduct_name(), Toast.LENGTH_SHORT).show();
+                navigator.navigateToItemDetails(activity,new ItemProductModel(item.getProduct_id(),
+                        item.getProduct_price(),item.getProduct_name(),item.getProduct_image(),
+                        item.getProduct_des(),item.getMore_information(),item.getProduct_amount()));
             }
         });
     }

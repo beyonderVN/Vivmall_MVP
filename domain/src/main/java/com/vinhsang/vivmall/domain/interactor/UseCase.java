@@ -19,6 +19,8 @@ package com.vinhsang.vivmall.domain.interactor;
 import com.vinhsang.vivmall.domain.executor.PostExecutionThread;
 import com.vinhsang.vivmall.domain.executor.ThreadExecutor;
 
+import java.util.concurrent.TimeUnit;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -62,7 +64,7 @@ public abstract class UseCase {
    */
   @SuppressWarnings("unchecked")
   public void execute(Subscriber UseCaseSubscriber) {
-    this.subscription = this.buildUseCaseObservable()
+    this.subscription = this.buildUseCaseObservable().delay(1, TimeUnit.SECONDS)
         .subscribeOn(Schedulers.from(threadExecutor))
         .observeOn(postExecutionThread.getScheduler())
         .subscribe(UseCaseSubscriber);
@@ -75,7 +77,7 @@ public abstract class UseCase {
    */
   @SuppressWarnings("unchecked")
   public void execute(Subscriber UseCaseSubscriber,Object... objects) {
-    this.subscription = this.buildUseCaseObservable(objects)
+    this.subscription = this.buildUseCaseObservable(objects).delay(1, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.from(threadExecutor))
             .observeOn(postExecutionThread.getScheduler())
             .subscribe(UseCaseSubscriber);

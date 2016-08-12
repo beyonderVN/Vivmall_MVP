@@ -50,7 +50,7 @@ public class GetProductListByCataloge extends UseCase {
     int cata = (Integer) objects[0];
     int pos = (Integer) objects[1];
     Observable observable = this.productRepositoty.iListByCataObservable(cata,pos);
-    return observable.delay(2, TimeUnit.SECONDS);
+    return observable;
   }
 
 }

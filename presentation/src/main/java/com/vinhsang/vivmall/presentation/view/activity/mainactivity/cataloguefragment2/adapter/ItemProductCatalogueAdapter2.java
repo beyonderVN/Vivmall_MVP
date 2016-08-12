@@ -97,7 +97,7 @@ public class ItemProductCatalogueAdapter2 extends BaseAdapter{
         holder.itemTitle.setText(sectionName);
 
         ItemProductAdapter itemListDataAdapter = new ItemProductAdapter(singleSectionItems);
-
+        holder.recycler_view_list.setNestedScrollingEnabled(false);
         holder.recycler_view_list.setHasFixedSize(true);
         holder.recycler_view_list.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         holder.recycler_view_list.setAdapter(itemListDataAdapter);
@@ -245,7 +245,7 @@ public class ItemProductCatalogueAdapter2 extends BaseAdapter{
                 if(s!=null){
                     int l =s.length();
                     s = s.substring(0,l-3);
-                    s ="đ"+s+"k";
+                    s ="đ "+s+"k";
                 }
 
                 return s;
@@ -295,7 +295,7 @@ public class ItemProductCatalogueAdapter2 extends BaseAdapter{
                 if(s!=null){
                     int l =s.length();
                     s = s.substring(0,l-3);
-                    s ="đ"+s+"k";
+                    s ="đ "+s+"k";
                 }
 
                 return s;

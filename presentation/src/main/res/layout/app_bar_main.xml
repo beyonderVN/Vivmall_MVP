@@ -47,8 +47,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email"
+        android:layout_margin="8dp"
+        android:src="@android:drawable/ic_menu_share"
+        app:fabSize="auto"
+        app:layout_behavior="com.vinhsang.vivmall.presentation.view.widget.ScrollAwareFABBehavior"
         />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -6,9 +6,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.vinhsang.vivmall.presentation.R;
 import com.vinhsang.vivmall.presentation.model.ItemProductModel;
@@ -46,6 +50,13 @@ public class ItemDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
         ButterKnife.bind(this);
+
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
+
+
         chromeFader = new ElasticDragDismissFrameLayout.SystemChromeFader(this);
         draggableFrame.addListener(
                 new ElasticDragDismissFrameLayout.SystemChromeFader(this) {
@@ -55,11 +66,12 @@ public class ItemDetailActivity extends AppCompatActivity {
                     }
                 });
 
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         itemProductModel = (ItemProductModel)getIntent().getSerializableExtra("ITEM_ID");
         Log.d(TAG, "onCreate: itemProductModel.getProduct_id: "+itemProductModel.getProduct_id());
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
         itemDetalAdapter = new ItemDetailAdapter(this,itemProductModel);
         recyclerView.setAdapter(itemDetalAdapter);
@@ -122,6 +134,34 @@ public class ItemDetailActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
+        //noinspection SimplifiableIfStatement
+
+        switch (id){
+            case R.id.action_cart :
+                Toast.makeText(this, "R.id.action_cart", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_search:
+                Toast.makeText(this, "R.id.action_search", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_favorite :
+                Toast.makeText(this, "R.id.action_favorite", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }

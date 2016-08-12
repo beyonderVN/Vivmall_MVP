@@ -20,8 +20,6 @@ import com.vinhsang.vivmall.domain.executor.PostExecutionThread;
 import com.vinhsang.vivmall.domain.executor.ThreadExecutor;
 import com.vinhsang.vivmall.domain.repository.ProductRepositoty;
 
-import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -43,7 +41,7 @@ public class GetCatalogueList extends UseCase {
 
   @Override public Observable buildUseCaseObservable() {
     Observable observable = this.productRepositoty.catalogueListObservable();
-    return observable.delay(2, TimeUnit.SECONDS);
+    return observable;
   }
 
   @Override

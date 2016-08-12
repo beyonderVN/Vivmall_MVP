@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:padding="0dp">
+        android:padding="0dp"
+        >
 
         <com.vinhsang.vivmall.presentation.view.widget.DynamicHeightImageView
             android:id="@+id/image_product"
@@ -21,7 +22,7 @@
             android:layout_height="100dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-
+            android:layout_gravity="center_horizontal"
             />
 
         <LinearLayout

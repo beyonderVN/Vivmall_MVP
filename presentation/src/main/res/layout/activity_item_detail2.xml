@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.vinhsang.vivmall.presentation.view.widget.ElasticDragDismissFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/comments_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:transitionGroup="false"
+    app:dragDismissDistance="168dp"
+    app:dragDismissScale="0.95"
+    tools:context="com.vinhsang.vivmall.presentation.view.activity.detailactivity.ItemDetailActivity">
+
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:nestedScrollingEnabled="false">
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:background="@android:color/white"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="1.0">
+
+                    <com.vinhsang.vivmall.presentation.view.widget.viewpager.viewpager.ScrollerViewPager
+                        android:id="@+id/view_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:layout_gravity="center" />
+
+                    <com.vinhsang.vivmall.presentation.view.widget.viewpager.viewpager.InkPageIndicator xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:padding="16dp"
+                        app:currentPageIndicatorColor="@color/page_indicator_dark_selected"
+                        app:pageIndicatorColor="@color/page_indicator_dark" />
+
+                </RelativeLayout>
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:contentInsetStart="0dp"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+
+            <!--<ImageView-->
+                <!--android:layout_width="200dp"-->
+                <!--android:layout_height="200dp"-->
+                <!--android:src="@mipmap/ic_launcher" />-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="200dp"-->
+                <!--android:layout_height="200dp"-->
+                <!--android:src="@mipmap/ic_launcher" />-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="200dp"-->
+                <!--android:layout_height="200dp"-->
+                <!--android:src="@mipmap/ic_launcher" />-->
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="16dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                />
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="?android:actionBarSize"
+            android:layout_height="?android:actionBarSize"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_arrow_back" />
+    </android.support.design.widget.CoordinatorLayout>
+
+</com.vinhsang.vivmall.presentation.view.widget.ElasticDragDismissFrameLayout>
