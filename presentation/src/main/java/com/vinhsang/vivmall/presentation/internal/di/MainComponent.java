@@ -8,11 +8,11 @@ import com.vinhsang.vivmall.domain.executor.PostExecutionThread;
 import com.vinhsang.vivmall.domain.executor.ThreadExecutor;
 import com.vinhsang.vivmall.domain.repository.ProductRepositoty;
 import com.vinhsang.vivmall.presentation.ui.activity.detailactivity.ItemDetailActivity;
-import com.vinhsang.vivmall.presentation.ui.activity.mainactivity.MainActivity;
-import com.vinhsang.vivmall.presentation.ui.activity.mainactivity.allfragment.AllFragment;
-import com.vinhsang.vivmall.presentation.ui.activity.mainactivity.allfragment2.AllFragment2;
-import com.vinhsang.vivmall.presentation.ui.activity.mainactivity.cataloguefragment.CatalogueFragment;
-import com.vinhsang.vivmall.presentation.ui.activity.mainactivity.cataloguefragment2.CatalogueFragment2;
+import com.vinhsang.vivmall.presentation.ui.activity.main.MainActivity;
+import com.vinhsang.vivmall.presentation.ui.activity.main.allfragment.AllFragment;
+import com.vinhsang.vivmall.presentation.ui.activity.main.allfragment2.AllFragment2;
+import com.vinhsang.vivmall.presentation.ui.activity.main.cataloguefragment.CatalogueFragment;
+import com.vinhsang.vivmall.presentation.ui.activity.main.cataloguefragment2.CatalogueFragment2;
 
 import javax.inject.Singleton;
 

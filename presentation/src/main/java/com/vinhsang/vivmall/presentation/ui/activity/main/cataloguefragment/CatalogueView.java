@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.presentation.ui.activity.main.allfragment;
+package com.vinhsang.vivmall.presentation.ui.activity.main.cataloguefragment;
 
 import com.vinhsang.vivmall.presentation.coremvp.MVPView;
 
@@ -6,7 +6,7 @@ import com.vinhsang.vivmall.presentation.coremvp.MVPView;
  * Created by Long on 7/8/2016.
  */
 
-public interface AllView extends MVPView {
+public interface CatalogueView extends MVPView {
 
     void showProgress();
 
@@ -17,6 +17,9 @@ public interface AllView extends MVPView {
     void onDisconnected();
 
     void onFetchError();
+    void init();
+    void loadListTag();
+    void finishLoadingMore();
+    void startLoadingMore();
     void onUpdate();
-    void showLoadingMore();
 }

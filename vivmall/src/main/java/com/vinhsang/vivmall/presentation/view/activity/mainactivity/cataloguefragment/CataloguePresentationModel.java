@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.presentation.ui.activity.mainactivity.cataloguefragment;
+package com.vinhsang.vivmall.presentation.ui.activity.main.cataloguefragment;
 
 import com.vinhsang.vivmall.domain.ItemProduct;
 

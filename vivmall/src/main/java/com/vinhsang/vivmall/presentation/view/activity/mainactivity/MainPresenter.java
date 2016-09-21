@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.presentation.ui.activity.mainactivity;
+package com.vinhsang.vivmall.presentation.ui.activity.main;
 
 import android.util.Log;
 

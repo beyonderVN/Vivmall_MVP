@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.presentation.ui.activity.mainactivity.cataloguefragment;
+package com.vinhsang.vivmall.presentation.ui.activity.main.cataloguefragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.vinhsang.vivmall.R;
 import com.vinhsang.vivmall.presentation.MainApplication;
 import com.vinhsang.vivmall.presentation.ui.activity.base.BaseFragment;
-import com.vinhsang.vivmall.presentation.ui.activity.mainactivity.cataloguefragment.adapter.ItemProductsAdapter;
+import com.vinhsang.vivmall.presentation.ui.activity.main.cataloguefragment.adapter.ItemProductsAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

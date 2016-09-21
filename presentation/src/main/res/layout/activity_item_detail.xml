@@ -32,14 +32,16 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/white"
-                    android:gravity="center_horizontal">
+
+                    android:gravity="center_horizontal"
+                    >
 
                     <com.vinhsang.vivmall.presentation.ui.widget.viewpager.viewpager.ScrollerViewPager
                         android:id="@+id/view_pager"
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        android:background="@android:color/holo_green_light"/>
 
                     <com.vinhsang.vivmall.presentation.ui.widget.viewpager.viewpager.InkPageIndicator xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/indicator"

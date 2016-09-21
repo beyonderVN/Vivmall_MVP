@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.presentation.ui.activity.mainactivity.cataloguefragment.adapter;
+package com.vinhsang.vivmall.presentation.ui.activity.main.cataloguefragment.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
