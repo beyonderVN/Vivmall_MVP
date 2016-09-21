@@ -1,1 +1,3 @@
-include ':vivmall', ':domain', ':data', ':presentation',':killsometime'
+include  ':domain', ':data', ':presentation' 
+//,':kill_some_time'
+

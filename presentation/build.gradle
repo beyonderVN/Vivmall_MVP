@@ -6,7 +6,7 @@ apply plugin: 'com.fernandocejas.frodo'
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
-    useLibrary 'org.apache.http.legacy'
+
     defaultConfig {
         applicationId "com.vinhsang.vivmall.presentation"
         minSdkVersion 16
@@ -15,6 +15,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+
 
     }
     buildTypes {
@@ -26,6 +28,8 @@ android {
 }
 
 dependencies {
+
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':domain')
     compile project(':data')
@@ -39,10 +43,14 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'javax.annotation:jsr250-api:1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.okhttp3:okhttp:3.3.1'
+
     compile 'me.gujun.android.taggroup:library:1.4@aar'
     compile 'com.google.dagger:dagger:2.5'
     compile 'com.google.code.findbugs:annotations:2.0.3'
+
+
+
+
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestCompile 'com.android.support.test:runner:0.5'

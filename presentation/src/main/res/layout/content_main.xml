@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".view.activity.mainactivity.MainActivity"
+    tools:context=".ui.activity.mainactivity.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
     <View

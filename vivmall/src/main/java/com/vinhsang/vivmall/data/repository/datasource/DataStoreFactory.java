@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.vinhsang.vivmall.data.cache.ProductCache;
 import com.vinhsang.vivmall.data.entity.mapper.ProductEntityJsonMapper;
-import com.vinhsang.vivmall.data.net.RestApi;
-import com.vinhsang.vivmall.data.net.RestApiImpl;
+import com.vinhsang.vivmall.data.vivmallapi.RestApi;
+import com.vinhsang.vivmall.data.vivmallapi.RestApiImpl;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

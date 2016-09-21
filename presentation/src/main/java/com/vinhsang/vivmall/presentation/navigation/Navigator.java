@@ -19,7 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.vinhsang.vivmall.presentation.model.ItemProductModel;
-import com.vinhsang.vivmall.presentation.view.activity.detailactivity.ItemDetailActivity;
+import com.vinhsang.vivmall.presentation.ui.activity.detailactivity.ItemDetailActivity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -36,7 +36,7 @@ public class Navigator {
   }
 
   /**
-   * Goes to the user list screen.
+   * Goes to the userModel list screen.
    *
    * @param context A Context needed to open the destiny activity.
    */

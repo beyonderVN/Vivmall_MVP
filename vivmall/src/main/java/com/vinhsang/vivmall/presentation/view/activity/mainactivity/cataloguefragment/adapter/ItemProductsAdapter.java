@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment.adapter;
+package com.vinhsang.vivmall.presentation.ui.activity.mainactivity.cataloguefragment.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.vinhsang.vivmall.R;
 import com.vinhsang.vivmall.domain.ItemProduct;
-import com.vinhsang.vivmall.presentation.helper.recyclerviewhelper.DynamicHeightImageView;
+import com.vinhsang.vivmall.presentation.test.recyclerviewhelper.DynamicHeightImageView;
 
 import java.util.List;
 

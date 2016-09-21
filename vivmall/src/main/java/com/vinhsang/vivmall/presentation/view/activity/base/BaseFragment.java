@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.presentation.view.activity.base;
+package com.vinhsang.vivmall.presentation.ui.activity.base;
 
 import android.support.annotation.NonNull;
 

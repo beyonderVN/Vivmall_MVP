@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment;
+package com.vinhsang.vivmall.presentation.ui.activity.mainactivity.allfragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 
 import com.vinhsang.vivmall.R;
 import com.vinhsang.vivmall.presentation.MainApplication;
-import com.vinhsang.vivmall.presentation.view.activity.base.BaseFragment;
-import com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment.adapter.ItemProductsAdapter;
+import com.vinhsang.vivmall.presentation.ui.activity.base.BaseFragment;
+import com.vinhsang.vivmall.presentation.ui.activity.mainactivity.allfragment.adapter.ItemProductsAdapter;
 
 import butterknife.BindInt;
 import butterknife.BindView;

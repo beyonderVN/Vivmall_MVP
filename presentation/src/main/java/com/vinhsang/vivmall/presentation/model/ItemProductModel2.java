@@ -111,7 +111,7 @@ public class ItemProductModel2 extends BaseModel implements Serializable {
     @Override public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("***** User Entity Details *****\n");
+        stringBuilder.append("***** UserModel Entity Details *****\n");
         stringBuilder.append("id=" + this.getProduct_id() + "\n");
         stringBuilder.append("cover url=" + this.getProduct_image() + "\n");
         stringBuilder.append("name=" + this.getProduct_name() + "\n");

@@ -1,9 +1,9 @@
-package com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment;
+package com.vinhsang.vivmall.presentation.ui.activity.mainactivity.allfragment;
 
 import android.util.Log;
 
 import com.vinhsang.vivmall.domain.ItemProduct;
-import com.vinhsang.vivmall.presentation.view.activity.base.OneInterfaceForAll;
+import com.vinhsang.vivmall.presentation.ui.activity.base.OneInterfaceForAll;
 
 import java.io.Serializable;
 import java.util.ArrayList;

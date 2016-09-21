@@ -22,7 +22,7 @@
             android:textColor="@android:color/black"
             android:textSize="12dp" />
 
-        <com.vinhsang.vivmall.presentation.view.widget.DynamicHeightImageView
+        <com.vinhsang.vivmall.presentation.ui.widget.DynamicHeightImageView
             android:id="@+id/image_product"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

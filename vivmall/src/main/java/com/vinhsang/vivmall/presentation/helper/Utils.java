@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.presentation.helper;
+package com.vinhsang.vivmall.presentation.test;
 
 import android.content.Context;
 import android.util.Log;

@@ -2,10 +2,10 @@ package com.vinhsang.vivmall.presentation.internal.di;
 
 import android.content.Context;
 
+import com.vinhsang.vivmall.data.bourbon.BourbonService;
+import com.vinhsang.vivmall.data.bourbon.BourbonServiceFactory;
 import com.vinhsang.vivmall.data.cache.ProductCache;
 import com.vinhsang.vivmall.data.cache.ProductCacheImpl;
-import com.vinhsang.vivmall.data.datamanager.DataInterface;
-import com.vinhsang.vivmall.data.datamanager.DataManager;
 import com.vinhsang.vivmall.data.executor.JobExecutor;
 import com.vinhsang.vivmall.data.repository.ProductDataRepository;
 import com.vinhsang.vivmall.domain.executor.PostExecutionThread;
@@ -41,10 +41,10 @@ public class MainModule {
         return this.application;
     }
 
-    @Provides @Singleton
-    DataInterface getDataManager(){
-        DataInterface dataManager = new DataManager(context);
-        return dataManager;
+    @Provides
+    @Singleton
+    BourbonService provideBourbonService() {
+        return BourbonServiceFactory.makeBourbonService();
     }
 
     @Provides @Singleton

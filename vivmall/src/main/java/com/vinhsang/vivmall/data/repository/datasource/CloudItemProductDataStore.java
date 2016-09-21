@@ -2,7 +2,7 @@ package com.vinhsang.vivmall.data.repository.datasource;
 
 import com.vinhsang.vivmall.data.cache.ProductCache;
 import com.vinhsang.vivmall.data.entity.ItemProductEntity;
-import com.vinhsang.vivmall.data.net.RestApi;
+import com.vinhsang.vivmall.data.vivmallapi.RestApi;
 
 import java.util.List;
 

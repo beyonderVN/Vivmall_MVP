@@ -2,7 +2,8 @@ package com.vinhsang.vivmall.data.datamanager;
 
 import android.util.Log;
 
-import com.vinhsang.vivmall.data.net.Extra;
+import com.example.vinhsang.data.BuildConfig;
+import com.vinhsang.vivmall.data.vivmallapi.Extra;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -29,8 +30,8 @@ public class ConnectService {
 	interface ConnectServiceInterface {
 
 	}
-	private static String url="http://103.3.249.99:8080/SrvAppVivmall/RestSrv/SrvConnect/";
-
+//	private static String url="http://103.3.249.99:8080/SrvAppVivmall/RestSrv/SrvConnect/";
+	private static String url= BuildConfig.VIVMALL_API_URL;
 	public static String getUrl() {
 		return url;
 	}

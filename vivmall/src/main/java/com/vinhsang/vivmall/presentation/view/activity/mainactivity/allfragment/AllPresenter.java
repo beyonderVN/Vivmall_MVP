@@ -1,7 +1,7 @@
-package com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment;
+package com.vinhsang.vivmall.presentation.ui.activity.mainactivity.allfragment;
 
 
-import com.vinhsang.vivmall.presentation.view.activity.base.OneInterfaceForAll;
+import com.vinhsang.vivmall.presentation.ui.activity.base.OneInterfaceForAll;
 import com.vinhsang.vivmall.presentation.coremvp.SimpleMVPPresenter;
 import com.vinhsang.vivmall.data.datamanager.DataInterface;
 

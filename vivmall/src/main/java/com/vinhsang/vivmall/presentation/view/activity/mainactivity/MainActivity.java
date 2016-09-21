@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.presentation.view.activity.mainactivity;
+package com.vinhsang.vivmall.presentation.ui.activity.mainactivity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,9 +23,9 @@ import android.widget.Toast;
 
 import com.vinhsang.vivmall.R;
 import com.vinhsang.vivmall.presentation.MainApplication;
-import com.vinhsang.vivmall.presentation.view.activity.base.BaseActivity;
-import com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment.AllFragment;
-import com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment.CatalogueFragment;
+import com.vinhsang.vivmall.presentation.ui.activity.base.BaseActivity;
+import com.vinhsang.vivmall.presentation.ui.activity.mainactivity.allfragment.AllFragment;
+import com.vinhsang.vivmall.presentation.ui.activity.mainactivity.cataloguefragment.CatalogueFragment;
 
 import java.util.ArrayList;
 import java.util.List;

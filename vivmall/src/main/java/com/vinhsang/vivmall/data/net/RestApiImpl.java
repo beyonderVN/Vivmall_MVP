@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.data.net;
+package com.vinhsang.vivmall.data.vivmallapi;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

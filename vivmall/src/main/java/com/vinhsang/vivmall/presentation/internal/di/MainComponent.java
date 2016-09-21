@@ -5,10 +5,10 @@ import android.content.Context;
 import com.vinhsang.vivmall.data.datamanager.DataInterface;
 import com.vinhsang.vivmall.domain.executor.ThreadExecutor;
 import com.vinhsang.vivmall.domain.repository.ProductRepositoty;
-import com.vinhsang.vivmall.presentation.view.activity.mainactivity.MainActivity;
+import com.vinhsang.vivmall.presentation.ui.activity.mainactivity.MainActivity;
 import com.vinhsang.vivmall.domain.executor.PostExecutionThread;
-import com.vinhsang.vivmall.presentation.view.activity.mainactivity.allfragment.AllFragment;
-import com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment.CatalogueFragment;
+import com.vinhsang.vivmall.presentation.ui.activity.mainactivity.allfragment.AllFragment;
+import com.vinhsang.vivmall.presentation.ui.activity.mainactivity.cataloguefragment.CatalogueFragment;
 
 import javax.inject.Singleton;
 

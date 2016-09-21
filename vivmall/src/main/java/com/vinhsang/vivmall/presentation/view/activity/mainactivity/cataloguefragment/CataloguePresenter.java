@@ -1,9 +1,9 @@
-package com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment;
+package com.vinhsang.vivmall.presentation.ui.activity.mainactivity.cataloguefragment;
 
 import android.util.Log;
 
 import com.vinhsang.vivmall.presentation.coremvp.SimpleMVPPresenter;
-import com.vinhsang.vivmall.presentation.helper.Extra;
+import com.vinhsang.vivmall.presentation.test.Extra;
 import com.vinhsang.vivmall.domain.ItemProduct;
 
 import java.util.ArrayList;

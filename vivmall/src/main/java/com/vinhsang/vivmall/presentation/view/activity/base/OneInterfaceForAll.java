@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.presentation.view.activity.base;
+package com.vinhsang.vivmall.presentation.ui.activity.base;
 
 /**
  * Created by Long on 7/15/2016.

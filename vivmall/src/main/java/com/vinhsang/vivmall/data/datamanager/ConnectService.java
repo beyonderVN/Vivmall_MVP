@@ -2,7 +2,7 @@ package com.vinhsang.vivmall.data.datamanager;
 
 import android.util.Log;
 
-import com.vinhsang.vivmall.presentation.helper.Extra;
+import com.vinhsang.vivmall.presentation.test.Extra;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

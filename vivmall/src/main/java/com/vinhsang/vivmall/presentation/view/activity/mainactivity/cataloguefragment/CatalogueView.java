@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.presentation.view.activity.mainactivity.cataloguefragment;
+package com.vinhsang.vivmall.presentation.ui.activity.mainactivity.cataloguefragment;
 
 import com.vinhsang.vivmall.presentation.coremvp.MVPView;
 

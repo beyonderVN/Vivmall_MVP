@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.vinhsang.vivmall.presentation.view.widget.ElasticDragDismissFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.vinhsang.vivmall.presentation.ui.widget.ElasticDragDismissFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/comments_container"
@@ -10,7 +10,7 @@
     android:transitionGroup="false"
     app:dragDismissDistance="168dp"
     app:dragDismissScale="0.95"
-    tools:context="com.vinhsang.vivmall.presentation.view.activity.detailactivity.ItemDetailActivity">
+    tools:context="com.vinhsang.vivmall.presentation.ui.activity.detailactivity.ItemDetailActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -35,13 +35,13 @@
                     android:background="@android:color/white"
                     android:gravity="center_horizontal">
 
-                    <com.vinhsang.vivmall.presentation.view.widget.viewpager.viewpager.ScrollerViewPager
+                    <com.vinhsang.vivmall.presentation.ui.widget.viewpager.viewpager.ScrollerViewPager
                         android:id="@+id/view_pager"
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
                         android:layout_gravity="center" />
 
-                    <com.vinhsang.vivmall.presentation.view.widget.viewpager.viewpager.InkPageIndicator xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <com.vinhsang.vivmall.presentation.ui.widget.viewpager.viewpager.InkPageIndicator xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/indicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -54,20 +54,14 @@
 
                 </RelativeLayout>
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/scrim2"
-                    app:cardUseCompatPadding="true"
-                    app:cardElevation="0dp"
-                    app:cardCornerRadius="@dimen/si_default_radius_max"
-                    >
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:background="@color/gray">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -82,21 +76,15 @@
                             android:text="Price: Đ 1.000 K"
                             android:textColor="@color/colorPrimaryDark" />
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    app:cardBackgroundColor="@color/scrim2"
-                    app:cardUseCompatPadding="true"
-                    app:cardElevation="0dp"
-                    app:cardCornerRadius="@dimen/si_default_radius_max">
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:padding="8dp"
+                        android:background="@color/white"
 
                         >
 
@@ -128,21 +116,15 @@
                             android:layout_height="wrap_content"
                             android:text="Price: Đ 1.000 K" />
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    app:cardBackgroundColor="@color/scrim2"
-                    app:cardUseCompatPadding="true"
-                    app:cardElevation="0dp"
-                    app:cardCornerRadius="@dimen/si_default_radius_max">
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="8dp">
+                        android:padding="8dp"
+                        android:background="@color/gray">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -174,7 +156,7 @@
                             android:text="Price: Đ 1.000 K" />
 
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -291,4 +273,4 @@
                 android:text="Other" />
         </LinearLayout>
     </FrameLayout>
-</com.vinhsang.vivmall.presentation.view.widget.ElasticDragDismissFrameLayout>
+</com.vinhsang.vivmall.presentation.ui.widget.ElasticDragDismissFrameLayout>

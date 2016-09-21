@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".view.activity.mainactivity.MainActivity">
+    tools:context=".ui.activity.mainactivity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -50,7 +50,7 @@
         android:layout_margin="8dp"
         android:src="@android:drawable/ic_menu_share"
         app:fabSize="auto"
-        app:layout_behavior="com.vinhsang.vivmall.presentation.view.widget.ScrollAwareFABBehavior"
+        app:layout_behavior="com.vinhsang.vivmall.presentation.ui.widget.ScrollAwareFABBehavior"
         />
 
 </android.support.design.widget.CoordinatorLayout>

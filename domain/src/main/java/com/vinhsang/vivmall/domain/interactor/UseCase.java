@@ -64,7 +64,7 @@ public abstract class UseCase {
    */
   @SuppressWarnings("unchecked")
   public void execute(Subscriber UseCaseSubscriber) {
-    this.subscription = this.buildUseCaseObservable().delay(1, TimeUnit.SECONDS)
+    this.subscription = this.buildUseCaseObservable().delay(3, TimeUnit.SECONDS)
         .subscribeOn(Schedulers.from(threadExecutor))
         .observeOn(postExecutionThread.getScheduler())
         .subscribe(UseCaseSubscriber);
@@ -77,7 +77,7 @@ public abstract class UseCase {
    */
   @SuppressWarnings("unchecked")
   public void execute(Subscriber UseCaseSubscriber,Object... objects) {
-    this.subscription = this.buildUseCaseObservable(objects).delay(1, TimeUnit.SECONDS)
+    this.subscription = this.buildUseCaseObservable(objects).delay(3, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.from(threadExecutor))
             .observeOn(postExecutionThread.getScheduler())
             .subscribe(UseCaseSubscriber);

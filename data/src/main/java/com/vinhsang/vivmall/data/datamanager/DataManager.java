@@ -3,7 +3,7 @@ package com.vinhsang.vivmall.data.datamanager;
 import android.content.Context;
 import android.util.Log;
 
-import com.vinhsang.vivmall.data.net.Extra;
+import com.vinhsang.vivmall.data.vivmallapi.Extra;
 import com.vinhsang.vivmall.domain.ItemProduct;
 
 import java.util.ArrayList;

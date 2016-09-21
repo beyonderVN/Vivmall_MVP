@@ -40,6 +40,7 @@ public class ItemProductModel extends BaseModel implements Serializable {
     }
 
     public ItemProductModel(String product_id, String product_price, String product_name, String product_image, String product_des, String more_information, int product_amount) {
+        this();
         this.product_id = product_id;
         this.product_price = product_price;
         this.product_name = product_name;
@@ -111,7 +112,7 @@ public class ItemProductModel extends BaseModel implements Serializable {
     @Override public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("***** User Entity Details *****\n");
+        stringBuilder.append("***** UserModel Entity Details *****\n");
         stringBuilder.append("id=" + this.getProduct_id() + "\n");
         stringBuilder.append("cover url=" + this.getProduct_image() + "\n");
         stringBuilder.append("name=" + this.getProduct_name() + "\n");

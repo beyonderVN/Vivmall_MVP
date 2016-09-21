@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.vinhsang.vivmall.presentation.view.widget.ElasticDragDismissFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.vinhsang.vivmall.presentation.ui.widget.ElasticDragDismissFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/comments_container"
@@ -8,7 +8,7 @@
     android:transitionGroup="false"
     app:dragDismissDistance="168dp"
     app:dragDismissScale="0.95"
-    tools:context="com.vinhsang.vivmall.presentation.view.activity.detailactivity.ItemDetailActivity">
+    tools:context="com.vinhsang.vivmall.presentation.ui.activity.detailactivity.ItemDetailActivity">
 
 
     <android.support.design.widget.CoordinatorLayout
@@ -38,13 +38,13 @@
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="1.0">
 
-                    <com.vinhsang.vivmall.presentation.view.widget.viewpager.viewpager.ScrollerViewPager
+                    <com.vinhsang.vivmall.presentation.ui.widget.viewpager.viewpager.ScrollerViewPager
                         android:id="@+id/view_pager"
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
                         android:layout_gravity="center" />
 
-                    <com.vinhsang.vivmall.presentation.view.widget.viewpager.viewpager.InkPageIndicator xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <com.vinhsang.vivmall.presentation.ui.widget.viewpager.viewpager.InkPageIndicator xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/indicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -100,4 +100,4 @@
             android:src="@drawable/ic_arrow_back" />
     </android.support.design.widget.CoordinatorLayout>
 
-</com.vinhsang.vivmall.presentation.view.widget.ElasticDragDismissFrameLayout>
+</com.vinhsang.vivmall.presentation.ui.widget.ElasticDragDismissFrameLayout>
