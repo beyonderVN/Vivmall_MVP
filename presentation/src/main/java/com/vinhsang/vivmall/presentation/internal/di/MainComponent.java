@@ -13,6 +13,7 @@ import com.vinhsang.vivmall.presentation.ui.activity.main.allfragment.AllFragmen
 import com.vinhsang.vivmall.presentation.ui.activity.main.allfragment2.AllFragment2;
 import com.vinhsang.vivmall.presentation.ui.activity.main.cataloguefragment.CatalogueFragment;
 import com.vinhsang.vivmall.presentation.ui.activity.main.cataloguefragment2.CatalogueFragment2;
+import com.vinhsang.vivmall.presentation.ui.activity.shotdetail.ShotActivity;
 
 import javax.inject.Singleton;
 
@@ -34,6 +35,7 @@ public interface MainComponent {
     void inject(CatalogueFragment catalogueFragment);
     void inject(CatalogueFragment2 catalogueFragment);
     void inject(ItemDetailActivity itemDetailActivity);
+    void inject(ShotActivity shotActivity);
 
     Context context();
     ThreadExecutor threadExecutor();

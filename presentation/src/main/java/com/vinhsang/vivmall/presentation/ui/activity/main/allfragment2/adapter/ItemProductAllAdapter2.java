@@ -82,6 +82,12 @@ public class ItemProductAllAdapter2 extends BaseAdapter {
         holder.viewCountText.setText(item.title);
 
         holder.setProductImage(item.images.normal);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigator.navigateToShotDetails(activity,item);
+            }
+        });
     }
 
     /* package */ protected static  class ItemShotViewHolder extends RecyclerView.ViewHolder{

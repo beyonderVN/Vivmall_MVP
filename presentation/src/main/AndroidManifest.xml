@@ -37,13 +37,16 @@
             </intent-filter>
         </activity-alias>
 
-        <activity android:name=".ui.activity.detailactivity.ItemDetailActivity"
+        <activity
+            android:name=".ui.activity.detailactivity.ItemDetailActivity"
             android:parentActivityName=".ui.activity.main.MainActivity"
             android:theme="@style/AppTheme.Translucent">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.main.MainActivity" />
         </activity>
+        <activity android:name=".ui.activity.shotdetail.ShotActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

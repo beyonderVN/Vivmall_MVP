@@ -20,6 +20,8 @@ import android.content.Intent;
 
 import com.vinhsang.vivmall.presentation.model.ItemProductModel;
 import com.vinhsang.vivmall.presentation.ui.activity.detailactivity.ItemDetailActivity;
+import com.vinhsang.vivmall.presentation.ui.activity.main.allfragment2.model.ShotModel;
+import com.vinhsang.vivmall.presentation.ui.activity.shotdetail.ShotActivity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -55,6 +57,13 @@ public class Navigator {
   public void navigateToItemDetails(Context context, ItemProductModel itemId) {
     if (context != null) {
       Intent intentToLaunch = ItemDetailActivity.getCallingIntent(context, itemId);
+      context.startActivity(intentToLaunch);
+    }
+  }
+
+  public void navigateToShotDetails(Context context, ShotModel shotModel) {
+    if (context != null) {
+      Intent intentToLaunch = ShotActivity.getCallingIntent(context, shotModel);
       context.startActivity(intentToLaunch);
     }
   }
