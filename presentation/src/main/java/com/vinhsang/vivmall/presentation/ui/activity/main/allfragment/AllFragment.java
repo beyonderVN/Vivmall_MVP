@@ -225,7 +225,7 @@ public class AllFragment extends BaseFragment<AllPresentationModel, AllView, All
         if (view.getParent() != null) {
             ((ViewGroup) view.getParent()).removeView(view);
         }
-
+        finishLoadingMore();
         super.onDestroyView();
     }
 

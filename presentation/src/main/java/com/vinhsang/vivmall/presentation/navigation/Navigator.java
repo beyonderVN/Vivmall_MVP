@@ -15,6 +15,7 @@
  */
 package com.vinhsang.vivmall.presentation.navigation;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 
@@ -65,6 +66,14 @@ public class Navigator {
     if (context != null) {
       Intent intentToLaunch = ShotActivity.getCallingIntent(context, shotModel);
       context.startActivity(intentToLaunch);
+    }
+  }
+
+  public void navigateToShotDetails(Context context, ShotModel shotModel, ActivityOptions ops) {
+    if (context != null) {
+
+      Intent intentToLaunch = ShotActivity.getCallingIntent(context, shotModel);
+      context.startActivity(intentToLaunch,ops.toBundle());
     }
   }
 }

@@ -3,8 +3,8 @@ package com.vinhsang.vivmall.presentation.ui.activity.main.allfragment2;
 
 import android.util.Log;
 
-import com.vinhsang.vivmall.data.bourbon.DataManager;
-import com.vinhsang.vivmall.data.bourbon.model.Shot;
+import com.vinhsang.vivmall.data.dribbble.DataManager;
+import com.vinhsang.vivmall.data.dribbble.model.Shot;
 import com.vinhsang.vivmall.presentation.coremvp.SimpleMVPPresenter;
 import com.vinhsang.vivmall.presentation.mapper.ItemShotMapper;
 import com.vinhsang.vivmall.presentation.model.BaseModel;

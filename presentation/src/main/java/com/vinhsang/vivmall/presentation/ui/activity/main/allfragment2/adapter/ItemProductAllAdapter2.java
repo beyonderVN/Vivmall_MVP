@@ -1,6 +1,7 @@
 package com.vinhsang.vivmall.presentation.ui.activity.main.allfragment2.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -76,7 +77,7 @@ public class ItemProductAllAdapter2 extends BaseAdapter {
         return viewHolder;
     }
 
-    protected void bindShotProductView(final ShotModel item, ItemShotViewHolder holder) {
+    protected void bindShotProductView(final ShotModel item, final ItemShotViewHolder holder) {
 
         holder.likeCountText.setText(item.likes_count);
         holder.viewCountText.setText(item.title);
@@ -85,7 +86,10 @@ public class ItemProductAllAdapter2 extends BaseAdapter {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigator.navigateToShotDetails(activity,item);
+//                navigator.navigateToShotDetails(activity,item);
+                View sharedView = holder.shotImage;
+                ActivityOptions ops = ActivityOptions.makeSceneTransitionAnimation(activity, sharedView, "shotImage");
+                navigator.navigateToShotDetails(activity,item,ops);
             }
         });
     }
@@ -95,18 +99,19 @@ public class ItemProductAllAdapter2 extends BaseAdapter {
         private static final String TAG = "ItemShotViewHolder";
 
         @BindView(R.id.image_shot)
-        ImageView shotImage;
+        public ImageView shotImage;
         @BindView(R.id.image_like) ImageView likeCountImage;
         @BindView(R.id.text_like_count)
         TextView likeCountText;
         @BindView(R.id.text_title) TextView viewCountText;
         @BindView(R.id.layout_header) View viewHeader;
         Context context;
-        public ItemShotViewHolder(View itemView) {
+        public ItemShotViewHolder(final View itemView) {
 
             super(itemView);
             ButterKnife.bind(this, itemView);
             context = itemView.getContext();
+
 
         }
 

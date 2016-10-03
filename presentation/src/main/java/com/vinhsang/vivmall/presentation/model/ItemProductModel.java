@@ -36,7 +36,6 @@ public class ItemProductModel extends BaseModel implements Serializable {
         this.product_price = product_price;
         this.product_name = product_name;
         this.product_image = product_image;
-
     }
 
     public ItemProductModel(String product_id, String product_price, String product_name, String product_image, String product_des, String more_information, int product_amount) {

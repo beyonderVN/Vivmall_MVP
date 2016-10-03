@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.vinhsang.vivmall.data.bourbon.model.Comment;
+import com.vinhsang.vivmall.data.dribbble.model.Comment;
 import com.vinhsang.vivmall.presentation.MainApplication;
 import com.vinhsang.vivmall.presentation.R;
 import com.vinhsang.vivmall.presentation.ui.activity.base.BaseActivity;

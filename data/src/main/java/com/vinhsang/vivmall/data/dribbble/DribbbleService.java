@@ -1,8 +1,8 @@
-package com.vinhsang.vivmall.data.bourbon;
+package com.vinhsang.vivmall.data.dribbble;
 
 
-import com.vinhsang.vivmall.data.bourbon.model.Comment;
-import com.vinhsang.vivmall.data.bourbon.model.Shot;
+import com.vinhsang.vivmall.data.dribbble.model.Comment;
+import com.vinhsang.vivmall.data.dribbble.model.Shot;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Single;
 
-public interface BourbonService {
+public interface DribbbleService {
 
     /**
      * Retrieve a list of shots

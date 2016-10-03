@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.vinhsang.vivmall.data.bourbon.model.Comment;
+import com.vinhsang.vivmall.data.dribbble.model.Comment;
 import com.vinhsang.vivmall.presentation.R;
 
 import java.util.Collections;

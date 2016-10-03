@@ -2,8 +2,8 @@ package com.vinhsang.vivmall.presentation.ui.activity.shotdetail;
 
 import android.util.Log;
 
-import com.vinhsang.vivmall.data.bourbon.DataManager;
-import com.vinhsang.vivmall.data.bourbon.model.Comment;
+import com.vinhsang.vivmall.data.dribbble.DataManager;
+import com.vinhsang.vivmall.data.dribbble.model.Comment;
 import com.vinhsang.vivmall.presentation.coremvp.SimpleMVPPresenter;
 
 import java.util.List;

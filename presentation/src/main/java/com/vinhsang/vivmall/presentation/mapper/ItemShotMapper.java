@@ -1,6 +1,6 @@
 package com.vinhsang.vivmall.presentation.mapper;
 
-import com.vinhsang.vivmall.data.bourbon.model.Shot;
+import com.vinhsang.vivmall.data.dribbble.model.Shot;
 import com.vinhsang.vivmall.presentation.model.BaseModel;
 import com.vinhsang.vivmall.presentation.ui.activity.main.allfragment2.model.ShotModel;
 

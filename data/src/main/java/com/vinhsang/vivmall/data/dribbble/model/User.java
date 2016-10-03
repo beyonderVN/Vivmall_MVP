@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.data.bourbon.model;
+package com.vinhsang.vivmall.data.dribbble.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

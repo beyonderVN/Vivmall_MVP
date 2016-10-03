@@ -2,8 +2,8 @@ package com.vinhsang.vivmall.presentation.internal.di;
 
 import android.content.Context;
 
-import com.vinhsang.vivmall.data.bourbon.BourbonService;
-import com.vinhsang.vivmall.data.bourbon.BourbonServiceFactory;
+import com.vinhsang.vivmall.data.dribbble.DribbbleService;
+import com.vinhsang.vivmall.data.dribbble.DribbbleServiceFactory;
 import com.vinhsang.vivmall.data.cache.ProductCache;
 import com.vinhsang.vivmall.data.cache.ProductCacheImpl;
 import com.vinhsang.vivmall.data.executor.JobExecutor;
@@ -43,8 +43,8 @@ public class MainModule {
 
     @Provides
     @Singleton
-    BourbonService provideBourbonService() {
-        return BourbonServiceFactory.makeBourbonService();
+    DribbbleService provideBourbonService() {
+        return DribbbleServiceFactory.makeBourbonService();
     }
 
     @Provides @Singleton

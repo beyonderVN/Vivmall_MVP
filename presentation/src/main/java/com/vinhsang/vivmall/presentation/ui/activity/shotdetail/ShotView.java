@@ -1,6 +1,6 @@
 package com.vinhsang.vivmall.presentation.ui.activity.shotdetail;
 
-import com.vinhsang.vivmall.data.bourbon.model.Comment;
+import com.vinhsang.vivmall.data.dribbble.model.Comment;
 import com.vinhsang.vivmall.presentation.coremvp.MVPView;
 
 import java.util.List;

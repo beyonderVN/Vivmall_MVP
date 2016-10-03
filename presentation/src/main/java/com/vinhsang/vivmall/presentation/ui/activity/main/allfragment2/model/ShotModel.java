@@ -1,8 +1,8 @@
 package com.vinhsang.vivmall.presentation.ui.activity.main.allfragment2.model;
 
 
-import com.vinhsang.vivmall.data.bourbon.model.Image;
-import com.vinhsang.vivmall.data.bourbon.model.User;
+import com.vinhsang.vivmall.data.dribbble.model.Image;
+import com.vinhsang.vivmall.data.dribbble.model.User;
 import com.vinhsang.vivmall.presentation.model.BaseModel;
 
 import java.io.Serializable;

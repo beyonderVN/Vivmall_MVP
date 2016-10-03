@@ -2,8 +2,8 @@ package com.vinhsang.vivmall.presentation.internal.di;
 
 import android.content.Context;
 
-import com.vinhsang.vivmall.data.bourbon.BourbonService;
-import com.vinhsang.vivmall.data.bourbon.DataManager;
+import com.vinhsang.vivmall.data.dribbble.DribbbleService;
+import com.vinhsang.vivmall.data.dribbble.DataManager;
 import com.vinhsang.vivmall.domain.executor.PostExecutionThread;
 import com.vinhsang.vivmall.domain.executor.ThreadExecutor;
 import com.vinhsang.vivmall.domain.repository.ProductRepositoty;
@@ -27,7 +27,7 @@ import dagger.Component;
 public interface MainComponent {
 
     DataManager dataManager();
-    BourbonService bourbonService();
+    DribbbleService bourbonService();
 
     void inject(MainActivity mainActivity);
     void inject(AllFragment allFragment);

@@ -1,4 +1,4 @@
-package com.vinhsang.vivmall.data.bourbon;
+package com.vinhsang.vivmall.data.dribbble;
 
 import com.example.vinhsang.data.BuildConfig;
 import com.google.gson.Gson;
@@ -10,24 +10,24 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Provide "make" methods to create instances of {@link BourbonService}
+ * Provide "make" methods to create instances of {@link DribbbleService}
  * and its related dependencies, such as OkHttpClient, Gson, etc.
  */
-public class BourbonServiceFactory {
+public class DribbbleServiceFactory {
 
-    public static BourbonService makeBourbonService() {
+    public static DribbbleService makeBourbonService() {
         OkHttpClient okHttpClient = makeOkHttpClient(makeLoggingInterceptor());
         return makeBourbonService(okHttpClient);
     }
 
-    public static BourbonService makeBourbonService(OkHttpClient okHttpClient) {
+    public static DribbbleService makeBourbonService(OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.DRIBBBLE_API_URL)
                 .client(okHttpClient)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(new Gson()))
                 .build();
-        return retrofit.create(BourbonService.class);
+        return retrofit.create(DribbbleService.class);
     }
 
     public static OkHttpClient makeOkHttpClient(HttpLoggingInterceptor httpLoggingInterceptor) {
