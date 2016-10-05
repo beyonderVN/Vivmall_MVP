@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Vivmall_MVP.iml" filepath="$PROJECT_DIR$/Vivmall_MVP.iml" />
       <module fileurl="file://$PROJECT_DIR$/data/data.iml" filepath="$PROJECT_DIR$/data/data.iml" />
       <module fileurl="file://$PROJECT_DIR$/domain/domain.iml" filepath="$PROJECT_DIR$/domain/domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/footballfan/footballfan.iml" filepath="$PROJECT_DIR$/footballfan/footballfan.iml" />
       <module fileurl="file://$PROJECT_DIR$/presentation/presentation.iml" filepath="$PROJECT_DIR$/presentation/presentation.iml" />
     </modules>
   </component>

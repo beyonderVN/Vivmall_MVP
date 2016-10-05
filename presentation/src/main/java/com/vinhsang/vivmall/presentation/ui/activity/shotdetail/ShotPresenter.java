@@ -57,19 +57,25 @@ public class ShotPresenter extends SimpleMVPPresenter<ShotView,ShotPresentationM
                 .subscribe(new SingleSubscriber<List<Comment>>() {
                     @Override
                     public void onSuccess(List<Comment> comments) {
-                        mComments = comments;
-                        getMvpView().hideProgress();
-                        if (comments.isEmpty()) {
-                            getMvpView().showEmptyComments();
-                        } else {
-                            getMvpView().showComments(comments);
+                        if(getMvpView()!=null) {
+                            mComments = comments;
+                            getMvpView().hideProgress();
+                            if (comments.isEmpty()) {
+                                getMvpView().showEmptyComments();
+                            } else {
+                                getMvpView().showComments(comments);
+                            }
+                            getMvpView().showCommentsTitle(!comments.isEmpty());
                         }
-                        getMvpView().showCommentsTitle(!comments.isEmpty());
                     }
 
                     @Override
                     public void onError(Throwable error) {
+
                         Log.e(TAG, "There was an error retrieving the comments", error);
+                        if (getMvpView() == null) {
+                            return;
+                        }
                         getMvpView().hideProgress();
                         getMvpView().showError();
                     }

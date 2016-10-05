@@ -25,7 +25,7 @@ android {
         buildConfigField("String", "DRIBBBLE_API_URL",
                 "\"${dribbbleApiUrl}\"")
         buildConfigField("String", "DRIBBBLE_ACCESS_TOKEN",
-                "\"${accessToken}\"")
+                "\"${dribbbleAccessToken}\"")
     }
 
     compileOptions {
